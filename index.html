@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Page Title</title>
+<title>Alexander Farren</title>
 </head>
 <link rel="stylesheet" type="text/css"
     href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
@@ -30,24 +30,65 @@ p {
   	width:fit-content;
 }
 top{
-	display:block;
+	display:table-cell;
     margin-top: 0px;
   	margin-bottom: 0px;
   	margin-right: auto;
   	margin-left: auto;
-	font-family:Computer Modern;
-    font-weight:900;
 	width:fit-content;
 	padding:0px 10px 0px 10px;
-    border:6px solid #693603;
+    border:6px solid #422604;
     border-radius:10px;
     font-size:200%;
+    text-align:middle;
 
+}
+
+    
+.title {
+  font-family: "Computer Modern", serif;
+  font-size: 300%;
+  font-weight:900;
+}
+.subtitle {
+  font-family: "Computer Modern", serif;
+  color:#6b3102;
+  font-size: 150%;
+}
+.outer {
+  display: table;
+  margin-top: 0px;
+  margin-bottom: 40px;
+  margin-right: auto;
+  margin-left: auto;
+  width:fit-content;
+  padding:0px 10px 0px 10px;
+  border:6px solid #422604;
+  border-radius:10px;
+}
+.middle {
+  display: table-cell;
+  vertical-align: top;
+}
+.innie {
+  text-align: center;
 }
 </style>
 <body style="background-color: #f2e6d9;">
-<top>Alexander Farren<p style="display:inline;color:#86592d;font-size:60%;">
-<br> farrenal@tcd.ie</p></top>
+<div class="outer">
+            <div class="middle">
+                <div class="innie">
+                    <span class="title">
+                        Alexander Farren
+                    </span>
+                    <br/>
+                    <span class="subtitle">
+                        farrenal@tcd.ie
+                    </span>
+                </div>
+            </div>
+        </div>
+
 
 <h2>About</h2> 
 <p><p/>

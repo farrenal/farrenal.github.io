@@ -4,9 +4,11 @@
 <title>Alexander Farren</title>
 </head>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 	<link rel="stylesheet" type="text/css"
     href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+
 <style>
 body {font-size: 130%;}
 h1 {
@@ -16,7 +18,7 @@ h1 {
   margin:0px;
 }
 h2 {
-  width:max-content;
+  max-width:100%;
   font-size:150%;
   padding:10px 0px 10px 0px;
   margin:0px;
@@ -30,7 +32,7 @@ hr{
 paddding:0px;
 }
 img {
-  display: inline;
+  display: block;
   margin-left:auto;
   margin-right:auto;
   margin-top:10px;
@@ -41,11 +43,12 @@ img {
   border-radius:50px;
 }
 main{
-  text-align: left;
+  text-align: justify;
+  text-justify:inter-word;
   font-family: "Computer Modern", serif;
   font-size: 100%;
   font-weight:100%;
-  width:auto;
+  max-width:20cm;
 }
 a{
 text-decoration:none;
@@ -53,16 +56,19 @@ color: blue;
 }
 </style>
 <body style="background-color: #f2e6d9;">
+<div>
 <h1 style="margin-left:auto;margin-right:auto;">Alexander Farren</h1>
 <p style="color:#6b3102;margin-left:auto;margin-right:auto;">farrenal@tcd.ie</p>
 <img src="https://pbs.twimg.com/profile_images/1346117163350978560/9-EI7QAR_400x400.jpg" alt="Hello there" style="width:200px;height:200px;" >
+</div>
 <hr>
-<h2>About me</h2>
+<div><h2>About me</h2>
 <main>I'm a final year theoretical physics student at Trinity College Dublin. Here you can find some work I've done.<main/>
+</div>
 <hr>
 <h2>Summer REU, University of Notre Dame</h2> 
-<main> Received the <a href=https://naughton.nd.edu/>Naughton Fellowship</a> to do an REU at Notre Dame for the Summer 2023. I worked with Prof. Ragnar Stroberg on <a href=Extended.pdf>spurious isospin symmetry breaking in the IMSRG</a>.
+<main> Received the <a href=https://naughton.nd.edu/>Naughton Fellowship</a> to do an REU at Notre Dame for the Summer 2023. I worked with Prof. Ragnar Stroberg on spurious isospin symmetry breaking in the IMSRG. See <a href=Extended.pdf>report</a> and <a href=Presentation.pdf>presentation</a>.
 <h2>Electoral Redistricting</h2> 
-<main> Sparked by the <a href=https://www.maths.tcd.ie/~tristan/SSG/index.html>Real World Mathematical Modelling</a> event in May 2023, applied multi-objective optimisation and data science techniques to the elecotral redistricting of Ireland. See the comprehensive <a href=https://github.com/elizasomerville/IrishConstituencyOptimisation>code</a> and <a href=https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf>report</a>.
+<main> Sparked by the <a href=https://www.maths.tcd.ie/~tristan/SSG/index.html>Real World Mathematical Modelling</a> event in May 2023, applied multi-objective optimisation and data science techniques to the elecotral redistricting of Ireland. See <a href=https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf>report</a> and <a href=https://github.com/elizasomerville/IrishConstituencyOptimisation>code</a>.
 </body>
 </html>

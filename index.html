@@ -42,7 +42,7 @@ p {
 td:nth-child(1){vertical-align:top;}
 td:nth-child(2){vertical-align:center;}
 
-.desktop-only{display:table-cell;}
+.desktop-only{display:block;}
 .mobile-only{display:none;}
 @media (pointer:coarse) {
     /* custom css for "touch targets" */
@@ -81,16 +81,15 @@ color: blue;
 }
 </style>
 <body style="background-color:#f2e6d9;">
-<table class="desktop-only" style="
+<table style="
   margin-left:auto;
   margin-right:auto;
-  max-width:fit-content;">
+  max-width:fit-content;"class="desktop-only">
 <tr>
 <td>
 <img src="https://farrenal.github.io/Headshot.jpg" alt="Photo of me" style="
   width:224px;
   height:366px;
-  display:block;
   border:5px solid #422604;
   border-radius:35px;" >
 </td>
@@ -107,9 +106,9 @@ color: blue;
 <img src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" style="
   width:224px;
   height:366px;
-  display:block;
   margin-left:auto;
   margin-right:auto;
+  display:block;
   margin-top:10px;
   margin-bottom:10px;
   padding:0px 0px 0px 0px;

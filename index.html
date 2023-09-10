@@ -12,14 +12,14 @@
 
 <style>
 
-@media screen and (min-width: 40px) {  
-	td[class=desktop-only]{display:none !important;width:0px;}
+@media screen and (min-width:10px) {  
+	td[class=desktop-only]{display:none;}
 
 }
-@media screen and (min-device-width: 480px) and (max-device-width: 1024px) {
+@media screen and (min-width: 480px) and (max-width: 1024px) {
 
     /* Hide stuff on tablets */
-    table[class=desktop-only],td[class=desktop-only],img[class=desktop-only],span[class=desktop-only]{display:none !important;}
+    table[class=emailnomob],td[class=emailnomob],img[class=emailnomob],span[class=emailnomob]{display:none !important;}
 }
 body {font-size: 130%;}
 h1 {
@@ -39,6 +39,9 @@ p {
   	width:fit-content;
     margin:0px;
 }
+td{
+min-width:0px;
+}
 hr{
 paddding:0px;
 }
@@ -57,7 +60,7 @@ color: blue;
 </style>
 <body style="background-color: #f2e6d9;">
 <div>
-<h1 style="margin-left:auto;margin-right:auto;">Ale Farren</h1>
+<h1 style="margin-left:auto;margin-right:auto;">A Farren</h1>
 <p style="color:#6b3102;margin-left:auto;margin-right:auto;">farrenal@tcd.ie</p>
 <img src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" style="
   width:fit-content;

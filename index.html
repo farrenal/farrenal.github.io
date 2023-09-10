@@ -35,8 +35,6 @@ p {
 .grids{
   width:fit-content;
   height:200px;
-  margin-left:auto;
-  padding:0px 0px 0px 0px;
   border: 4px solid #422604;
   border-radius:5px;
 }
@@ -49,11 +47,12 @@ td{
 min-width:0px;
 min-height:0px;
 padding-left:10px;
-padding-right:0px;
+padding-right:10px;
 text-align: center;
-vertical-align:center;
 max-width:20cm;
 }
+td:nth-child(1){vertical-align:top;}
+td:nth-child(2){vertical-align:center;}
 
 .desktop-only{display:table-cell;}
 .mobile-only{display:none;}
@@ -85,7 +84,7 @@ color: blue;
 <table class="desktop-only" style="padding-left:20px;">
 <tr>
 <td>
-<img src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" style="
+<img src="https://farrenal.github.io/Headshot.jpg" alt="Photo of me" style="
   width:224px;
   height:366px;
   display:block;
@@ -150,7 +149,7 @@ See <a href="https://farrenal.github.io/Extended.pdf">report</a> and <a href="ht
 <img src="https://farrenal.github.io/ireland.jpg" class="grids" style="border-color:#fa7d34;">
 </td>
 </tr>
-<tr>
+<tr style="background-color: #bae09d;outline: #278513 thick solid;">
 <td>
 <h2>Physics Communication</h2> 
 <main> Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation convention for the Theoretical Physics Students Association (TPSA) <a href="https://www.youtube.com/@tpsa_ireland/videos">Youtube channel</a>. Recently created a video on deriving the critical temperature of the 2D Ising Model with Mikey Whelan.</main>
@@ -160,7 +159,7 @@ See <a href="https://farrenal.github.io/Extended.pdf">report</a> and <a href="ht
 <main>- <a href="https://www.youtube.com/watch?v=qBqU5paaXLk">Critical Temperature of the 2D Ising Model</a></main>
 </td>
 <td>
-<img src="https://farrenal.github.io/physcomm.jpeg" class="grids"
+<img src="https://farrenal.github.io/physcomm.jpeg" class="grids" style="border-color:#278513">
 </td>
 </tr>
 </table>

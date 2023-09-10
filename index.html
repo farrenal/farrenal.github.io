@@ -12,11 +12,14 @@
 
 <style>
 
-@media only screen and (max-width: 400px) {
+@media screen and (max-width: 40px) {  
+    table[class=desktop-only],td[class=desktop-only],img[class=desktop-only],span[class=desktop-only]{display:none !important;}
 
-    //Create Class that will only hide on mobile size.
-    //Add the class desktop-only to the image(or LI) that you want to hide on mobile view.
-  table[class=desktop-only],td[class=desktop-onlyb],img[class=desktop-only],span[class=desktop-only]{display:none !important;}
+}
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+
+    /* Hide stuff on tablets */
+    table[class=desktop-only],td[class=desktop-only],img[class=desktop-only],span[class=desktop-only]{display:none !important;}
 }
 body {font-size: 130%;}
 h1 {

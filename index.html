@@ -39,18 +39,6 @@ p {
   border-radius:5px;
 }
   
-table {
-  min-width:0px;
-  min-height:0px;
-}
-td{
-min-width:0px;
-min-height:0px;
-padding-left:10px;
-padding-right:10px;
-text-align: center;
-max-width:20cm;
-}
 td:nth-child(1){vertical-align:top;}
 td:nth-child(2){vertical-align:center;}
 
@@ -63,6 +51,18 @@ td:nth-child(2){vertical-align:center;}
   }
   .desktop-only{display:none;}
   .mobile-only{display:block;}
+}
+table {
+  min-width:0px;
+  min-height:0px;
+}
+td{
+min-width:0px;
+min-height:0px;
+padding-left:10px;
+padding-right:10px;
+text-align: center;
+max-width:20cm;
 }
 hr{
 padding:0px;
@@ -80,28 +80,26 @@ text-decoration:none;
 color: blue;
 }
 </style>
-<body style="background-color: #f2e6d9;">
-<table class="desktop-only" style="padding-left:20px;">
+<body style="background-color:#f2e6d9;">
+<table class="desktop-only" style="
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  max-width:fit-content;">
 <tr>
 <td>
 <img src="https://farrenal.github.io/Headshot.jpg" alt="Photo of me" style="
   width:224px;
   height:366px;
-  display:block;
-  margin-left:auto;
-  margin-right:auto;
-  margin-top:10px;
-  margin-bottom:10px;
-  padding:0px 0px 0px 0px;
-  border:4.5px solid #422604;
-  border-radius:50px;" >
+  border:5px solid #422604;
+  border-radius:35px;" >
 </td>
-<td style="padding-left:2cm">
+<td>
 <h1 style="margin-left:auto;margin-right:auto;font-size:350%;">Alexander Farren</h1>
 <p style="color:#6b3102;margin-left:auto;margin-right:auto;font-size:150%;">farrenal@tcd.ie</p>
 <hr>
 <h2>About me</h2>
-<main>I'm a final year theoretical physics student at Trinity College Dublin. Here you can find some work I've done.<main/>
+<main>I'm a final year theoretical physics student at Trinity College Dublin. Here you can find some work I've done.</main>
 </td></tr></table>
 
 <div class="mobile-only"><h1 style="margin-left:auto;margin-right:auto;">Alexander Farren</h1>
@@ -131,11 +129,11 @@ color: blue;
 <main> Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">Naughton Fellowship</a> to do an REU at the University of Notre Dame for the Summer 2023. I worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on spurious isospin symmetry breaking in the IMSRG.</main>
 <br>
 <main>
-See <a href="https://farrenal.github.io/Extended.pdf">report</a> and <a href="https://farrenal.github.io/Presentation.pdf">presentation slides</a>.
+See <a href="https://farrenal.github.io/Extended.pdf">report</a> and <a href="https://farrenal.github.io/Presentation.pdf">presentation</a>.
 </main>
 </td>
 <td>
-<img class="grids" src="https://farrenal.github.io/particleladder.jpeg" style="border-color:#4a55cf">
+<img class="grids" src="https://farrenal.github.io/particleladder.jpeg" style="border:#4a55cf 5px solid;">
 </td>
 </tr>
 <tr style="background-color: #f2c796;outline: #fa7d34 thick solid;">
@@ -143,23 +141,23 @@ See <a href="https://farrenal.github.io/Extended.pdf">report</a> and <a href="ht
 <h2>Electoral Redistricting</h2> 
 <main> Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a> event in May 2023, applied multi-objective optimisation and data science techniques to the elecotral redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>, Ben McGloin and Mikey Whelan.</main>
 <br>
-<main>See <a href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">report</a> and <a href="https://github.com/elizasomerville/IrishConstituencyOptimisation">code repository</a>.</main>
+<main>See <a href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">report</a> and <a href="https://github.com/elizasomerville/IrishConstituencyOptimisation">code</a>.</main>
 </td>
 <td>
-<img src="https://farrenal.github.io/ireland.jpg" class="grids" style="border-color:#fa7d34;">
+<img src="https://farrenal.github.io/ireland.jpg" class="grids" style="border:#fa7d34 5px solid;">
 </td>
 </tr>
 <tr style="background-color: #bae09d;outline: #278513 thick solid;">
 <td>
 <h2>Physics Communication</h2> 
-<main> Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation convention for the Theoretical Physics Students Association (TPSA) <a href="https://www.youtube.com/@tpsa_ireland/videos">Youtube channel</a>. Recently created a video on deriving the critical temperature of the 2D Ising model with Mikey Whelan.</main>
+<main> Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation convention for the Theoretical Physics Students Association (TPSA) <a href="https://www.youtube.com/@tpsa_ireland/videos">Youtube channel</a>. Recently created a video on deriving the critical temperature of the 2D Ising Model with Mikey Whelan.</main>
 <br>
 <main>- <a href="https://www.youtube.com/watch?v=RrZWrJcV5ZM">Einstein Summation Convention #1</a></main>
 <main>- <a href="https://www.youtube.com/watch?v=qBqU5paaXLk">Einstein Summation Convention #2</a></main>
 <main>- <a href="https://www.youtube.com/watch?v=qBqU5paaXLk">Critical Temperature of the 2D Ising Model</a></main>
 </td>
 <td>
-<img src="https://farrenal.github.io/physcomm.jpeg" class="grids" style="border-color:#278513">
+<img src="https://farrenal.github.io/physcomm.jpeg" class="grids" style="border:#278513 5px solid">
 </td>
 </tr>
 </table>

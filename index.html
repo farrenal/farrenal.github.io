@@ -12,13 +12,11 @@
 
 <style>
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 400px) {
 
     //Create Class that will only hide on mobile size.
     //Add the class desktop-only to the image(or LI) that you want to hide on mobile view.
-    .desktop-only {
-        display: none;
-    }
+  table[class=desktop-only],td[class=desktop-onlyb],img[class=desktop-only],span[class=desktop-only]{display:none !important;}
 }
 body {font-size: 130%;}
 h1 {
@@ -86,8 +84,8 @@ color: blue;
 See <a href="Extended.pdf">report</a> and <a href="Presentation.pdf">presentation</a>.
 </main>
 </td>
-<td>
-<img class="desktop-only" src="https://farrenal.github.io/particleladder.jpeg" alt="Hello there" style="
+<td class="desktop-only">
+<img src="https://farrenal.github.io/particleladder.jpeg" alt="Hello there" style="
   width:fit-content;
   height:200px;
   margin-left:auto;
@@ -101,8 +99,8 @@ See <a href="Extended.pdf">report</a> and <a href="Presentation.pdf">presentatio
 <br>
 <main>See <a href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">report</a> and <a href="https://github.com/elizasomerville/IrishConstituencyOptimisation">code</a>.</main>
 </td>
-<td>
-<img class="desktop-only" src="https://farrenal.github.io/particleladder.jpeg" style="
+<td class="desktop-only">
+<img src="https://farrenal.github.io/particleladder.jpeg" style="
   width:fit-content;
   height:200px;
   margin-left:auto;
@@ -118,8 +116,8 @@ See <a href="Extended.pdf">report</a> and <a href="Presentation.pdf">presentatio
 <main>- <a href="https://www.youtube.com/watch?v=qBqU5paaXLk">Einstein Summation Convention #2</a></main>
 <main>- <a href="https://www.youtube.com/watch?v=qBqU5paaXLk">Critical Temperature of the 2D Ising Model</a></main>
 </td>
-<td>
-<img class="desktop-only" src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" style="
+<td class="desktop-only">
+<img src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" style="
   width:fit-content;
   height:200px;
   margin-left:auto;

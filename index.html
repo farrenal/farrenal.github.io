@@ -49,14 +49,19 @@ min-height:0px;
 text-align: center;
 vertical-align:center;
 }
+
+.desktop-only{display:table-cell;}
+.mobile-only{display:none;}
 @media (pointer:coarse) {
     /* custom css for "touch targets" */
   td:nth-child(2) {
     display:none;
   }
+  .desktop-only{display:none;}
+  .mobile-only{display:block;}
 }
 hr{
-paddding:0px;
+padding:0px;
 }
 main{
   text-align: justify;
@@ -72,7 +77,7 @@ color: blue;
 }
 </style>
 <body style="background-color: #f2e6d9;">
-<table cellspacing="50px">
+<table class="desktop-only" style="padding-left:20px;">
 <tr>
 <td>
 <img src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" style="
@@ -87,15 +92,32 @@ color: blue;
   border:4.5px solid #422604;
   border-radius:50px;" >
 </td>
-<td>
-<h1 style="margin-left:auto;margin-right:auto;">Alexander Farren</h1>
-<p style="color:#6b3102;margin-left:auto;margin-right:auto;">farrenal@tcd.ie</p>
+<td style="padding-left:2cm">
+<h1 style="margin-left:auto;margin-right:auto;font-size:350%;">Alexander Farren</h1>
+<p style="color:#6b3102;margin-left:auto;margin-right:auto;font-size:150%;">farrenal@tcd.ie</p>
 <hr>
 <h2>About me</h2>
 <main>I'm a final year theoretical physics student at Trinity College Dublin. Here you can find some work I've done.<main/>
 </td></tr></table>
-<hr>
 
+<div class="mobile-only"><h1 style="margin-left:auto;margin-right:auto;">Alexander Farren</h1>
+<p style="color:#6b3102;margin-left:auto;margin-right:auto;">farrenal@tcd.ie</p>
+<img src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" style="
+  width:224px;
+  height:366px;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:10px;
+  margin-bottom:10px;
+  padding:0px 0px 0px 0px;
+  border:4.5px solid #422604;
+  border-radius:50px;" >
+<hr><table cellspacing="10px"><tr><td><h2>About me</h2>
+<main>I'm a final year theoretical physics student at Trinity College Dublin. Here you can find some work I've done.<main/></td></tr></table>
+</div>
+
+<hr>
 <table cellspacing="10">
 <tr>
 <td>

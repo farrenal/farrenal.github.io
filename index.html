@@ -12,14 +12,10 @@
 
 <style>
 
-@media screen and (min-width:10px) {  
-	td[class=desktop-only]{display:none;}
-
-}
-@media screen and (min-width: 480px) and (max-width: 1024px) {
-
-    /* Hide stuff on tablets */
-    table[class=emailnomob],td[class=emailnomob],img[class=emailnomob],span[class=emailnomob]{display:none !important;}
+@media only screen and (max-width: 800px) {
+  td:nth-child(2) {
+    display:none;
+  }
 }
 body {font-size: 130%;}
 h1 {
@@ -39,12 +35,13 @@ p {
   	width:fit-content;
     margin:0px;
 }
-
+.grids{
+  width:fit-content;
+  height:200px;
+  margin-left:auto;
+  padding:0px 0px 0px 0px;
+  }
 table{
-min-width:0px;
-min-height:0px;
-}
-tr{
 min-width:0px;
 min-height:0px;
 }
@@ -70,10 +67,11 @@ color: blue;
 </style>
 <body style="background-color: #f2e6d9;">
 <div>
-<h1 style="margin-left:auto;margin-right:auto;">Alexander Farren</h1>
+<h1 style="margin-left:auto;margin-right:auto;">Alexander</h1>
 <p style="color:#6b3102;margin-left:auto;margin-right:auto;">farrenal@tcd.ie</p>
 <img src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" style="
   width:fit-content;
+  max-width:fit-content;
   height:366px;
   display:block;
   margin-left:auto;
@@ -100,12 +98,8 @@ color: blue;
 See <a href="Extended.pdf">report</a> and <a href="Presentation.pdf">presentation</a>.
 </main>
 </td>
-<td class="desktop-only">
-<img src="https://farrenal.github.io/particleladder.jpeg" alt="Hello there" style="
-  width:fit-content;
-  height:200px;
-  margin-left:auto;
-  padding:0px 0px 0px 0px;" >
+<td>
+<img class="grids" src="https://farrenal.github.io/particleladder.jpeg">
 </td>
 </tr>
 <tr>
@@ -116,11 +110,7 @@ See <a href="Extended.pdf">report</a> and <a href="Presentation.pdf">presentatio
 <main>See <a href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">report</a> and <a href="https://github.com/elizasomerville/IrishConstituencyOptimisation">code</a>.</main>
 </td>
 <td class="desktop-only">
-<img src="https://farrenal.github.io/particleladder.jpeg" style="
-  width:fit-content;
-  height:200px;
-  margin-left:auto;
-  padding:0px 0px 0px 0px;" >
+<img src="https://farrenal.github.io/particleladder.jpeg" class="grids">
 </td>
 </tr>
 <tr>
@@ -133,11 +123,7 @@ See <a href="Extended.pdf">report</a> and <a href="Presentation.pdf">presentatio
 <main>- <a href="https://www.youtube.com/watch?v=qBqU5paaXLk">Critical Temperature of the 2D Ising Model</a></main>
 </td>
 <td class="desktop-only">
-<img src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" style="
-  width:fit-content;
-  height:200px;
-  margin-left:auto;
-  padding:0px 0px 0px 0px;" >
+<img src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" class="grids"
 </td>
 </tr>
 </table>

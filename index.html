@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,16 +39,20 @@ p {
   padding:0px 0px 0px 0px;
   border: 4px solid #422604;
   border-radius:5px;
-  }
-table{
-min-width:0px;
-min-height:0px;
+}
+  
+table {
+  min-width:0px;
+  min-height:0px;
 }
 td{
 min-width:0px;
 min-height:0px;
+padding-left:10px;
+padding-right:0px;
 text-align: center;
 vertical-align:center;
+max-width:20cm;
 }
 
 .desktop-only{display:table-cell;}
@@ -118,10 +123,12 @@ color: blue;
 </div>
 
 <hr>
-<table cellspacing="10">
-<tr>
-<td>
-<h2>Research Experience</h2> 
+<table style="
+  margin-left:auto;
+  margin-right:auto;
+  border-spacing:0px 20px; ">
+<tr style="background-color: #d2e6f7;outline: #4a55cf thick solid;">
+<td><h2>Research Experience</h2> 
 <main> Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">Naughton Fellowship</a> to do an REU at the University of Notre Dame for the Summer 2023. I worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on spurious isospin symmetry breaking in the IMSRG.</main>
 <br>
 <main>
@@ -129,10 +136,10 @@ See <a href="https://farrenal.github.io/Extended.pdf">report</a> and <a href="ht
 </main>
 </td>
 <td>
-<img class="grids" src="https://farrenal.github.io/particleladder.jpeg">
+<img class="grids" src="https://farrenal.github.io/particleladder.jpeg" style="border-color:#4a55cf">
 </td>
 </tr>
-<tr>
+<tr style="background-color: #f2c796;outline: #fa7d34 thick solid;">
 <td>
 <h2>Electoral Redistricting</h2> 
 <main> Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a> event in May 2023, applied multi-objective optimisation and data science techniques to the elecotral redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>, Ben McGloin and Mikey Whelan.</main>
@@ -140,7 +147,7 @@ See <a href="https://farrenal.github.io/Extended.pdf">report</a> and <a href="ht
 <main>See <a href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">report</a> and <a href="https://github.com/elizasomerville/IrishConstituencyOptimisation">code</a>.</main>
 </td>
 <td>
-<img src="https://farrenal.github.io/ireland.jpg" class="grids">
+<img src="https://farrenal.github.io/ireland.jpg" class="grids" style="border-color:#fa7d34;">
 </td>
 </tr>
 <tr>

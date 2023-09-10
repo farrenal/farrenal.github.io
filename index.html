@@ -11,6 +11,15 @@
     href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
 
 <style>
+
+@media only screen and (max-width: 768px) {
+
+    //Create Class that will only hide on mobile size.
+    //Add the class desktop-only to the image(or LI) that you want to hide on mobile view.
+    .desktop-only {
+        display: none;
+    }
+}
 body {font-size: 130%;}
 h1 {
   width:max-content;
@@ -78,7 +87,7 @@ See <a href="Extended.pdf">report</a> and <a href="Presentation.pdf">presentatio
 </main>
 </td>
 <td>
-<img src="https://farrenal.github.io/pladder.jpeg" alt="Hello there" style="
+<img class="desktop-only" src="https://farrenal.github.io/particleladder.jpeg" alt="Hello there" style="
   width:fit-content;
   height:200px;
   display:inline;
@@ -94,12 +103,12 @@ See <a href="Extended.pdf">report</a> and <a href="Presentation.pdf">presentatio
 <main>See <a href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">report</a> and <a href="https://github.com/elizasomerville/IrishConstituencyOptimisation">code</a>.</main>
 </td>
 <td>
-<img src="https://farrenal.github.io/pladder.jpeg" style="
+<img class="desktop-only" src="https://farrenal.github.io/particleladder.jpeg" style="
   width:fit-content;
   height:200px;
   display:inline;
   margin-left:auto;
-  padding:0px 0px 0px 0px;" ></embed>
+  padding:0px 0px 0px 0px;" >
 </td>
 </tr>
 <tr>

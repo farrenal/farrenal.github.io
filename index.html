@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Fira Sans Condensed' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
 
-    <link rel="apple-touch-icon" href="https://farrenal.github.io/apple-touch-icon.png">
+    <link rel="apple-touch-icon" type="image/png" href="https://farrenal.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="https://farrenal.github.io/android-chrome-512x512.png">
     
 	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
@@ -44,13 +45,17 @@ td:nth-child(2){vertical-align:center;}
 
 .desktop-only{display:block;}
 .mobile-only{display:none;}
-@media (pointer:coarse) {
+@media screen and (min-width:1px) {
     /* custom css for "touch targets" */
   td:nth-child(2) {
     display:none;
   }
   .desktop-only{display:none;}
   .mobile-only{display:block;}
+   h1 {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+  }
 }
 table {
   min-width:0px;
@@ -114,11 +119,11 @@ a{
   padding:0px 0px 0px 0px;
   border:4.5px solid #422604;
   border-radius:50px;" >
-<hr><table cellspacing="10px"><tr><td><h2>About me</h2>
+<hr style="max-width:800px;"><table cellspacing="10px" style="margin-left:auto;margin-right:auto;"><tr style="max-width:fit-content;"><td><h2>About me</h2>
 <main>I'm a final year theoretical physics student at Trinity College Dublin. Here you can find some work I've done.<main/></td></tr></table>
 </div>
 
-<hr>
+<hr style="max-width:800px;">
 <table style="
   margin-left:auto;
   margin-right:auto;

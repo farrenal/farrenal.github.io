@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,81 +7,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link href='https://fonts.googleapis.com/css?family=Fira Sans Condensed' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
-
-    <link rel="apple-touch-icon" type="image/png" href="/Images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="/Images/android-chrome-512x512.png">
     
+    <link rel="apple-touch-icon" type="image/png" href="Images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="Images/android-chrome-512x512.png">
 	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <link rel="stylesheet" type="text/css" href="masterstyle.css">
 
-<style>
-body {font-size: 130%; font-family:"Oswald";}
-h1{
-  width:max-content;
-  font-size:200%;
-  padding:0px 0px 0px 0px;
-  margin:0px;
-}
-h2{
-  max-width:100%;
-  font-size:150%;
-  padding:0px 0px 10px 0px;
-  margin:0px;
-  text-align: justify;
-}
-p{
-  padding:0px 0px 0px 0px;
-  width:fit-content;
-  margin:0px;
-}
-.grids{
-  width:fit-content;
-  height:200px;
-  border-radius:15px;
-}
-  
-td:nth-child(1){vertical-align:top;}
-td:nth-child(2){vertical-align:center;}
-
-.desktop-only{display:block;}
-.mobile-only{display:none;}
-@media (pointer:coarse) {
-    /* custom css for "touch targets" */
-  td:nth-child(2) {
-    display:none;
-  }
-  .desktop-only{display:none;}
-  .mobile-only{display:block;}
-	h2 {letter-spacing: -0.5px;}
-	h1 {letter-spacing: -0.5px;}
-}
-table {
-  min-width:0px;
-  min-height:0px;
-}
-td{
-  min-width:0px;
-  min-height:0px;
-  padding-left:10px;
-  padding-right:10px;
-  text-align: center;
-  max-width:20cm;
-}
-hr{
-  padding:0px;
-}
-main{
-  text-align: justify;
-  text-justify:inter-word;
-  font-family:"Fira Sans Condensed", serif;
-  font-size: 100%;
-  font-weight:100%;
-  max-width:100%;
-}
-a{
-  text-decoration:none;
-  color: blue;
-}
-</style>
 <body style="background-color:#f2e6d9;">
 <div class="desktop-only"><table style="
   margin-left:auto;
@@ -90,7 +20,7 @@ a{
   max-width:fit-content;">
 <tr>
 <td>
-<img src="/Images/headshot.jpg" alt="Photo of me" style="
+<img src="Images/headshot.jpg" alt="Photo of me" style="
   width:224px;
   height:366px;
   border:5px solid #422604;
@@ -108,7 +38,7 @@ a{
 
 <div class="mobile-only"><h1 style="margin-left:auto;margin-right:auto;letter-spacing: -0.5px;">Alexander Farren</h1>
 <p style="color:#6b3102;margin-left:auto;margin-right:auto;">farrenal@tcd.ie</p>
-<img src="/Images/headshot.jpg" alt="Hello there" style="
+<img src="Images/headshot.jpg" alt="Hello there" style="
   width:224px;
   height:366px;
   margin-left:auto;
@@ -130,47 +60,56 @@ a{
   border-spacing:0px 20px; ">
 <tr style="background-color: #d2e6f7;outline: #4a55cf thick solid;">
 <td><h2>Research Experience</h2> 
-<main> Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">Naughton Fellowship</a> to do an REU at the University of Notre Dame for the Summer 2023. I worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on spurious isospin symmetry breaking in the IMSRG formalism of <i>ab initio</i> many-body nuclear theory.</main>
+<main> Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">
+Naughton Fellowship</a> to do an REU at the University of Notre Dame for the Summer 2023. 
+Worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on 
+spurious isospin symmetry breaking in the IMSRG formalism of <i>ab initio</i> many-body nuclear theory.</main>
 <br>
 <main>
 See <a href="https://miro.medium.com/v2/resize:fit:1024/1*mwXHpdt6CTQHxH78dwc6NA.jpeg">report</a> and <a href="/Documents/ISB_presentation.pdf">presentation slides</a>.
 </main><br>
 </td>
 <td style="background-color:#b1d6fa;border-left: #4a55cf thick solid;">
-<img class="grids" src="/Images/particleladder.jpeg" >
+<img class="grids" src="Images/particleladder.jpeg" >
 </td>
 </tr>
 <tr style="background-color: #8e8a94;outline: #3e3a42 thick solid;">
 <td>
 <h2><i>Coming soon... </i></h2>
 </td>
-<td style="background-color:#8e8a94;border-left: #3e3a42 thick solid;">
-<img src="https://cdn.shopify.com/s/files/1/0484/0508/6365/files/mystery-box-intrigue_480x480.jpg" class="grids">
+<td id="mystery" style="background-color:#8e8a94;border-left: #3e3a42 thick solid;">
+<img style="z-index: -1; position: relative;" src="https://cdn.shopify.com/s/files/1/0484/0508/6365/files/mystery-box-intrigue_480x480.jpg" class="grids">
 </td>
 </tr>	
 <tr style="background-color: #fcd4b6;outline: #fa7d34 thick solid;">
 <td>
 <h2>Electoral Redistricting</h2> 
-<main> Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a> event in May 2023, applied multi-objective optimisation and data science techniques to the elecotral redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>, Ben McGloin and Mikey Whelan.</main>
+<main> Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a> 
+hackathon event in May 2023, applied multi-objective optimisation and data science techniques to the elecotral 
+redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>, 
+Ben McGloin and Mikey Whelan.</main>
 <br>
-<main>See <a href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">report</a> and <a href="https://github.com/elizasomerville/IrishConstituencyOptimisation">code repository</a>.</main><br>
+<main>See <a href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">report</a> and 
+<a href="https://github.com/elizasomerville/IrishConstituencyOptimisation">code repository</a>.</main><br>
 </td>
 <td style="background-color:#f2c796;border-left: #fa7d34 thick solid;">
-<img src="/Images/ireland.jpg" class="grids">
+<img src="Images/ireland.jpg" class="grids">
 </td>
 </tr>
 <tr style="background-color: #bae09d;outline: #278513 thick solid;">
 <td>
 <h2>Physics Communication</h2> 
-<main> Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation convention for the Theoretical Physics Student Association (TPSA) <a href="https://www.youtube.com/@tpsa_ireland/videos">Youtube channel</a>. Recently created a video on deriving the critical temperature of the 2D Ising Model with Mikey Whelan.</main>
+<main> Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation 
+convention for the Theoretical Physics Student Association (TPSA). Recently made a video on the critical 
+temperature of the Ising Model with Mikey Whelan.</main>
 <br>
 <main>- <a href="https://www.youtube.com/watch?v=RrZWrJcV5ZM">Einstein Summation Convention #1</a></main>
 <main>- <a href="https://www.youtube.com/watch?v=qBqU5paaXLk">Einstein Summation Convention #2</a></main>
 <main>- <a href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Critical Temperature of the 2D Ising Model</a></main>
 <br>
 </td>
-<td style="background-color:#93d485;border-left: #278513 thick solid;">
-<img src="/Images/physcomm.jpeg" class="grids">
+<td id="physcomm" style="background-color:#93d485;border-left: #278513 thick solid;">
+<img style="z-index: -1; position: relative;" src="Images/physcomm.jpeg" class="grids">
 </td>
 </tr>
 </table>

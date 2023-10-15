@@ -1,0 +1,138 @@
+<!DOCTYPE HTML >
+<html lang="en">
+
+<head>
+</head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css?family=Fira Sans Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="/MathJax/MathJax.js" type="text/javascript">
+        MathJax.Hub.Config({
+        config: ["MMLorHTML.js"],
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX"],
+        tex2jax: {inlineMath: ["\\(","\\)"]}
+        });
+    </script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+
+<body>
+<div class="desktop-only">
+    <div style="display:flex">
+        <h1 class="align-left" style="margin-left:1%;"><a href="https://farrenal.github.io">Back to homepage</a></h2>
+        <h1 class="align-center" style="flex:1;text-align:center;font-size:300%;">Interactive Potts Model</h1>
+    </div>
+    <div align="center">
+        <table class="headtable"> 
+                <tr><td>Alexander Farren</td><td>Mikey Whelan</td><td>Luke Hodgkiss</td></tr>
+                <tr style="font-size:80%"><td>farrenal@tcd.ie</td><td>whelam17@tcd.ie</td><td>hodgkisl@tcd.ie</td></tr>
+        </table>
+    </div>
+    <hr style="width:100%">
+</div>
+<div class="mobile-only" style="width:100%;">
+<div style="width:100%;margin-left:auto;margin-right:auto;">
+        <h1 style="font-size:100%;"><a href="https://farrenal.github.io">Back to homepage</a></h2><br>
+        <h1 style="margin-left:auto;margin-right:auto;text-align:center;font-size:300%;">Interactive Potts Model</h1>
+        <table class="headtable" style="font-size:120%;"> 
+                <tr><td>A. Farren</td><td>M. Whelan</td><td>L. Hodgkiss</td></tr>
+                <tr style="font-size:80%"><td>farrenal@tcd.ie</td><td>whelam17@tcd.ie</td><td>hodgkisl@tcd.ie</td></tr>
+        </table>
+        </table>
+    <hr style="margin:0;width:100%">
+</div>
+</div>
+
+<table style="
+  margin-left:auto;
+  margin-right:auto;
+  border-spacing:20px 20px; ">
+<tr style="background-color: #baa7cc;outline: #6d3f99 thick solid;"><td><h2 style="text-align:justify;">What is this?</h2> 
+<main style="bottom:0px;font-size:120%;"> 
+Here you will find an interactive GIF gallery where you can pick the system temperature \(T\) and 
+magnetic field strength \(H\) of the \(q\)-Potts model for different values of \(q\), which is 
+the number of states available to a lattice site.
+<br><br>
+Over our 2022 Christmas break Mikey Whelan, Luke Hodgkiss and I independently studied Prof. Tong's
+<a href="http://www.damtp.cam.ac.uk/user/tong/sft.html"> Part III notes</a> on statistical field 
+theory. Alongside completing <a href="https://farrenal.github.io/Documents/SFT_1.pdf">problem 
+sheet 1</a> and <a href="https://farrenal.github.io/Documents/SFT_2.pdf">some of 2</a>, we learned about mean 
+field theory, path integrals and renormalisation groups. I found the concept of 
+criticality interesting so I proposed to study in more detail the behaviour of 
+the Potts model and came up with this fun way of presenting the topic.<br><br>
+See <a href="/Documents/Potts_report.pdf">our report</a> for an explanation of what you are seeing below.
+<br><br></main></td></tr>
+<tr style="background-color: #baa7cc;outline: #6d3f99 thick solid;"><td>
+<h2 style="margin-left:auto;margin-right:auto;font-size:200%;">Select \(q\), \( \ T\) and \(H\) values below</h2>
+    <div class="box-container">
+        <div class="box" onclick="boxClicked('q2');changeColor(this)">
+            <span class="box-text">\(q=2\)
+            <br>
+            <div class="rectangle s0"></div>
+            <div class="rectangle s1"></div>   
+            </span>
+        </div>
+        <div class="box" onclick="boxClicked('q3');changeColor(this)">
+            <span class="box-text">\(q=3\)
+            <br>
+            <div class="rectangle s0"></div>
+            <div class="rectangle s1"></div>
+            <div class="rectangle s2"></div>
+            </span>
+        </div> 
+        <div class="box" onclick="boxClicked('q4');changeColor(this)">
+            <span class="box-text">\(q=4\)
+            <br>
+            <div class="rectangle s0"></div>
+            <div class="rectangle s1"></div>
+            <div class="rectangle s2"></div>
+            <div class="rectangle s3"></div>
+            </span>
+        </div>
+        <div class="box" onclick="boxClicked('q5');changeColor(this)">
+            <span class="box-text">\(q=5\)
+            <br>
+            <div class="rectangle s0"></div>
+            <div class="rectangle s1"></div>
+            <div class="rectangle s2"></div>
+            <div class="rectangle s3"></div>
+            <div class="rectangle s4"></div>
+            </span>
+        </div>  
+    </div>
+
+  <div class="gif-container" id="poopoo">
+    <img src="Potts gifs/q3_TA_HW.gif" alt="GIF Display" class="responsive-image" id="gifImage">
+  </div>
+
+  <div class="slider-container">
+    <p class="slider-desc">Select temperature \(T\)</p>
+    <input type="range" min="0" max="3" value="2" step="1" list="Ttickmarks" class="slider" id="slider1">
+    <datalist id="Ttickmarks">
+      <option value="0" label="Low"></option>
+      <option value="1" label="Below Critical" class="desktop-only"></option>
+      <option value="2" label="Above Critical" class="desktop-only"></option>
+      <option value="3" label="High"></option>
+    </datalist>
+  </div>
+
+  <div class="slider-container">
+    <p class="slider-desc">Select magnetic field \(H\)</p>
+    <input type="range" min="0" max="3" value="1" step="1" class="slider" list="Ttickmarks" id="slider2" id="datalist">
+    <datalist id="Htickmarks">
+      <option value="0" label="None"></option>
+      <option value="1" label="Weak" class="desktop-only"></option>
+      <option value="2" label="Medium" class="desktop-only"></option>
+      <option value="3" label="Strong"></option>
+    </datalist>
+    
+  </div>
+  <p style="visibility:hidden;" id="sumValue">showing gif:</p>
+<script src="script.js"></script></td></tr></table>
+  
+</body>
+
+</html>

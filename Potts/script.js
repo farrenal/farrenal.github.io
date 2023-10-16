@@ -38,8 +38,15 @@ function updateSum() {
 // Calculate and display the total sum
 function updateTotalSum(Qnumber, value1, value2) {
   sumValue.innerText = Qnumber+`_T`+value1+`_H`+value2+`.gif`;
-  gifImage.src = `Potts gifs/`+Qnumber+`_T`+value1+`_H`+value2+`.gif`;
+  gifImage.src = `Potts gifs/`+Qnumber+`_T`+value1+`_H`+value2+`-min.gif`;
 }
 
 slider1.addEventListener('input', updateSum);
 slider2.addEventListener('input', updateSum);
+
+$('body').waitForImages({
+    waitForAll: true,
+    finished: function() {
+       // All images have loaded.
+    }  
+});

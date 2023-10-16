@@ -1,15 +1,13 @@
 <!DOCTYPE HTML >
 <html lang="en">
-
 <head>
-</head>
+    <title>Alexander Farren</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link href='https://fonts.googleapis.com/css?family=Fira Sans Condensed' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
-    
-    <link rel="apple-touch-icon" type="image/png" href="Images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="Images/android-chrome-512x512.png">
+    <link rel="apple-touch-icon" type="image/png" href="https://farrenal.github.io/Images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="https://farrenal.github.io/Images/android-chrome-512x512.png">
     <link rel="stylesheet" href="styles.css">
     <script src="/MathJax/MathJax.js" type="text/javascript">
         MathJax.Hub.Config({
@@ -21,7 +19,6 @@
     </script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
-
 <body>
 <div class="desktop-only">
     <div style="display:flex">
@@ -48,90 +45,158 @@
 </div>
 <hr>
 <table id="maintable">
-<tr style="background-color: #baa7cc;outline: #6d3f99 thick solid;"><td><h2 style="text-align:justify;">What is this?</h2> 
-<main style="bottom:0px;font-size:120%;width:100%;"> 
-Here you will find an interactive GIF gallery where you can pick the system temperature \(T\) and 
-magnetic field strength \(H\) of the \(q\)-Potts model for different values of \(q\), which is 
-the number of states available to a lattice site.
-<br><br>
-Over our 2022 Christmas break Mikey Whelan, Luke Hodgkiss and I independently studied Prof. Tong's
-<a href="http://www.damtp.cam.ac.uk/user/tong/sft.html"> Part III notes</a> on statistical field 
-theory. Alongside completing <a href="https://farrenal.github.io/Documents/SFT_1.pdf">problem 
-sheet 1</a> and <a href="https://farrenal.github.io/Documents/SFT_2.pdf">some of 2</a>, we learned about mean 
-field theory, path integrals and renormalisation groups. I found the concept of 
-criticality interesting so I proposed to study in more detail the behaviour of 
-the Potts model and came up with this fun way of presenting the topic.<br><br>
-See <a href="/Documents/Potts_report.pdf">our report</a> for an explanation of what you are seeing below.
-<br><br></main></td></tr>
-<tr style="background-color: #baa7cc;outline: #6d3f99 thick solid;"><td>
-<h2 style="margin-left:auto;margin-right:auto;" id="qTH">Select \(q\), \( \ T\) and \(H\) values below</h2>
-    
-    <div class="box-container">
-        <div class="box" onclick="boxClicked('q2');changeColor(this)">
-            <span class="box-text">\(q=2\)
-            <br>
-            <div class="rectangle s0"></div>
-            <div class="rectangle s1"></div>   
-            </span>
-        </div>
-        <div class="box" onclick="boxClicked('q3');changeColor(this)">
-            <span class="box-text">\(q=3\)
-            <br>
-            <div class="rectangle s0"></div>
-            <div class="rectangle s1"></div>
-            <div class="rectangle s2"></div>
-            </span>
-        </div> 
-        <div class="box" onclick="boxClicked('q4');changeColor(this)">
-            <span class="box-text">\(q=4\)
-            <br>
-            <div class="rectangle s0"></div>
-            <div class="rectangle s1"></div>
-            <div class="rectangle s2"></div>
-            <div class="rectangle s3"></div>
-            </span>
-        </div>
-        <div class="box" onclick="boxClicked('q5');changeColor(this)">
-            <span class="box-text">\(q=5\)
-            <br>
-            <div class="rectangle s0"></div>
-            <div class="rectangle s1"></div>
-            <div class="rectangle s2"></div>
-            <div class="rectangle s3"></div>
-            <div class="rectangle s4"></div>
-            </span>
-        </div>  
-    </div>
+    <tr style="background-color: #baa7cc;outline: #6d3f99 thick solid;"><td><h2 style="text-align:justify;">What is this?</h2> 
+    <main style="bottom:0px;font-size:120%;width:100%;"> 
+    Here you will find an interactive gallery where you can pick the system temperature \(T\) and 
+    magnetic field strength \(H\) of the \(q\)-Potts model for different values of \(q\), which is 
+    the number of states available to a lattice site.
+    <br><br>
+    Over our 2022 Christmas break Mikey Whelan, Luke Hodgkiss and I independently studied Prof. Tong's
+    <a href="http://www.damtp.cam.ac.uk/user/tong/sft.html"> Part III notes</a> on statistical field 
+    theory. Alongside completing <a href="https://farrenal.github.io/Documents/SFT_1.pdf">problem 
+    sheet 1</a> and <a href="https://farrenal.github.io/Documents/SFT_2.pdf">some of 2</a>, we learned about mean 
+    field theory, path integrals and renormalisation groups. I found the concept of 
+    criticality interesting so I proposed to study in more detail the behaviour of 
+    the Potts model and came up with this fun way of presenting the topic.<br><br>
+    See <a href="/Documents/Potts_report.pdf">our report</a> for an explanation of what you are seeing below.
+    <br><br></main></td>
+        </tr>
+    <tr style="background-color: #baa7cc;outline: #6d3f99 thick solid;">
+        <td>
+        <h2 style="margin-left:auto;margin-right:auto;" id="qTH">Select \(q\), \( \ T\) and \(H\) values below</h2>
+            <div class="box-container">
+                <div class="box" onclick="boxClicked('q2');changeColor(this)">
+                    <span class="box-text">\(q=2\)
+                    <br>
+                    <div class="rectangle s0"></div>
+                    <div class="rectangle s1"></div>   
+                    </span>
+                </div>
+                <div class="box" onclick="boxClicked('q3');changeColor(this)">
+                    <span class="box-text">\(q=3\)
+                    <br>
+                    <div class="rectangle s0"></div>
+                    <div class="rectangle s1"></div>
+                    <div class="rectangle s2"></div>
+                    </span>
+                </div> 
+                <div class="box" onclick="boxClicked('q4');changeColor(this)">
+                    <span class="box-text">\(q=4\)
+                    <br>
+                    <div class="rectangle s0"></div>
+                    <div class="rectangle s1"></div>
+                    <div class="rectangle s2"></div>
+                    <div class="rectangle s3"></div>
+                    </span>
+                </div>
+                <div class="box" onclick="boxClicked('q5');changeColor(this)">
+                    <span class="box-text">\(q=5\)
+                    <br>
+                    <div class="rectangle s0"></div>
+                    <div class="rectangle s1"></div>
+                    <div class="rectangle s2"></div>
+                    <div class="rectangle s3"></div>
+                    <div class="rectangle s4"></div>
+                    </span>
+                </div>  
+            </div>
+          <div class="gif-container" id="poopoo">
+            <img src="Potts gifs/q3_TA_HW-min.gif" alt="GIF Display" class="responsive-image" id="gifImage">
+          </div>
+          <div class="slider-container">
+            <p class="slider-desc">Select temperature \(T\)</p>
+            <input type="range" min="0" max="3" value="2" step="1" list="Ttickmarks" class="slider" id="slider1">
+            <datalist id="Ttickmarks">
+              <option value="0" label="Low"></option>
+              <option value="1" label="Below Critical" class="desktop-only"></option>
+              <option value="2" label="Above Critical" class="desktop-only"></option>
+              <option value="3" label="High"></option>
+            </datalist>
+          </div>
+          <div class="slider-container">
+            <p class="slider-desc">Select magnetic field \(H\)</p>
+            <input type="range" min="0" max="3" value="1" step="1" class="slider" list="Ttickmarks" id="slider2" id="datalist">
+            <datalist id="Htickmarks">
+              <option value="0" label="None"></option>
+              <option value="1" label="Weak" class="desktop-only"></option>
+              <option value="2" label="Medium" class="desktop-only"></option>
+              <option value="3" label="Strong"></option>
+            </datalist>    
+          </div>
+          <p style="visibility:hidden;" id="sumValue">showing gif:</p>
+        <script src="script.js"></script>
+        </td>
+    </tr>
+</table>
+<div id="preload">
+   <img src="Potts gifs/q2_TL_HN-min" width="1" height="1" alt="Image 01" />
+   <img src="Potts gifs/q2_TL_HW-min" width="1" height="1" alt="Image 02" />
+   <img src="Potts gifs/q2_TL_HM-min" width="1" height="1" alt="Image 03" />
+   <img src="Potts gifs/q2_TL_HS-min" width="1" height="1" alt="Image 04" />
+   <img src="Potts gifs/q2_TB_HN-min" width="1" height="1" alt="Image 05" />
+   <img src="Potts gifs/q2_TB_HW-min" width="1" height="1" alt="Image 06" />
+   <img src="Potts gifs/q2_TB_HM-min" width="1" height="1" alt="Image 07" />
+   <img src="Potts gifs/q2_TB_HS-min" width="1" height="1" alt="Image 08" />
+   <img src="Potts gifs/q2_TA_HN-min" width="1" height="1" alt="Image 09" />
+   <img src="Potts gifs/q2_TA_HW-min" width="1" height="1" alt="Image 10" />
+   <img src="Potts gifs/q2_TA_HM-min" width="1" height="1" alt="Image 11" />
+   <img src="Potts gifs/q2_TA_HS-min" width="1" height="1" alt="Image 12" />
+   <img src="Potts gifs/q2_TH_HN-min" width="1" height="1" alt="Image 13" />
+   <img src="Potts gifs/q2_TH_HW-min" width="1" height="1" alt="Image 14" />
+   <img src="Potts gifs/q2_TH_HM-min" width="1" height="1" alt="Image 15" />
+   <img src="Potts gifs/q2_TH_HS-min" width="1" height="1" alt="Image 16" />
+   
+   <img src="Potts gifs/q3_TL_HN-min" width="1" height="1" alt="Image 01" />
+   <img src="Potts gifs/q3_TL_HW-min" width="1" height="1" alt="Image 02" />
+   <img src="Potts gifs/q3_TL_HM-min" width="1" height="1" alt="Image 03" />
+   <img src="Potts gifs/q3_TL_HS-min" width="1" height="1" alt="Image 04" />
+   <img src="Potts gifs/q3_TB_HN-min" width="1" height="1" alt="Image 05" />
+   <img src="Potts gifs/q3_TB_HW-min" width="1" height="1" alt="Image 06" />
+   <img src="Potts gifs/q3_TB_HM-min" width="1" height="1" alt="Image 07" />
+   <img src="Potts gifs/q3_TB_HS-min" width="1" height="1" alt="Image 08" />
+   <img src="Potts gifs/q3_TA_HN-min" width="1" height="1" alt="Image 09" />
+   <img src="Potts gifs/q3_TA_HW-min" width="1" height="1" alt="Image 10" />
+   <img src="Potts gifs/q3_TA_HM-min" width="1" height="1" alt="Image 11" />
+   <img src="Potts gifs/q3_TA_HS-min" width="1" height="1" alt="Image 12" />
+   <img src="Potts gifs/q3_TH_HN-min" width="1" height="1" alt="Image 13" />
+   <img src="Potts gifs/q3_TH_HW-min" width="1" height="1" alt="Image 14" />
+   <img src="Potts gifs/q3_TH_HM-min" width="1" height="1" alt="Image 15" />
+   <img src="Potts gifs/q3_TH_HS-min" width="1" height="1" alt="Image 16" />
+   
+   <img src="Potts gifs/q4_TL_HN-min" width="1" height="1" alt="Image 01" />
+   <img src="Potts gifs/q4_TL_HW-min" width="1" height="1" alt="Image 02" />
+   <img src="Potts gifs/q4_TL_HM-min" width="1" height="1" alt="Image 03" />
+   <img src="Potts gifs/q4_TL_HS-min" width="1" height="1" alt="Image 04" />
+   <img src="Potts gifs/q4_TB_HN-min" width="1" height="1" alt="Image 05" />
+   <img src="Potts gifs/q4_TB_HW-min" width="1" height="1" alt="Image 06" />
+   <img src="Potts gifs/q4_TB_HM-min" width="1" height="1" alt="Image 07" />
+   <img src="Potts gifs/q4_TB_HS-min" width="1" height="1" alt="Image 08" />
+   <img src="Potts gifs/q4_TA_HN-min" width="1" height="1" alt="Image 09" />
+   <img src="Potts gifs/q4_TA_HW-min" width="1" height="1" alt="Image 10" />
+   <img src="Potts gifs/q4_TA_HM-min" width="1" height="1" alt="Image 11" />
+   <img src="Potts gifs/q4_TA_HS-min" width="1" height="1" alt="Image 12" />
+   <img src="Potts gifs/q4_TH_HN-min" width="1" height="1" alt="Image 13" />
+   <img src="Potts gifs/q4_TH_HW-min" width="1" height="1" alt="Image 14" />
+   <img src="Potts gifs/q4_TH_HM-min" width="1" height="1" alt="Image 15" />
+   <img src="Potts gifs/q4_TH_HS-min" width="1" height="1" alt="Image 16" />
+   
+   <img src="Potts gifs/q5_TL_HN-min" width="1" height="1" alt="Image 01" />
+   <img src="Potts gifs/q5_TL_HW-min" width="1" height="1" alt="Image 02" />
+   <img src="Potts gifs/q5_TL_HM-min" width="1" height="1" alt="Image 03" />
+   <img src="Potts gifs/q5_TL_HS-min" width="1" height="1" alt="Image 04" />
+   <img src="Potts gifs/q5_TB_HN-min" width="1" height="1" alt="Image 05" />
+   <img src="Potts gifs/q5_TB_HW-min" width="1" height="1" alt="Image 06" />
+   <img src="Potts gifs/q5_TB_HM-min" width="1" height="1" alt="Image 07" />
+   <img src="Potts gifs/q5_TB_HS-min" width="1" height="1" alt="Image 08" />
+   <img src="Potts gifs/q5_TA_HN-min" width="1" height="1" alt="Image 09" />
+   <img src="Potts gifs/q5_TA_HW-min" width="1" height="1" alt="Image 10" />
+   <img src="Potts gifs/q5_TA_HM-min" width="1" height="1" alt="Image 11" />
+   <img src="Potts gifs/q5_TA_HS-min" width="1" height="1" alt="Image 12" />
+   <img src="Potts gifs/q5_TH_HN-min" width="1" height="1" alt="Image 13" />
+   <img src="Potts gifs/q5_TH_HW-min" width="1" height="1" alt="Image 14" />
+   <img src="Potts gifs/q5_TH_HM-min" width="1" height="1" alt="Image 15" />
+   <img src="Potts gifs/q5_TH_HS-min" width="1" height="1" alt="Image 16" />
 
-  <div class="gif-container" id="poopoo">
-    <img src="Potts gifs/q3_TA_HW.gif" alt="GIF Display" class="responsive-image" id="gifImage">
-  </div>
-
-  <div class="slider-container">
-    <p class="slider-desc">Select temperature \(T\)</p>
-    <input type="range" min="0" max="3" value="2" step="1" list="Ttickmarks" class="slider" id="slider1">
-    <datalist id="Ttickmarks">
-      <option value="0" label="Low"></option>
-      <option value="1" label="Below Critical" class="desktop-only"></option>
-      <option value="2" label="Above Critical" class="desktop-only"></option>
-      <option value="3" label="High"></option>
-    </datalist>
-  </div>
-
-  <div class="slider-container">
-    <p class="slider-desc">Select magnetic field \(H\)</p>
-    <input type="range" min="0" max="3" value="1" step="1" class="slider" list="Ttickmarks" id="slider2" id="datalist">
-    <datalist id="Htickmarks">
-      <option value="0" label="None"></option>
-      <option value="1" label="Weak" class="desktop-only"></option>
-      <option value="2" label="Medium" class="desktop-only"></option>
-      <option value="3" label="Strong"></option>
-    </datalist>
-    
-  </div>
-  <p style="visibility:hidden;" id="sumValue">showing gif:</p>
-<script src="script.js"></script></td></tr></table>
-  
+</div>
 </body>
-
 </html>

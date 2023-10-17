@@ -195,9 +195,10 @@ a{
 .rectangle.s4{background-color: #7ad151;}
 
 .MathJax:focus, .mjx-chtml:focus, .MathJax_SVG:focus{
-    /*outline:1px #440154 solid;*/
-margin:-20px;
+    outline:1px #440154 solid;
+    margin:-20px;
 }
+
 datalist{
     display: flex;
     justify-content: space-between;
@@ -211,7 +212,8 @@ input{width:50%;}
 @media (pointer:coarse){
     #qTH{font-size:120%;}
     .slider-desc{font-size:100%;}
-    .gif-container{;}
+    .gif-container{max-height:60vw;}
+    .responsive-image{max-height:60vw;}
     .box{width:19vw;margin:1px;padding:0px;}
     .box-container{font-size:50%;padding:0px;margin:0px 0px 10px 0px;}
     .box-text{font-size:200%;}

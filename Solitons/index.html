@@ -1,0 +1,151 @@
+<!DOCTYPE HTML >
+<html lang="en">
+<head>
+    <title>Alexander Farren</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link href='https://fonts.googleapis.com/css?family=Fira Sans Condensed' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+    <link rel="apple-touch-icon" type="image/png" href="https://farrenal.github.io/Images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="https://farrenal.github.io/Images/android-chrome-512x512.png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="/MathJax/MathJax.js" type="text/javascript">
+        MathJax.Hub.Config({
+        config: ["MMLorHTML.js"],
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/SVG"],
+        tex2jax: {inlineMath: ["\\(","\\)"], displayMath: ["\$$","\$$"]}
+        });
+    </script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG" type="text/javascript"></script>
+</head>
+<body>
+<div class="desktop-only">
+    <div style="display:flex">
+        <h1 class="align-center" style="flex:1;text-align:center;font-size:300%;">Solitons in 1+1 dimensions</h1>
+    </div>
+    <div align="center">
+        <table class="headtable"> 
+                <tr><td><a href="https://farrenal.github.io">Alexander Farren</a></td><td><a href="https://elizasomerville.github.io"> Eliza Somerville</a></td></tr>
+                <tr style="font-size:80%"><td>farrenal@tcd.ie</td><td>somervie@tcd.ie</td></tr>
+        </table>
+    </div>
+</div>
+<div class="mobile-only">
+<div style="margin-left:auto;margin-right:auto;">
+        <h1 style="margin-left:auto;margin-right:auto;text-align:center;font-size:200%;">Solitons in 1D</h1>
+        <table class="headtable" style="font-size:120%;"> 
+                <tr><td><a href="https://farrenal.github.io">Alexander Farren</a></td><td><a href="https://elizasomerville.github.io"> Eliza Somerville</a></td></tr>
+                <tr style="font-size:80%"><td>farrenal@tcd.ie</td><td>somervie@tcd.ie</td></tr>
+        </table>
+        </table>
+</div>
+</div>
+<hr>
+<table id="maintable">
+    <tr class="mainrow">
+        <td>
+            <h2 style="text-align:justify;">Solitons</h2> 
+            <main style="bottom:0px;font-size:120%;width:100%;">
+                Solitons are ubiquitous phenomena, appearing in sciences ranging from neuroscience to magnetism to oceanography. 
+                In this short exposition of solitons in 1 space and 1 time dimension, we begin by review the basics of wave solutions 
+                leading up to the Korteweg-de Vries equation. Kink solitons are then explored in the context of classical field theory, 
+                with examples of $\phi^4$ theory and the sine-Gordon equation to illustrate key ideas. We end with a short and sweet discussion 
+                about solitons in more spatial dimensions, namely vortices and skyrmions.
+                <br>
+                <br>
+            </main>
+        </td>
+    </tr>
+    <tr class="mainrow">
+        <td style="padding:0px">
+           <div class="tab" id="mobiletab">
+              <button class="tablinks" onclick="openTab(event, 'KdV')" id="defaultOpen">KdV</button>
+              <button class="tablinks" onclick="openTab(event, 'Phi4')">\(\phi^4\)</button>
+              <button class="tablinks" onclick="openTab(event, 'SG')">SG</button>
+          </div>
+          <div class="tab">
+             <button class="tablinks" onclick="openTab(event, 'KdV')" id="mobiledefaultOpen">Korteweg-de Vries</button>
+             <button class="tablinks" onclick="openTab(event, 'Phi4')">\(\phi^4\) potential</button>
+             <button class="tablinks" onclick="openTab(event, 'SG')">Sine-Gordon</button>
+         </div>
+          <div id="container">
+          <div id="KdV" class="tabcontent">
+          <h2 class="mobile-only">Korteweg-de Vries equation</h2>
+            <table class="content"><tr>
+                <td>
+                    <h2>The Korteweg-de Vries equation</h2>
+                    <p>
+                    Adopting the notation \( u_x=\partial u/\partial x\), the simplest wave equation is 
+                    $$u_{tt}-c^2u_{xx}=0$$
+                    for some wave amplitude \(u(x,t)\). Physical systems often introduce specific constraints on \(u(x,t)\) in addition to the wave equation. 
+                    One might consider systems whose solutions present dispersion and nonlinearity, such that 
+                    $$u_t-6uu_x+u_{xxx}=0.$$
+                    The solitary wave solution to the above equation was found by Korteweg and de Vries in 1895, and has the general form
+                    $$\zeta(x,t)=a\text{sech}^2\Big\{\frac{1}{2}\sqrt{\frac{3a}{h^3}}( x-ct)\Big\}$$
+                    for waves with crest height \(a\) in water with height \(h\).
+                    The phase velocity \(c\) is given by Russell's empirical formula in the limit of relatively small waves (\(a\ll h\))  on Earth's surface,
+                    $$c=\sqrt{gh}(1+\frac{1}{2}\frac{a}{h}).$$
+                    </p>
+                </td>
+                <td>
+                    <table class="images">
+                        <tr><td><img src="gifs/KdV_twosol.gif"></td></tr>
+                        <tr><td><img src="gifs/KdV_varcrest.gif"></td></tr>
+                    </table>
+                </td>
+            </tr>
+            </table>
+          </div>
+          <div id="Phi4" class="tabcontent">
+          <h2 class="mobile-only">Kink soliton in \(\scriptsize\phi^4\) potential</h2>
+            <table class="content"><tr>
+                <td>
+                    <h2>Kink solitons in a \(\scriptsize\phi^4\) potential</h2>
+                    <p>
+                    The Lagrangian of a single scalar field \(\phi(x,t)\) is of the form
+                    $$\mathcal{L} = \frac{1}{2}\partial_{\mu}\phi\partial^{\mu}\phi - U(\phi).$$
+                    The equation of motion obtained from this Lagrangian is the non-linear Klein Gordon equation
+                    $$\partial_{\mu}\partial^{\mu}\phi + \frac{dU}{d\phi}=0$$
+                      </p>
+                  </td>
+                  <td>
+                      <table class="images">
+                          <tr><td><img src="gifs/phi4_kink.gif"></td></tr>
+                          <tr><td><img src="gifs/KdV_varcrest.gif"></td></tr>
+                      </table>
+                  </td>
+              </tr>
+              </table>
+          </div>
+          <div id="SG" class="tabcontent">
+          <h2 class="mobile-only">Kink soliton in sine-Gordon potential</h2>
+               <table class="content"><tr>
+                   <td>
+                       <h2>Kink solitons in a sine-Gordon potential</h2>
+                       <p>
+                       Adopting the notation \( u_x=\partial u/\partial x\), the simplest wave equation is 
+                       $$u_{tt}-c^2u_{xx}=0$$
+                       for some wave amplitude \(u(x,t)\). Physical systems often introduce specific constraints on \(u(x,t)\) in addition to the wave equation. 
+                       One might consider systems whose solutions present dispersion and nonlinearity, such that 
+                       $$u_t-6uu_x+u_{xxx}=0.$$
+                       The solitary wave solution to the above equation was found by Korteweg and de Vries in 1895, and has the general form
+                       $$\zeta(x,t)=a\text{sech}^2\Big\{\frac{1}{2}\sqrt{\frac{3a}{h^3}}( x-ct)\Big\}.$$
+                       </p>
+                   </td>
+                   <td>
+                       <table class="images">
+                           <tr><td><img src="gifs/KdV_twosol.gif"></td></tr>
+                           <tr><td><img src="gifs/KdV_varcrest.gif"></td></tr>
+                       </table>
+                   </td>
+               </tr>
+               </table>
+          </div>
+          </div>
+        <script src="script.js"></script>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

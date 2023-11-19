@@ -49,7 +49,7 @@
             <main style="bottom:0px;font-size:100%;width:100%;">
                 Solitons are ubiquitous phenomena, appearing in sciences ranging from neuroscience to magnetism to oceanography. 
                 This is a short exposition of solitons in 1 spatial and 1 time dimension. Below you will find animations pertaining to the Korteweg-de Vries
-                equation and kink solutions in \(\scriptsize\phi^4\) and sine-Gordon classical scalar field potentials. Our <a href="https://farrenal.github.io/Documents/Solitons_report.pdf">report</a>
+                equation and kink solutions in \(\small\phi^4\) and sine-Gordon classical scalar field potentials. Our <a href="https://farrenal.github.io/Documents/Solitons_report.pdf">report</a>
                 walks the reader through some basic notions relating to wave equations, and then attacks each of the sections below.
                 <br>
                 <br>
@@ -85,8 +85,7 @@
                     for waves with crest height \(a\) in water with height \(h\).
                     The phase velocity \(c\) is given by Russell's empirical formula in the limit of relatively small waves (\(a\ll h\))  on Earth's surface,
                     $$c=\sqrt{gh}(1+\frac{1}{2}\frac{a}{h}).$$
-                    We see clearly that solitary waves or <i>solitons</i> propagate as particles with different velocities \(c\) depending on their wave crest amplitude. 
-                    Taller waves move faster since \(c\propto a\).
+                    We see clearly that taller solitary waves or <i>solitons</i>, with greater crest amplitude \(a\), propagate faster since \(c\propto a\).
                     </p>
                 </td>
                 <td>
@@ -107,8 +106,13 @@
                     The Lagrangian of a single scalar field \(\phi(x,t)\) is of the form
                     $$\mathcal{L} = \frac{1}{2}\partial_{\mu}\phi\partial^{\mu}\phi - U(\phi).$$
                     The equation of motion obtained from this Lagrangian is the non-linear Klein-Gordon equation
-                    $$\partial_{\mu}\partial^{\mu}\phi + \frac{dU}{d\phi}=0$$
-                      </p>
+                    $$\partial_{\mu}\partial^{\mu}\phi + \frac{dU}{d\phi}=0.$$
+                    For static solutions (\(\partial_t\phi=0\)), one can show that the field equation admits a <i>kink soliton</i> solution, connecting two vacua,
+                    $$\phi(x)=\tanh(x+a).$$ 
+                    Boosting with velocity \(v\ll 1\) in units of \(c\), the time-dependent solution is of the form
+                    $$\phi(x,t)=\tanh(x-a(t)),$$
+                    where the axis intercept now moves in time, as animated above.
+                    </p>
                   </td>
                   <td>
                       <table class="images">
@@ -155,7 +159,7 @@
                        <table class="images">
                            <tr><td><img src="gifs/SG_kink.gif"></td></tr>
                            <tr><td><img src="gifs/SG_kink-kink.gif"></td></tr>
-                           <tr><td><img src="gifs/SG_kink-kink.gif"></td></tr>
+                           <tr><td><img src="gifs/SG_kink-antikink.gif"></td></tr>
                            <tr><td><img src="gifs/SG_doublet.gif"></td></tr>
                        </table>
                    </td>

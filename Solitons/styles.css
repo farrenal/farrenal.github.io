@@ -96,7 +96,7 @@ a{text-decoration:none;color: blue;}
   outline:#ba0707 thick solid;
 }
 
-#maintable{margin-left:auto;margin-right:auto;border-spacing:0px 20px;} 
+#maintable{margin-left:auto;margin-right:auto;border-spacing:0px 20px;font-size:110%;} 
 .mainrow{background-color: #f59595;outline: #ba0707 thick solid;}
 
 /* Style the buttons that are used to open the tab content */

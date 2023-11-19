@@ -64,6 +64,13 @@ table {
   background-repeat: no-repeat;
   background-size: cover;
 }
+#solitons{
+  margin:0px;
+  padding:0px;
+  background: url(Images/Solitons.gif);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 #mystery {
   margin:0px;
   padding:0px;

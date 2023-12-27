@@ -12,6 +12,11 @@ h2{
   margin:0px;
   text-align: justify;
 }
+.dates{/* dates */
+  display:inline;
+  color:#636363;
+  font-size:80%;
+}
 p{
   padding:0px 0px 0px 0px;
   width:fit-content;
@@ -32,6 +37,7 @@ td:nth-child(2){valign:center;}
   .mobile-only{display:block;}
 	h2 {letter-spacing: -0.5px;}
 	h1 {letter-spacing: -0.5px;}
+  .dates{display:none;}
 }
 table {
   min-width:0px;

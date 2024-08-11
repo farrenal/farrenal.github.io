@@ -1,4 +1,9 @@
-body {font-size: 130%; font-family:"Oswald";}
+body {
+    font-size: 130%; 
+    font-family:system-ui;
+    color:black;
+    letter-spacing: -1px;
+}
 h1{
   width:max-content;
   font-size:200%;
@@ -104,6 +109,10 @@ td{
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  border-radius:0px;
+}
+tr{
+  border-radius:10px;
 }
 hr{
   padding:0px;
@@ -111,12 +120,73 @@ hr{
 main{
   text-align: justify;
   text-justify:inter-word;
-  font-family:"Fira Sans Condensed", serif;
+  /*font-family:"Fira Sans Condensed";*/
+  font-family:system-ui;
+  letter-spacing:-0.8px;
   font-size: 100%;
-  font-weight:100%;
+  font-weight:110%;
   max-width:100%;
 }
 a{
   text-decoration:none;
   color: blue;
+}
+
+a:hover{
+    color:#4d4fff;
+}
+#maintable{
+ color:black;
+}
+.clickables {
+  float: left;
+  transition-duration: 0.4s;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0.5em;
+  cursor: pointer;
+  border-radius:10px; 
+  color:white;
+}
+.clickables:hover {
+  box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.3);
+}
+a.clickables{
+  font: inherit;
+  color:inhert;
+ }
+a.clickables:hover{
+  color:white;
+}
+ 
+.clickables.hamilton{
+  background-color: #22a194;
+  border: 0px #22a194;
+}
+.clickables.fyp{
+  background-color: #525252;
+  border: 0px #525252;
+}
+.clickables.naughton{
+  background-color: #4a55cf;
+  border: 0px #4a55cf;
+}
+.clickables.potts{
+  background-color: #6d3f99;
+  border: 0px #6d3f99;
+}
+.clickables.solitons{
+  background-color: #ba0707;
+  border: 0px #ba0707;
+}
+.clickables.physcomm{
+  background-color: #278513;
+  border: 0px #278513;
+}
+.clickables.ireland{
+  background-color: #fa7d34;
+  border: 0px #fa7d34;
 }

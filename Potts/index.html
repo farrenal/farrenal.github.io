@@ -20,35 +20,49 @@
     <script defer data-domain="farrenal.github.io/potts" src="https://plausible.io/js/script.js"></script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
+
 <body>
-<div class="desktop-only">
-    <div style="display:flex">
-        <h1 class="align-left" style="margin-left:1%;"><a href="https://farrenal.github.io">Back to homepage</a></h2>
-        <h1 class="align-center" style="flex:1;text-align:center;font-size:300%;">Interactive Potts Model</h1>
-    </div>
+<div class="desktop-only-intro">
+    <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1>
     <div align="center">
+        <h1 class="title">Interactive Potts Model</h1>
         <table class="headtable"> 
-                <tr><td>Alexander Farren</td><td>Mikey Whelan</td><td>Luke Hodgkiss</td></tr>
-                <tr style="font-size:80%"><td>farrenal@tcd.ie</td><td>whelam17@tcd.ie</td><td>hodgkisl@tcd.ie</td></tr>
+                <tr class="names">
+                    <td>Alexander Farren</td>
+                    <td>Mikey Whelan</td>
+                    <td>Luke Hodgkiss</td>
+                </tr>
+                <tr class="email">  
+                    <td><a href="mailto:farrenal@tcd.ie">farrenal@tcd.ie</a></td>
+                    <td><a href="mailto:whelam17@tcd.ie">whelam17@tcd.ie</a></td>
+                    <td><a href="mailto:hodgkisl@tcd.ie">hogkisl@tcd.ie</a></td>
+                </tr>
         </table>
     </div>
 </div>
-<div class="mobile-only">
-<div style="margin-left:auto;margin-right:auto;">
-        <h1 style="font-size:100%;"><a href="https://farrenal.github.io">Back to homepage</a></h2><br>
-        <h1 style="margin-left:auto;margin-right:auto;text-align:center;font-size:200%;">Interactive Potts Model</h1>
-        <table class="headtable" style="font-size:120%;"> 
-                <tr><td>A. Farren</td><td>M. Whelan</td><td>L. Hodgkiss</td></tr>
-                <tr style="font-size:80%"><td>farrenal@tcd.ie</td><td>whelam17@tcd.ie</td><td>hodgkisl@tcd.ie</td></tr>
-        </table>
-        </table>
+<div class="mobile-only-intro">
+    <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1><br>
+    <h1 class="title">Interactive Potts Model</h1>
+    <table class="headtable"> 
+            <tr class="names">
+                <td>A. Farren</td>
+                <td>M. Whelan</td>
+                <td>L. Hodgkiss</td>
+            </tr>
+            <tr class="email">  
+                <td>farrenal@tcd.ie</td>
+                <td>whelam17@tcd.ie</td>
+                <td>hodgkisl@tcd.ie</td>
+            </tr>
+    </table>
 </div>
-</div>
+
 <hr>
-<table id="maintable">
-    <tr style="background-color: #baa7cc;outline: #6d3f99 thick solid;">
+
+<table class="maintable">
+    <tr>
         <td>
-            <h2 style="text-align:justify;">What is this?</h2> 
+            <h2>What is this?</h2> 
             <main style="bottom:0px;font-size:120%;width:100%;"> 
                 Here you will find an interactive gallery where you can pick the system temperature \(T\) and 
                 magnetic field strength \(H\) of the \(q\)-Potts model for different values of \(q\), which is 
@@ -56,20 +70,16 @@
                 <br><br>
                 Over our 2022 Christmas break Mikey Whelan, Luke Hodgkiss and I independently studied Prof. Tong's
                 <a href="http://www.damtp.cam.ac.uk/user/tong/sft.html"> Part III notes</a> on statistical field 
-                theory. Alongside completing <a href="https://farrenal.github.io/Documents/SFT_1.pdf">problem 
-                sheet 1</a> and <a href="https://farrenal.github.io/Documents/SFT_2.pdf">some of 2</a>, we learned about mean 
-                field theory, path integrals and renormalisation groups. I found the concept of 
-                criticality interesting so I proposed to study in more detail the behaviour of 
-                the Potts model and came up with this fun way of presenting the topic.<br><br>
-                See <a href="/Documents/Potts_report.pdf">our report</a> for an explanation of what you are seeing below. (Visuals take a moment to load.)
-                <br>
-                <br>
+                theory. I found the concept of criticality interesting so I proposed to study in more detail the 
+                behaviour of the Potts model and came up with this fun way of presenting the topic. (Visuals take a moment to load.)
+                <br><br>
+                <div class="explanation"><a class="clickables" href="../Documents/Potts_report.pdf">Explanation</a></div>
             </main>
         </td>
     </tr>
-    <tr style="background-color: #baa7cc;outline: #6d3f99 thick solid;">
+    <tr>
         <td>
-        <h2 style="margin-left:auto;margin-right:auto;" id="qTH">Select \(q\), \( \ T\) and \(H\) values below</h2>
+        <h2 class="qTH">Select \(q\), \( \ T\) and \(H\) values below</h2>
             <div class="box-container">
                 <div class="box" onclick="boxClicked('q2');changeColor(this)">
                     <span class="box-text">\(q=2\)

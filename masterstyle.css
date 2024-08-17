@@ -152,7 +152,7 @@ a:hover{
     }
 }
 
-.maintable{
+table.maintable{
     color: black;
     margin-left: auto;
     margin-right: auto;
@@ -359,4 +359,5 @@ td:nth-child(2){valign: center;}
     .mobile-only{display: block;}
     .dates{display:none;}
     .navbar{display: none;}
+    table.maintable{tr{border-radius:50px;}}
 }

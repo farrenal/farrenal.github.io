@@ -74,7 +74,7 @@ a:hover{
     color: #4d4fff;
 }
 
-.desktop-only.intro{
+.desktop-only-intro{
         margin-left: auto;
         margin-right: auto;
         max-width: fit-content;
@@ -100,7 +100,7 @@ a:hover{
         }
 }
 
-.mobile-only.intro{
+.mobile-only-intro{
     margin-left: auto;
     margin-right: auto;
     max-width: fit-content;
@@ -364,6 +364,8 @@ td:nth-child(2){valign: center;}
 
 .desktop-only{display: block;}
 .mobile-only{display: none;}
+.destop-only-intro{display: block;}
+.mobile-only-intro{display: none;}
 
 @media(pointer:coarse){
     /* custom css for "touch targets" */
@@ -372,6 +374,8 @@ td:nth-child(2){valign: center;}
      h1{letter-spacing: -0.5px;}
     .desktop-only{display: none;}
     .mobile-only{display: block;}
+    .desktop-only-intro{display: none;}
+    .mobile-only-intro{display: block;}
     .dates{display:none;}
     .navbar{display: none;}          
 }

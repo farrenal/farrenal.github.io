@@ -83,23 +83,12 @@ a:hover{
             margin-right: auto;
             font-size: 350%;
         }
-        h1.mobile.name{
-            font-size: 200%;
-            letter-spacing: -0.5px;
-        }
+
         img.headshot{
             width: 230px;
             height: 366px;
             border: 4px solid #dddddd;
             border-radius: 15px;
-        }
-        img.mobile.headshot{
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            border: 4px solid #dddddd;
         }
         .email{
             margin-left: auto;
@@ -108,16 +97,6 @@ a:hover{
             font-size: 120%;
             color: #4066b3;
             a:hover{color: blue;}
-        }
-        .mobile.email{
-            font-size: 120%;
-        }
-        table.mobile{
-            margin-left:auto;
-            margin-right:auto;
-            tr{
-                max-width:fit-content;
-            }
         }
 }
 
@@ -359,5 +338,28 @@ td:nth-child(2){valign: center;}
     .mobile-only{display: block;}
     .dates{display:none;}
     .navbar{display: none;}
-    table.maintable{tr{border-radius:50px;}}
+    .intro{
+        h1.name{
+            font-size: 200%;
+            letter-spacing: -0.5px;
+        }
+        .email{
+            font-size: 120%;
+        }
+        table.mobile{
+            margin-left:auto;
+            margin-right:auto;
+            tr{
+                max-width:fit-content;
+            }
+        }
+        img.mobile.headshot{
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 4px solid #dddddd;
+        }
+    }          
 }

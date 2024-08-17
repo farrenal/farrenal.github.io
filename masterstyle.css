@@ -74,7 +74,7 @@ a:hover{
     color: #4d4fff;
 }
 
-.intro{
+.desktop-only.intro{
         margin-left: auto;
         margin-right: auto;
         max-width: fit-content;
@@ -98,6 +98,44 @@ a:hover{
             color: #4066b3;
             a:hover{color: blue;}
         }
+}
+
+.mobile-only.intro{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: fit-content;
+    h1.name{
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 200%;
+        letter-spacing: -0.5px;
+    }
+    .email{
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0px 0px 0px 0px;
+        font-size: 120%;
+        color: #4066b3;
+    }
+    img.headshot{
+        width: 230px;
+        height: 366px;
+        border: 4px solid #dddddd;
+        border-radius: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: 4px solid #dddddd;
+    }
+    table.mobile{
+        margin-left:auto;
+        margin-right:auto;
+        tr{
+            max-width:fit-content;
+        }
+    }
 }
 
 .navbar{
@@ -337,29 +375,5 @@ td:nth-child(2){valign: center;}
     .desktop-only{display: none;}
     .mobile-only{display: block;}
     .dates{display:none;}
-    .navbar{display: none;}
-    .intro{
-        h1.name{
-            font-size: 200%;
-            letter-spacing: -0.5px;
-        }
-        .email{
-            font-size: 120%;
-        }
-        table.mobile{
-            margin-left:auto;
-            margin-right:auto;
-            tr{
-                max-width:fit-content;
-            }
-        }
-        img.mobile.headshot{
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            border: 4px solid #dddddd;
-        }
-    }          
+    .navbar{display: none;}          
 }

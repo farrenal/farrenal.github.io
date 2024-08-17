@@ -1,147 +1,201 @@
 body {
     font-size: 130%; 
-    font-family:system-ui;
-    color:black;
+    font-family: system-ui;/* Oswald*/
+    color: black;
     letter-spacing: -1px;
+    background-color: #f0f0f0;
+    /*Beige #f2e6d9 --- Dark grey #222325 --- Off white #f0f0f0 */
 }
-/*body {
-    font-size: 130%; 
-    font-family:"Oswald";
-}*/
+
+
+hr{
+  padding: 0px;
+}
+.mainhr{
+    max-width: 29.5cm;
+}
+.bumphr{
+    height: 0px; 
+    visibility: hidden;
+}
+
 h1{
-  width:max-content;
-  font-size:200%;
-  padding:0px 0px 0px 0px;
-  margin:0px;
+  width: max-content;
+  font-size: 200%;
+  padding: 0px 0px 0px 0px;
+  margin: 0px;
 }
 h2{
-  max-width:100%;
-  font-size:150%;
-  padding:0px 0px 10px 0px;
-  margin:0px;
+  max-width: 100%;
+  font-size: 150%;
+  padding: 0px 0px 10px 0px;
+  margin: 0px;
   text-align: justify;
 }
-.dates{/* dates */
-  display:inline;
-  color:#636363;
-  font-size:80%;
+
+main{
+  text-align: justify;
+  text-justify: inter-word;
+  font-family: system-ui; /*Fira Sans Condensed*/
+  letter-spacing: -0.8px;
+  font-size: 100%;
+  font-weight: 110%;
+  max-width: 100%;
 }
 p{
-  padding:0px 0px 0px 0px;
-  width:fit-content;
-  margin:0px;
+  padding: 0px 0px 0px 0px;
+  width: fit-content;
+  margin: 0px;
 }
-  
-td:nth-child(1){vertical-align:top;}
-td:nth-child(2){valign:center;}
 
-.desktop-only{display:block;}
-.mobile-only{display:none;}
-@media (pointer:coarse) {
-    /* custom css for "touch targets" */
-  td:nth-child(2) {
-    display:none;
-  }
-  .desktop-only{display:none;}
-  .mobile-only{display:block;}
-	h2 {letter-spacing: -0.5px;}
-	h1 {letter-spacing: -0.5px;}
-  .dates{display:none;}
-}
 table {
-  min-width:0px;
-  min-height:0px;
-}
-.grids{
-  max-height:200px;
-  border-radius:0px;
-  margin:0px;
-  padding:0px;
-}
-.grids.fit{
-    display:block;
-    width:100%;
-    height:auto;
-    background-size:cover;
-    align:center;
-}
-#physcomm {
-  margin:0px;
-  padding:0px;
-  background: url(Images/physcomm.jpeg);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-#potts{
-  margin:0px;
-  padding:0px;
-  background: url(Images/Potts.gif);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-#solitons{
-  margin:0px;
-  padding:0px;
-  background: url(Images/Solitons.gif);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-#mystery {
-  margin:0px;
-  padding:0px;
-  /*background: url(https://cdn.shopify.com/s/files/1/0484/0508/6365/files/mystery-box-intrigue_480x480.jpg);
-  */
-  background: url(https://media.istockphoto.com/id/1360029122/photo/mysterious-pandora-box-opening-with-rays-of-light-high-contrast-image-3d-rendering.jpg?s=612x612&w=0&k=20&c=2VK_Xl1OZ38Mga04YSIaTrC1MfaQbbZD58nkW90mkDc=);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-#ireland {
-  margin:0px;
-  padding:0px;
-  background: url(Images/ireland.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  min-width: 0px;
+  min-height: 0px;
 }
 td{
-  min-width:0px;
-  min-height:0px;
-  max-width:20cm;
-  padding-left:10px;
-  padding-right:10px;
-  text-align:center;
+  min-width: 0px;
+  min-height: 0px;
+  max-width: 20cm;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  border-radius:0px;
-}
-tr{
-  border-radius:10px;
-}
-hr{
-  padding:0px;
-}
-main{
-  text-align: justify;
-  text-justify:inter-word;
-  /*font-family:"Fira Sans Condensed";*/
-  font-family:system-ui;
-  letter-spacing:-0.8px;
-  font-size: 100%;
-  font-weight:110%;
-  max-width:100%;
-}
-a{
-  text-decoration:none;
-  color: blue;
+  border-radius: 0px;
 }
 
+td:nth-child(1){vertical-align: top;}
+td:nth-child(2){valign: center;}
+
+.desktop-only{display: block;}
+.mobile-only{display: none;}
+@media (pointer:coarse) {
+    /* custom css for "touch targets" */
+    td:nth-child(2) {
+        display: none;
+    }
+    .desktop-only{display: none;}
+    .mobile-only{display: block;}
+    .dates{display: none;}
+    .navbar{display: none;}
+    h2 {letter-spacing: -0.5px;}
+    h1 {letter-spacing: -0.5px;}
+}
+
+a{
+  text-decoration: none;
+  color: blue;
+}
 a:hover{
-    color:#4d4fff;
+    color: #4d4fff;
 }
-#maintable{
- color:black;
+
+.intro{
+        margin-left: auto;
+        margin-right: auto;
+        max-width: fit-content;
+        h1.name{
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 350%;
+        }
+        h1.name.mobile{
+            font-size: 200%;
+            letter-spacing: -0.5px;
+        }
+        img.headshot{
+            width: 224px;
+            height: 366px;
+            border: 4px solid #dddddd;
+            border-radius: 15px;
+        }
+        img.mobile.headshot{
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 4px solid #dddddd;
+        }
+        .email{
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0px 0px 0px 0px;
+            font-size: 120%;
+            color: #4066b3;
+            a:hover{color: blue;}
+        }
+        table.mobile{
+            margin-left:auto;
+            margin-right:auto;
+            tr{
+                max-width:fit-content;
+            }
+        }
 }
+
+.navbar{
+    padding: 10px 0px 10px 0px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: fit-content;
+    text-align: center;
+    
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: 4px solid #dddddd;
+    
+    a{
+        padding: 0px 25px 0px 25px;
+        color: black;
+    }
+    a:hover{
+        color: #4066b3;
+    }
+    nav{
+        padding: 0px;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: fit-content;
+    }
+}
+
+.maintable{
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 0px 20px;
+    tr{
+      border-radius: 10px;
+    }
+}
+
+.grids{
+    max-height: 200px;
+    margin: 0px;
+    padding: 0px;
+    .fit{
+        display: block;
+        width: 100%;
+        height: auto;
+        background-size: cover;
+        align: center;
+    }
+}
+
+.dates{
+  display: inline;
+  color: #636363;
+  font-size: 80%;
+}
+
 .clickables {
   float: left;
   transition-duration: 0.4s;
@@ -151,46 +205,161 @@ a:hover{
   display: inline-block;
   margin: 0.5em;
   cursor: pointer;
-  border-radius:10px; 
-  color:white;
-  target:"_blank";
+  border-radius: 10px; 
+  color: white;
+  target: "_blank";
 }
 .clickables:hover {
   box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.3);
 }
 a.clickables{
   font: inherit;
-  font-size:90%;
+  font-size: 90%;
 }
 a.clickables:hover{
-  color:white;
+  color: white;
 }
- 
-.clickables.hamilton{
-  background-color: #22a194;
-  border: 0px #22a194;
+
+.headanchor{
+    tr.td{
+        font-weight:
+    }
 }
-.clickables.fyp{
-  background-color: #525252;
-  border: 0px #525252;
+
+/*****************************************************************************/
+.hamilton{
+    background-color: #d0d0eb;
+    outline: #7f61b0 thick solid;
+    a.clickables{
+        background-color: #22a194;
+        border: 0px #22a194;
+    }
+    td.grids{
+        background-color: #aa9dd0;
+        border-left: #7f61b0 thick solid;
+    }
 }
-.clickables.naughton{
-  background-color: #4a55cf;
-  border: 0px #4a55cf;
+
+.fyp{
+    background-color: #f2e6d9;/*f2f0ed*/
+    outline: #b36840 thick solid;/*525252*/
+    a.clickables{
+        background-color: #b36840;
+        border: 0px #b36840;
+    }
+    td.grids{
+        background-color: #d2a78c;/*dedddc*/
+        border-left: #b36840 thick solid;
+        img{
+            max-height: 250px;
+        }
+    }
 }
-.clickables.potts{
-  background-color: #6d3f99;
-  border: 0px #6d3f99;
+
+.naughton{
+    background-color: #d2e6f7;
+    outline: #4a55cf thick solid;
+    a.clickables{
+        background-color: #4a55cf;
+        border: 0px #4a55cf;
+    }
+    td.grids{
+        background-color: #b1d6fa;
+        border-left: #4a55cf thick solid;
+    }
 }
-.clickables.solitons{
-  background-color: #ba0707;
-  border: 0px #ba0707;
+
+.potts{
+    background-color: #baa7cc;
+    outline: #6d3f99 thick solid;
+    a.clickables{
+        background-color: #6d3f99;
+        border: 0px #6d3f99;
+    }
+    td.grids{
+        background-color: #baa7cc;
+        border-left: #6d3f99 thick solid;
+        margin: 0px;
+        padding: 0px;
+        background: url(Images/Potts.gif);
+        background-repeat: no-repeat;
+        background-size: cover;
+        img{
+            z-index: -1; 
+            position: relative;
+        }
+    }
 }
-.clickables.physcomm{
-  background-color: #278513;
-  border: 0px #278513;
+
+.solitons{
+    background-color: #f59595;outline: 
+    #ba0707 thick solid;
+    a.clickables{
+        background-color: #ba0707;
+        border: 0px #ba0707;
+    }
+    td.grids{
+        background-color: #f59595;
+        border-left: #ba0707 thick solid;
+        margin: 0px;
+        padding: 0px;
+        background: url(Images/Solitons.gif);
+        background-repeat: no-repeat;
+        background-size: cover;
+        img{
+            z-index: -1; 
+            position: relative;
+        }
+    }
 }
-.clickables.ireland{
-  background-color: #fa7d34;
-  border: 0px #fa7d34;
+
+.physcomm{
+    background-color: #bae09d;
+    outline: #278513 thick solid;
+    a.clickables{
+        background-color: #278513;
+        border: 0px #278513;
+    }
+    td.grids{
+        background-color: #93d485;
+        border-left: #278513 thick solid;
+        margin: 0px;
+        padding: 0px;
+        background: url(Images/physcomm.jpeg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        img{
+            z-index: -1; 
+            position: relative;
+        }
+    }
+}
+
+.ireland{
+    background-color: #f2c796;
+    outline: #fa7d34 thick solid;
+    a.clickables{
+        background-color: #fa7d34;
+        border: 0px #fa7d34;
+    }
+    td.grids{
+        background-color: #f2c796;
+        border-left: #fa7d34 thick solid;
+    }
+}
+
+.mystery{
+    background-color: #dddddd;
+    outline: #000000 thick solid;
+    td.grids{
+        height:200px;
+        background-color: #000000;
+        border-left: #000000 thick solid;
+        margin: 0px;
+        padding: 0px;
+        /*background: url(https://cdn.shopify.com/s/files/1/0484/0508/6365/files/mystery-box-intrigue_480x480.jpg);*/
+        background: url(https://media.istockphoto.com/id/1360029122/photo/mysterious-pandora-box-opening-with-rays-of-light-high-contrast-image-3d-rendering.jpg?s=612x612&w=0&k=20&c=2VK_Xl1OZ38Mga04YSIaTrC1MfaQbbZD58nkW90mkDc=);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 }

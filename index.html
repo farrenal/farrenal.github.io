@@ -22,201 +22,271 @@
     </script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-    
 </head>
-<!--<body style="background-color:#f2e6d9;"> Beige-->
-<!--<body style="background-color:#222325;"> Dark grey -->
-<body style="background-color:#f0f0f0;"> 
 
-<div class="desktop-only">
-    <table style="margin-left:auto;margin-right:auto;max-width:fit-content;">
+<body> 
+
+<div class="intro desktop-only">
+    <table>
         <tr>
             <td>
-                <img src="Images/headshot.jpg" alt="Photo of me" style="
-                  width:224px;
-                  height:366px;
-                  border:4px solid #000000;
-                  border-radius:15px;">
+                <img class="headshot" src="Images/headshot.jpg" alt="Photo of me">
             </td>
             <td>
-                <h1 style="margin-left:auto;margin-right:auto;font-size:350%;">Alexander Farren</h1>
-                <p style="color:#4066b3;margin-left:auto;margin-right:auto;font-size:150%;">farrenal@tcd.ie</p>
+                <h1 class="name">
+                    Alexander Farren
+                </h1>
+                <p class="email">
+                    <a class="email" href="mailto:farrenal@tcd.ie">farrenal@tcd.ie</a>
+                </p>
                 <hr>
-                <h2>About me</h2>
-                <main>I just graduated from Theoretical Physics at Trinity College, Dublin. 
-                <br>
-                In October I will be starting Part III in St. John's College, Cambridge.
-                <br><br>
-                This is a website I wrote where you can find some extracurricular work I've done as well as my bachelor thesis.
+                <h2>
+                    About me
+                </h2>
+                <main>
+                    I just graduated from Theoretical Physics at Trinity College, Dublin. 
+                    <br>
+                    In October I will be starting Part III in St. John's College, Cambridge.
+                    <br><br>
+                    This is a website I wrote where you can find some extracurricular work I've done as well as my bachelor thesis.
                 </main>
-        </td>
+            </td>
         </tr>
     </table>
-    <hr style="max-width:29.5cm">
+    <hr class="mainhr">
 </div>
-<div class="mobile-only">
-    <h1 style="margin-left:auto;margin-right:auto;letter-spacing: -0.5px;">Alexander Farren</h1>
-    <p style="color:#63768a;margin-left:auto;margin-right:auto;">farrenal@tcd.ie</p>
-    <img src="Images/headshot.jpg" alt="Hello there" style="
-      width:224px;
-      height:366px;
-      margin-left:auto;
-      margin-right:auto;
-      display:block;
-      margin-top:10px;
-      margin-bottom:10px;
-      padding:0px 0px 0px 0px;
-      border:4px solid #ffffff;
-      border-radius:50px;" >
-    <hr style="max-width:800px;"><table cellspacing="10px" style="margin-left:auto;margin-right:auto;">
-    <tr style="max-width:fit-content;">
-    <td><h2>About me</h2>
-    <main>I just graduated from Theoretical Physics at Trinity College, Dublin. 
-    <br>
-    In October I will be starting Part III in St. John's College, Cambridge.
-    <br><br>
-    This is a website I wrote where you can find some extracurricular work I've done as well as my bachelor thesis.
-    </main></td></tr></table>
-    <hr style="max-width:29.5cm;">
+<div class="intro mobile-only">
+    <h1 class="name mobile">
+        Alexander Farren
+    </h1>
+    <p class="email">
+        farrenal@tcd.ie
+    </p>
+    <img class="headshot mobile" src="Images/headshot.jpg" alt="Photo of me">
+    <hr class="mainhr">
+    <table class="mobile" cellspacing="10px">
+        <tr>
+            <td>
+                <h2>
+                    About me
+                </h2>
+                <main>
+                    I just graduated from Theoretical Physics at Trinity College, Dublin. 
+                    <br>
+                    In October I will be starting Part III in St. John's College, Cambridge.
+                    <br><br>
+                    This is a website I wrote where you can find some extracurricular work I've done as well as my bachelor thesis.
+                </main>
+            </td>
+        </tr>
+    </table>
+    <hr class="mainhr">
 </div>
-<table style="tab">
 
-</table>
-<table id="maintable" style="margin-left:auto;margin-right:auto;border-spacing:0px 20px;">
-    <tr style="background-color: #c1c0e4;outline: #7f61b0 thick solid;">
-        <td><h2>Research Experience <div class="dates">- Summer 2024</div></h2> 
-        <main> Participated in the Hamilton Trust Summer Internship with <a href="https://elizasomerville.github.io">Eliza Somerville</a> and Mikey Whelan.
-        Supervised by <a href="https://www.maths.tcd.ie/~britto/">Prof. Ruth Britto</a>, we studied the symbol alphabet of one-loop Feynman integrals.
-        </main>
-        <hr style="height:0px; visibility:hidden;" />
-        <main>
-        <a class="clickables hamilton" href="Documents/Hamilton_report.pdf">Report</a>
-        <a class="clickables hamilton" href="Documents/Hamilton_presentation.pdf" >Slides</a>
-        <a class="clickables hamilton" href="Documents/Hamilton_poster.pdf" >Poster</a>
-        </main>
-        </td>
-        <td style="background-color:#9987c5;border-left: #7f61b0 thick solid;">
-        <img class="grids" src="Images/cutbox.jpeg" >
-        </td>
-    </tr>
-    <tr style="background-color: #f2f0ed;outline:#525252 thick solid;">
-        <td><h2>Bachelor Thesis <div class="dates">- 2023/2024</div></h2> 
-        <main> My thesis was a review of <a href="https://arxiv.org/abs/0901.4937"> Foundations of the \(\small\text{AdS}_5\times S^5\) Superstring</a> in which
-        I reproduced many of the results from the first two chapters. It involved learning about basic string theory, superalgebras, the Green-Schwarz superstring
-        in \(\small\text{AdS}_5\times S^5\), and how one could go about quantising it in the light-cone gauge. It turns out to be difficult to quantise the model
-        directly so one resorts to a perturbative approach in the limit as the string length goes to infinity. My supervisor was <a href="https://www.maths.tcd.ie/~frolovs/">Prof. Sergey Frolov</a>.
-        </main>
-        <hr style="height:0px; visibility:hidden;" />
-        <main>
-        <a class="clickables fyp" href="Documents/FYP.pdf" >Thesis</a>
-        <a class="clickables fyp" href="Documents/FYP_presentation.pdf" >Slides</a>
-        <a class="clickables fyp" href="Documents/FYP_poster.pdf" >Poster</a>
-        </main>
-        </td>
-        <td style="background-color:#dedddc;border-left: #525252 thick solid;">
-        <img style="max-height:250px;" class="grids" src="Images/worldsheet.jpeg" >
-        </td>
-    </tr>
-    <tr style="background-color: #d2e6f7;outline: #4a55cf thick solid;">
-        <td><h2>Research Experience <div class="dates">- Summer 2023</div></h2> 
-        <main> Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">
-        Naughton Fellowship</a> to do an REU at the University of Notre Dame. 
-        Worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on 
-        spurious isospin symmetry breaking in the IMSRG formalism of <i>ab initio</i> many-body nuclear theory.</main>
-        <hr style="height:0px; visibility:hidden;" />
-        <main>
-        <a class="clickables naughton" href="Documents/SpuriousISB_report.pdf" >Report</a>
-        <a class="clickables naughton" href="Documents/SpuriousISB_presentation.pdf" >Slides</a>
-        </main>
-        </td>
-        <td style="background-color:#b1d6fa;border-left: #4a55cf thick solid;">
-        <img class="grids" src="Images/particleladder.jpeg" >
-        </td>
-    </tr>
-    <tr style="background-color: #baa7cc;outline: #6d3f99 thick solid;">
+<!--<div class="navbar">
+    <nav>
+        <a href="#Research">        Research</a> 
+        <a href="#Visualisations">  Visualisations</a> 
+        <a href="#Communication">   Communication</a> 
+        <a href="#Miscellaneous">   Miscellaneous</a>
+    </nav>
+</div>-->
+
+<table class="maintable">
+    <tr class="headanchor" name="Research">
         <td>
-        <h2>Interactive Potts Model <div class="dates">- 2023</div></h2> 
-        <main> Following an independent reading project on statistical field theory, my interest 
-        in critical behaviour led to this visual showcase of the square lattice Potts model. To play around with the 
-        lattice, see the interactive gallery (best on desktop). If you want to skip straight to the theory behind it,
-        see the explanation.
-        </main>
-        <hr style="height:0px; visibility:hidden;" />
-        <main>
-        <a class="clickables potts" href="Documents/Potts_report.pdf">Explanation</a>
-        <a class="clickables potts" href="Potts" >Interactive gallery</a>
-        </main>
-        </td>
-        <td id="potts" style="background-color:#baa7cc;border-left: #6d3f99 thick solid;">
-        <img style="z-index: -1; position: relative;" src="Images/Potts.gif" class="grids">
+            <h1>Research</h1>
         </td>
     </tr>
-    <tr style="background-color: #f59595;outline: #ba0707 thick solid;">
+    <tr class="hamilton">
         <td>
-        <h2>Solitons in 1 dimension <div class="dates">- Nov 2023</div></h2> 
-        <main> Learned about basic soliton theory with <a href="https://elizasomerville.github.io">Eliza Somerville</a> and wrote a 
-        short introduction to solitons in 1+1 dimensions, namely solutions to the KdV equation and kink solitons for a \(\small\phi^4\) potential and a sine-Gordon potential.
-        </main>
-        <hr style="height:0px; visibility:hidden;" />
-        <main>
-        <a class="clickables solitons" href="Documents/Solitons_report.pdf" >Explanation</a>
-        <a class="clickables solitons" href="Solitons" >Satisfying animations</a>
-        </main>
+            <h2>
+                Research Experience <div class="dates">- Summer 2024</div>
+            </h2> 
+            <main>
+                Participated in the Hamilton Trust Summer Internship with <a href="https://elizasomerville.github.io">Eliza Somerville</a> and Mikey Whelan.
+                Supervised by <a href="https://www.maths.tcd.ie/~britto/">Prof. Ruth Britto</a>, we studied the symbol alphabet of one-loop Feynman integrals.
+            </main>
+            <hr class="bumphr"/>
+            <main>
+                <a class="clickables" href="Documents/Hamilton_report.pdf">Report</a>
+                <a class="clickables" href="Documents/Hamilton_presentation.pdf" >Slides</a>
+                <a class="clickables" href="Documents/Hamilton_poster.pdf" >Poster</a>
+            </main>
         </td>
-        <td id="solitons" style="background-color:#f59595;border-left: #ba0707 thick solid;">
-        <img style="z-index: -1; position: relative;" src="Images/Solitons.gif" class="grids">
+        <td class="grids">
+            <img class="grids" src="Images/cutbox.jpeg" >
+        </td>
+    </tr>
+    <tr class="naughton">
+        <td>
+            <h2>
+                Research Experience <div class="dates">- Summer 2023</div>
+            </h2> 
+            <main> 
+                Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">
+                Naughton Fellowship</a> to do an REU at the University of Notre Dame. 
+                Worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on 
+                spurious isospin symmetry breaking in the IMSRG formalism of <i>ab initio</i> many-body nuclear theory.</main>
+            <hr class="bumphr"/>
+            <main>
+                <a class="clickables" href="Documents/SpuriousISB_report.pdf" >Report</a>
+                <a class="clickables" href="Documents/SpuriousISB_presentation.pdf" >Slides</a>
+            </main>
+        </td>
+        <td class="grids">
+            <img class="grids" src="Images/particleladder.jpeg" >
+        </td>
+    </tr>
+    <tr class="fyp">
+        <td>
+            <h2>
+                Bachelor Thesis <div class="dates">- 2023/2024</div>
+            </h2> 
+            <main> 
+                My thesis was a review of <a href="https://arxiv.org/abs/0901.4937"> Foundations of the \(\small\text{AdS}_5\times S^5\) Superstring</a> in which
+                I reproduced many of the results from the first two chapters. It involved learning about basic string theory, superalgebras, the Green-Schwarz superstring
+                in \(\small\text{AdS}_5\times S^5\), and how one could go about quantising it in the light-cone gauge. It turns out to be difficult to quantise the model
+                directly so one resorts to a perturbative approach in the limit as the string length goes to infinity. My supervisor was <a href="https://www.maths.tcd.ie/~frolovs/">Prof. Sergey Frolov</a>.
+            </main>
+            <hr class="bumphr"/>
+            <main>
+                <a class="clickables" href="Documents/FYP.pdf" >Thesis</a>
+                <a class="clickables" href="Documents/FYP_presentation.pdf" >Slides</a>
+                <a class="clickables" href="Documents/FYP_poster.pdf" >Poster</a>
+            </main>
+        </td>
+        <td class="grids">
+            <img src="Images/worldsheet.jpeg">
+        </td>
+    </tr>
+    <tr class="headanchor" id="#Visualisations">
+        <td>
+            <h1>Visualisations</h1>
+        </td>
+    </tr>
+    <tr class="potts">
+        <td>
+            <h2>
+                Interactive Potts Model <div class="dates">- 2023</div>
+            </h2> 
+            <main> 
+                Following an independent reading project on statistical field theory, my interest 
+                in critical behaviour led to this visual showcase of the square lattice Potts model. To play around with the 
+                lattice, see the interactive gallery (best on desktop). If you want to skip straight to the theory behind it,
+                see the explanation.
+            </main>
+            <hr class="bumphr" />
+            <main>
+                <a class="clickables" href="Documents/Potts_report.pdf">Explanation</a>
+                <a class="clickables" href="Potts" >Interactive gallery</a>
+            </main>
+        </td>
+        <td class="grids">
+            <img class="grids fit" src="Images/Potts.gif">
+        </td>
+    </tr>
+    <tr class="solitons">
+        <td>
+            <h2>
+                Solitons in 1 dimension <div class="dates">- Nov 2023</div>
+            </h2> 
+            <main> 
+                Learned about basic soliton theory with <a href="https://elizasomerville.github.io">Eliza Somerville</a> and wrote a 
+                short introduction to solitons in 1+1 dimensions, namely solutions to the KdV equation and kink solitons for a \(\small\phi^4\) potential and a sine-Gordon potential.
+            </main>
+            <hr class="bumphr"/>
+            <main>
+                <a class="clickables" href="Documents/Solitons_report.pdf" >Explanation</a>
+                <a class="clickables" href="Solitons" >Satisfying animations</a>
+            </main>
+        </td>
+        <td class="grids">
+            <img class="grids fit" src="Images/Solitons.gif">
+        </td>
+    </tr>
+    <tr class="mystery">
+        <td>
+            <h2>
+                Coming soon... <div class="dates">- ??? 2024</div>
+            </h2> 
+            <main> 
+            </main>
+            <hr class="bumphr"/>
+            <main>
+            </main>
+        </td>
+        <td class="grids">
+            <img class="grids fit">
+        </td>
+    </tr>
+    <tr class="headanchor" id="#Communication">
+        <td>
+            <h1>Communication</h1>
         </td>
     </tr>	
-    <tr style="background-color: #bae09d;outline: #278513 thick solid;">
+    <tr class="physcomm">
         <td>
-        <h2>Physics Communication <div class="dates">- 2023</div></h2> 
-        <main> Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation 
-        convention for the Theoretical Physics Student Association (TPSA).</main>
-        <main>
-        <a class="clickables physcomm" href="https://www.youtube.com/watch?v=RrZWrJcV5ZM">ESC #1</a>
-        <a class="clickables physcomm" href="https://www.youtube.com/watch?v=qBqU5paaXLk">ESC #2</a>
-        <div class="desktop-only">
-        <a class="clickables physcomm" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3 - Classical Field Theory</a>
-        </div>
-        <div class="mobile-only">
-        <a class="clickables physcomm" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3</a>
-        </div>
-        </main>
-        <br style="clear:both" />
-        <br>
-        <main>
-        Made a video on the critical temperature of the Ising Model with Mikey Whelan.
-        </main>
-        <main>
-        <div class="desktop-only">
-        <a class="clickables physcomm" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Critical Temperature of the 2D Ising Model</a>
-        </div>
-        <div class="mobile-only">
-        <a class="clickables physcomm" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Ising model</a>
-        </div>
-        </main>
-        <br>
+            <h2>
+                Physics Communication <div class="dates">- 2023</div>
+            </h2> 
+            <main>
+                Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation 
+                convention for the Theoretical Physics Student Association (TPSA).
+            </main>
+            <main>
+                <a class="clickables" href="https://www.youtube.com/watch?v=RrZWrJcV5ZM">ESC #1</a>
+                <a class="clickables" href="https://www.youtube.com/watch?v=qBqU5paaXLk">ESC #2</a>
+                <div class="desktop-only">
+                <a class="clickables" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3 - Classical Field Theory</a>
+                </div>
+                <div class="mobile-only">
+                <a class="clickables" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3</a>
+                </div>
+            </main>
+            <br style="clear:both" />
+            <br>
+            <main>
+                Made a video on the critical temperature of the Ising Model with Mikey Whelan.
+            </main>
+            <main>
+                <div class="desktop-only">
+                <a class="clickables" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Critical Temperature of the 2D Ising Model</a>
+                </div>
+                <div class="mobile-only">
+                <a class="clickables" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Ising model</a>
+                </div>
+            </main>
+            <br>
         </td>
-        <td id="physcomm" style="background-color:#93d485;border-left: #278513 thick solid;">
-        <img style="z-index: -1; position: relative;" src="Images/physcomm.jpeg" class="grids">
+        <td class="grids">
+            <img class="grids fit" src="Images/physcomm.jpeg">
         </td>
     </tr>
-    <tr style="background-color: #fcd4b6;outline: #fa7d34 thick solid;">
+    <tr class="headanchor" id="#Miscellaneous">
         <td>
-        <h2>Electoral Redistricting <div class="dates">- May 2023</div></h2> 
-        <main> Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a> 
-        hackathon event, applied multi-objective optimisation and data science techniques to the electoral 
-        redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>, 
-        Ben McGloin and Mikey Whelan.</main>
-        <hr style="height:0px; visibility:hidden;" />
-        <main>
-        <a class="clickables ireland" href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">Report</a>
-        <a class="clickables ireland" href="https://github.com/elizasomerville/IrishConstituencyOptimisation">Github</a>
-        </main>
+            <h1>Miscellaneous</h1>
         </td>
-        <td style="background-color:#f2c796;border-left: #fa7d34 thick solid;">
-        <img src="Images/ireland.jpg" class="grids">
+    </tr>
+    <tr class="ireland">
+        <td>
+            <h2>
+                Electoral Redistricting <div class="dates">- May 2023</div>
+            </h2> 
+            <main> 
+                Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a> 
+                hackathon event, applied multi-objective optimisation and data science techniques to the electoral 
+                redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>, 
+                Ben McGloin and Mikey Whelan.
+            </main>
+            <hr class="bumphr" />
+            <main>
+                <a class="clickables" href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">Report</a>
+                <a class="clickables" href="https://github.com/elizasomerville/IrishConstituencyOptimisation">Github</a>
+            </main>
+        </td>
+        <td class="grids">
+            <img class="grids" src="Images/ireland.jpg">
         </td>
     </tr>	
 </table>

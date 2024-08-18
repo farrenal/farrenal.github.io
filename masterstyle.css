@@ -100,7 +100,7 @@ a:hover{
         }
 }
 
-.mobile-only-intro {
+.mobile-only-intro{
     margin-left: auto;
     margin-right: auto;
     max-width: fit-content;
@@ -225,23 +225,16 @@ a.clickables:hover{
 .hamilton{
     background-color: #d0d0eb;
     outline: #7f61b0 thick solid;
-    a.clickables{
-        background-color: #22a194;
-        border: 0px #22a194;
-    }
     td.grids{
         background-color: #aa9dd0;
         border-left: #7f61b0 thick solid;
     }
 }
+.hamilton .clickables{background-color: #22a194;border: 0px #22a194;}
 
 .fyp{
     background-color: #f2e6d9;/*f2f0ed*/
     outline: #b36840 thick solid;/*525252*/
-    a.clickables{
-        background-color: #b36840;
-        border: 0px #b36840;
-    }
     td.grids{
         background-color: #d2a78c;/*dedddc*/
         border-left: #b36840 thick solid;
@@ -250,27 +243,20 @@ a.clickables:hover{
         }
     }
 }
-
+.fyp .clickables{background-color: #b36840;border: 0px #b36840;}
 .naughton{
     background-color: #d2e6f7;
     outline: #4a55cf thick solid;
-    a.clickables{
-        background-color: #4a55cf;
-        border: 0px #4a55cf;
-    }
     td.grids{
         background-color: #b1d6fa;
         border-left: #4a55cf thick solid;
     }
 }
+.naughton .clickables{background-color: #4a55cf;border: 0px #4a55cf;}
 
 .potts{
     background-color: #baa7cc;
     outline: #6d3f99 thick solid;
-    a.clickables{
-        background-color: #6d3f99;
-        border: 0px #6d3f99;
-    }
     td.grids{
         background-color: #baa7cc;
         border-left: #6d3f99 thick solid;
@@ -285,14 +271,11 @@ a.clickables:hover{
         }
     }
 }
+.potts .clickables{background-color: #6d3f99;border: 0px #6d3f99;}
 
 .solitons{
     background-color: #f59595;outline: 
     #ba0707 thick solid;
-    a.clickables{
-        background-color: #ba0707;
-        border: 0px #ba0707;
-    }
     td.grids{
         background-color: #f59595;
         border-left: #ba0707 thick solid;
@@ -307,14 +290,11 @@ a.clickables:hover{
         }
     }
 }
+.solitons .clickables{background-color: #ba0707;border: 0px #ba0707;}
 
 .physcomm{
     background-color: #bae09d;
     outline: #278513 thick solid;
-    .clickables{
-        background-color: #278513;
-        border: 0px #278513;
-    }
     td.grids{
         background-color: #93d485;
         border-left: #278513 thick solid;
@@ -329,6 +309,7 @@ a.clickables:hover{
         }
     }
 }
+.physcomm .clickables{background-color: #278513;border: 0px #278513;}
 
 .ireland{
     background-color: #f2c796;

@@ -86,48 +86,48 @@ a:hover{
     margin-left:auto;
     margin-right:auto;
     max-width:100%;
-    h1.title{
-        max-width:90vw;
-        margin-left: auto;
-        margin-right: auto;
-        font-size:130%;
-    }
-    .backlink{
-        position:relative;
-        margin-left:auto;
-        margin-right:auto;
-        text-align:center;
-        font-size:93%;
-    }
-    .names{
-        font-size:110%;
-        font-weight:600;
-        color:#4066b3;
-    }
-    .email{
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0px 0px 0px 0px;
-        font-size: 85%;
-        color: #4066b3;
-    }
-    table.headtable{
-        display:inline;
-        text-align:center;
-        padding:0px;
-        margin-left:auto;
-        margin-right:auto;
+}
+.mobile-only-intro h1.title{
+    max-width:90vw;
+    margin-left: auto;
+    margin-right: auto;
+    font-size:130%;
+}
+.mobile-only-intro .backlink{
+    position:relative;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    font-size:93%;
+}
+.mobile-only-intro .email{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px 0px 0px 0px;
+    font-size: 85%;
+    color: #4066b3;
+}
+.mobile-only-intro .names{
+    font-size:110%;
+    font-weight:600;
+    color:#4066b3;
+}
+.mobile-only-intro table.headtable{
+    display:inline;
+    text-align:center;
+    padding:0px;
+    margin-left:auto;
+    margin-right:auto;
+    min-width:0px;
+    min-height:0px;
+    max-width:90vw;
+    font-size:80%;
+    td{
         min-width:0px;
         min-height:0px;
-        max-width:90vw;
-        font-size:80%;
-        td{
-            min-width:0px;
-            min-height:0px;
-            padding-left:10px;
-            padding-right:10px;
-            text-align:center;
-        }
+        padding-left:10px;
+        padding-right:10px;
+        text-align:center;
     }
 }
 
@@ -136,17 +136,17 @@ a:hover{
     margin-right:auto;
     border-spacing:0px 20px;
     font-size:80%;
-    tr{
-        background-color: #baa7cc;
-        outline: #6d3f99 thick solid;
-        border-radius:10px;
-    }
-    .qTH{
-        margin-left:auto;
-        margin-right:auto;
-        text-align:center;
-        font-size:160%;
-    }
+}
+.maintable tr{
+    background-color: #baa7cc;
+    outline: #6d3f99 thick solid;
+    border-radius:10px;
+}
+.maintable .qTH{
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    font-size:160%;
 }
 
 .clickables {

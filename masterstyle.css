@@ -117,18 +117,6 @@ a:hover{
         font-size: 120%;
         color: #4066b3;
     }
-    img.headshot{
-        width: 230px;
-        height: 366px;
-        border: 4px solid #dddddd;
-        border-radius: 15px;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        border: 4px solid #dddddd;
-    }
     table.about-me{
         margin-left:auto;
         margin-right:auto;
@@ -136,6 +124,19 @@ a:hover{
             max-width:fit-content;
         }
     }
+}
+
+img.mobile-only-intro.headshot{
+    width: 230px;
+    height: 366px;
+    border: 4px solid #dddddd;
+    border-radius: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 4px solid #dddddd;
 }
 
 .navbar{

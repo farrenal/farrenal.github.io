@@ -1,4 +1,4 @@
-<!DOCTYPE HTML >
+<!doctype html>
 <html lang="en">
 <head>
     <title>Alexander Farren</title>
@@ -18,41 +18,54 @@
         });
     </script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
+
 <body>
-<div class="desktop-only">
-    <div style="display:flex">
-        <h1 class="align-center" style="flex:1;text-align:center;font-size:300%;">Solitons in 1+1 dimensions</h1>
-    </div>
+<div class="desktop-only-intro">
+    <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1>
     <div align="center">
+        <h1 class="title">Solitons in 1 dimension</h1>
         <table class="headtable"> 
-                <tr><td><a href="https://farrenal.github.io">Alexander Farren</a></td><td><a href="https://elizasomerville.github.io"> Eliza Somerville</a></td></tr>
-                <tr style="font-size:80%"><td>farrenal@tcd.ie</td><td>somervie@tcd.ie</td></tr>
+                <tr class="names">
+                    <td>Alexander Farren</td>
+                    <td>Eliza Somerville</td>
+                </tr>
+                <tr class="email">  
+                    <td><a href="mailto:farrenal@tcd.ie">farrenal@tcd.ie</a></td>
+                    <td><a href="mailto:whelam17@tcd.ie">somervie@tcd.ie</a></td>
+                </tr>
         </table>
     </div>
 </div>
-<div class="mobile-only">
-<div style="margin-left:auto;margin-right:auto;">
-        <h1 style="margin-left:auto;margin-right:auto;text-align:center;font-size:200%;">Solitons in 1D</h1>
-        <table class="headtable" style="font-size:120%;"> 
-                <tr><td><a href="https://farrenal.github.io">Alexander Farren</a></td><td><a href="https://elizasomerville.github.io"> Eliza Somerville</a></td></tr>
-                <tr style="font-size:80%"><td>farrenal@tcd.ie</td><td>somervie@tcd.ie</td></tr>
-        </table>
-        </table>
+<div class="mobile-only-intro">
+    <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1><br>
+    <h1 class="title">Solitons in 1 dimension</h1>
+    <table class="headtable"> 
+            <tr class="names">
+                <td>A. Farren</td>
+                <td>E. Somerville</td>
+            <tr class="email">  
+                <td>farrenal@tcd.ie</td>
+                <td>somervie@tcd.ie</td>
+            </tr>
+    </table>
 </div>
-</div>
+
 <hr>
-<table id="maintable">
+
+<table class="maintable">
     <tr class="mainrow">
         <td>
             <h2 style="text-align:justify;">Solitons</h2> 
-            <main style="bottom:0px;font-size:100%;width:100%;">
+            <main style="bottom:0px;font-size:120%;width:100%;">
                 Solitons are ubiquitous phenomena, appearing in sciences ranging from neuroscience to magnetism to oceanography. 
                 This is a short exposition of solitons in 1 spatial and 1 time dimension. Below you will find animations pertaining to the Korteweg-de Vries
-                equation and kink solutions in \(\small\phi^4\) and sine-Gordon classical scalar field potentials. Our <a href="https://farrenal.github.io/Documents/Solitons_report.pdf">report</a>
-                walks the reader through some basic notions relating to wave equations, and then attacks each of the sections below.
+                equation and kink solutions in \(\small\phi^4\) and sine-Gordon classical scalar field potentials. Our explanation walks the reader through 
+                some basic notions relating to wave equations, and then attacks each of the sections below.
                 <br>
                 <br>
+                <div class="explanation"><a class="clickables" href="../Documents/Solitons_report.pdf">Explanation</a></div>
             </main>
         </td>
     </tr>
@@ -174,5 +187,9 @@
         </td>
     </tr>
 </table>
+
+<script> 
+   $('.clickables').attr('target', '_blank'); 
+</script>
 </body>
 </html>

@@ -199,7 +199,6 @@ a.clickables:hover{
   overflow: hidden;
   background-color: #ddd;
   outline:#ba0707 thick solid;
-  border-radius:10px;
   border-radius:10px 10px 0px 0px;
 }
 .tab.mobiletab{
@@ -207,7 +206,7 @@ a.clickables:hover{
   overflow: hidden;
   background-color: #ddd;
   outline:#ba0707 thick solid;
-  border-radius:10px 0px 10px 0px;
+  border-radius:0px;
 }
 
 .maintable{

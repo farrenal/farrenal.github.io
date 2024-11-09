@@ -214,6 +214,14 @@ table.maintable{
 .clickables:hover {
   box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.3);
 }
+
+.clickables.broken{
+    cursor:default;
+}
+.clickables.broken:hover {
+  box-shadow: inset 0 0 0 10em #444444;
+}
+
 a.clickables{
   font: inherit;
   font-size: 90%;
@@ -264,7 +272,8 @@ a.clickables:hover{
         margin: 0px;
         padding: 0px;
         /*background: url(https://cdn.shopify.com/s/files/1/0484/0508/6365/files/mystery-box-intrigue_480x480.jpg);*/
-        background: url(https://media.istockphoto.com/id/1360029122/photo/mysterious-pandora-box-opening-with-rays-of-light-high-contrast-image-3d-rendering.jpg?s=612x612&w=0&k=20&c=2VK_Xl1OZ38Mga04YSIaTrC1MfaQbbZD58nkW90mkDc=);
+        /*background: url(https://media.istockphoto.com/id/1360029122/photo/mysterious-pandora-box-opening-with-rays-of-light-high-contrast-image-3d-rendering.jpg?s=612x612&w=0&k=20&c=2VK_Xl1OZ38Mga04YSIaTrC1MfaQbbZD58nkW90mkDc=);*/
+        background: url(Images/CChamber.gif);
         background-repeat: no-repeat;
         background-size: cover;
     }

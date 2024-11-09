@@ -254,6 +254,23 @@ a.clickables:hover{
 }
 .naughton .clickables{background-color: #4a55cf;border: 0px #4a55cf;}
 
+.cloudchamber{
+    background-color: #dddddd;
+    outline: #444444 thick solid;
+    td.grids{
+        height:200px;
+        background-color: #000000;
+        border-left: #444444 thick solid;
+        margin: 0px;
+        padding: 0px;
+        /*background: url(https://cdn.shopify.com/s/files/1/0484/0508/6365/files/mystery-box-intrigue_480x480.jpg);*/
+        background: url(https://media.istockphoto.com/id/1360029122/photo/mysterious-pandora-box-opening-with-rays-of-light-high-contrast-image-3d-rendering.jpg?s=612x612&w=0&k=20&c=2VK_Xl1OZ38Mga04YSIaTrC1MfaQbbZD58nkW90mkDc=);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+.cloudchamber .clickables{background-color: #444444;border: 0px #444444;}
+
 .potts{
     background-color: #baa7cc;
     outline: #6d3f99 thick solid;
@@ -350,6 +367,7 @@ td:nth-child(2){valign: center;}
     td:nth-child(2){display: none;}
      h2{letter-spacing: -0.5px;}
      h1{letter-spacing: -0.5px;}
+    h2.project-title{font-size:130%;}
     .desktop-only{display: none;}
     .mobile-only{display: block;}
     .desktop-only-intro{display: none;}

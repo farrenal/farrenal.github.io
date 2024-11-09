@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Alexander Farren</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link href='https://fonts.googleapis.com/css?family=Fira Sans Condensed' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+    <link rel="apple-touch-icon" type="image/png" href="https://farrenal.github.io/Images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="https://farrenal.github.io/Images/android-chrome-512x512.png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="/MathJax/MathJax.js" type="text/javascript">
+        MathJax.Hub.Config({
+        config: ["MMLorHTML.js"],
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX"],
+        tex2jax: {inlineMath: ["\\(","\\)"]}
+        });
+    </script>
+    <script defer data-domain="farrenal.github.io/potts" src="https://plausible.io/js/script.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="desktop-only-intro">
+    <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1>
+    <div align="center">
+        <h1 class="title">Interactive Cloud Chamber</h1>
+        <table class="headtable"> 
+                <tr class="names">
+                    <td>Alexander Farren</td>
+                </tr>
+                <tr class="email">  
+                    <td><a href="mailto:farrenal@tcd.ie">farrenal@tcd.ie</a></td>
+                </tr>
+        </table>
+    </div>
+</div>
+<div class="mobile-only-intro">
+    <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1><br>
+    <h1 class="title">Interactive Cloud Chamber</h1>
+    <table class="headtable"> 
+            <tr class="names">
+                <td>A. Farren</td>
+            </tr>
+            <tr class="email">  
+                <td>farrenal@tcd.ie</td>
+            </tr>
+    </table>
+</div>
+
+<hr>
+
+<table class="maintable">
+    <tr>
+        <td>
+            <h2>The first particle detector</h2> 
+            <main style="bottom:0px;font-size:120%;width:100%;"> 
+                Cloud chambers are setup in a way such that any charged particle passing through will
+                leave behind a trail. Typically this is done by permeating the space with a gas in a supercritical state,
+                such that any charge particle will ionize and reliquify the gas to form droplets.
+                In the absence of an radioactive sources, cloud chambers detect cosmic rays and their products from cosmic
+                showers. By placing the cloud chamber in a magnetic field, the particles' mass and charge reveal themselves
+                through the radius of its cycloidal motion. This is how the first anti-particle was discovered when Blackett
+                and Anderson saw an electron veering in the opposite direction! Cloud chambers also discovered the muon and 
+                the anti-muon. 
+                <br><br>
+                In particular, the electron has mass \(m_e\simeq 0.5\,\mathrm{MeV}\) while
+                the muon has \(m_{\mu}\simeq 100\, \mathrm{MeV}\). What does this tell us about their trajectory's radius in
+                the chamber? (Hint: Think radially!)
+                <br><br>
+                This project started with me wanting to build my own cloud chamber for cheap, for example as showcased in 
+                <a href="https://youtu.be/gt3Ad5_Z5IA">this video</a>. I realised it would be a challenge (and also free) to
+                just code one up and let people play with a limited version themselves.
+                <br><br>
+                <i style="color:#666666">Over time I might implement cooler features such as decay/pair creation, or an interactive quiz. 
+                If you have some relevant programming experience, feel free to send me suggestions about how you would render these animations.</i>
+                <br><br>
+                <div class="explanation"><a class="clickables broken" style="on-hover:">Explanation (<i>in progress</i>)</a></div>
+            </main>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding-top:10px">
+        <!--<h2 class="qTH">Choose a particle to send in!</h2>-->
+          <div class="gif-container" id="poopoo">
+            <img src="CloudChamber gifs/boomerang big.gif" alt="GIF Display" class="responsive-image" >
+            <img class="responsive-image overlayed static" id="gifImage"></img>
+            <img class="responsive-image overlayed cycling" id="gifImageA"></img>
+            <img class="responsive-image overlayed cycling" id="gifImageB"></img>
+            <img class="responsive-image overlayed cycling" id="gifImageC"></img>
+            <img class="responsive-image overlayed cycling" id="gifImageD"></img>
+          </div>
+          <table class="options" style="display:block;">
+              <tr><td style="padding:0;">
+              <div class="slider-container">
+                <p class="slider-desc">Select magnetic field</p>
+                  <div class="box-container">
+                      <div class="box f" onclick="fClicked('out');changefColor(this)">
+                          <span class="box-text">\(\bigodot\)</span>
+                      </div>
+                      <div class="box f" onclick="fClicked('in');changefColor(this)">
+                          <span class="box-text">\(\bigotimes\)</span>
+                      </div>
+                      <div class="box f" onclick="fClicked('off');changefColor(this)" style="background-color:#aaaaaa">
+                          <span class="box-text">off </span>
+                      </div>
+                  </div>
+              </div>
+              </td>
+              <td style="padding-right:20px">
+              <div class="slider-container particle" >
+                <p class="slider-desc">Select particle type</p>
+                <div class="box-container">
+                    <div class="box p" onclick="pClicked('p+');changepColor(this)">
+                        <span class="box-text">\(p\)</span>
+                    </div>
+                    <div class="box p" onclick="pClicked('mu-');changepColor(this)">
+                        <span class="box-text">\(\mu^{-}\)</span>
+                    </div>
+                    <div class="box p" onclick="pClicked('e-');changepColor(this)">
+                        <span class="box-text">\(e^{-}\)</span>
+                    </div> 
+                    <div class="box p" onclick="pClicked('a+');changepColor(this)">
+                        <span class="box-text">\(\alpha\)</span>
+                    </div> 
+                    <div class="box p" onclick="pClicked('mu+');changepColor(this)">
+                        <span class="box-text">\(\mu^{+}\)</span>
+                    </div>
+                    <div class="box p" onclick="pClicked('e+');changepColor(this)">
+                        <span class="box-text">\(e^{+}\)</span>
+                    </div> 
+                 </div>
+              </div>
+              </td>
+              <td>
+              <div class="box-container" style="max-width:75px">
+                  <div class="box bg" onclick="cycleImages();">
+                      <span class="box-text">Random</span>
+                  </div>
+              </div>
+              </td></tr>
+          </table>
+          <p style="visibility:hidden;" id="sumValue">showing gif:</p>
+        <script src="script.js"></script>
+        </td>
+    </tr>
+</table>
+
+<script> 
+   $('.clickables').attr('target', '_blank'); 
+</script>
+</body>
+</html>

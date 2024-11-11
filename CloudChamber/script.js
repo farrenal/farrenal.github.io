@@ -128,14 +128,14 @@ function cycleImages() {
         //f = ['off','in','out'];
         f = fieldType
         p = 'test';
-        rand = Math.random()*7.5;
+        rand = Math.random()*7.7;
         r = Math.floor(Math.random()*19);
-        if (rand <= 0.5){p='p+'};
-        if (rand > 0.5 && rand <= 2){p='e-'};
-        if (rand > 2 && rand <= 3.5){p='e+'};
-        if (rand > 3.5 && rand <= 5){p='mu-'};
-        if (rand > 5 && rand <= 6.5){p='mu+'};
-        if (rand > 6.5 && rand <= 7.5){p='a+'};
+        if (rand <= 0.2){p='p+'};
+        if (rand > 0.2 && rand <= 2){p='e-'};
+        if (rand > 2 && rand <= 3.8){p='e+'};
+        if (rand > 3.8 && rand <= 5.6){p='mu-'};
+        if (rand > 5.6 && rand <= 7.4){p='mu+'};
+        if (rand > 7.4 && rand <= 7.7){p='a+'};
         
         sumValue.innerText = p+f+r;
         gifImages[a % 4].src = `CloudChamber gifs/`+p+f+`/`+p+f+r+`.png`;

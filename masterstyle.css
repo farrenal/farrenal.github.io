@@ -258,10 +258,15 @@ a.clickables:hover{
     td.grids{
         background-color: #b1d6fa;
         border-left: #4a55cf thick solid;
-    }
+    };
 }
-.naughton .clickables{background-color: #4a55cf;border: 0px #4a55cf;}
-
+.naughton .clickables{
+    background-color: #4a55cf;
+    border: 0px #4a55cf;
+}
+#paper{
+    background-color: #ba0707;
+}
 .cloudchamber{
     background-color: #dddddd;
     outline: #444444 thick solid;
@@ -337,6 +342,26 @@ a.clickables:hover{
 }
 .physcomm .clickables{background-color: #278513;border: 0px #278513;}
 
+.partiiitalk{
+    background-color: #bbf0ef;
+    outline: #089e9c thick solid;
+    td.grids{
+        background-color: #bbf0ef;
+        border-left: #089e9c thick solid;
+        margin: 0px;
+        padding: 0px;
+        background: url(Images/OnShellAmplitude.jpeg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        img{
+            z-index: -1; 
+            position: relative;
+        }
+    }
+}
+.partiiitalk .clickables{background-color: #089e9c;border: 0px #089e9c;}
+
+
 .ireland{
     background-color: #fcd4b6;
     outline: #fa7d34 thick solid;
@@ -346,6 +371,16 @@ a.clickables:hover{
     }
 }
 .ireland .clickables{background-color: #fa7d34;border: 0px #fa7d34;}
+
+.mathhack{
+    background-color: #d498ba;
+    outline: #0D0119 thick solid;
+    td.grids{
+        background-color: #0D0119;
+        border-left: #0D0119 thick solid;
+    }
+}
+.mathhack .clickables{background-color: #700a44;border: 0px #361057;}
 
 .mystery{
     background-color: #dddddd;

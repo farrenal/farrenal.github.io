@@ -382,6 +382,23 @@ a.clickables:hover{
 }
 .mathhack .clickables{background-color: #700a44;border: 0px #361057;}
 
+.rocket{
+    background-color: #dddddd;
+    outline: #444444 thick solid;
+    td.grids{
+        background-color: #444444;
+        border-left: #444444 thick solid;
+        background: url(Images/rocket.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        img{
+            z-index: -1; 
+            position: relative;
+        }
+    }
+}
+.rocket .clickables{background-color: #aa4032;border: 0px #361057;}
+
 .mystery{
     background-color: #dddddd;
     outline: #000000 thick solid;

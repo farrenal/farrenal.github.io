@@ -239,6 +239,18 @@ a.clickables:hover{
     }
 }
 .hamilton .clickables{background-color: #22a194;border: 0px #22a194;}
+.essay{
+    background-color: #bbf0ef;
+    outline: #089e9c thick solid;
+    td.grids{
+        background-color: #86cfcd;
+        border-left: #089e9c thick solid;
+        img{
+            max-height: 250px;
+        }
+    }
+}
+.essay .clickables{background-color: #089e9c;border: 0px #089e9c;}
 
 .fyp{
     background-color: #f2e6d9;/*f2f0ed*/

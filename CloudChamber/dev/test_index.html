@@ -43,33 +43,27 @@
     <tr>
         <td style="padding:10px">
           <div class="gif-container" id="poopoo">
-            <img src="../CloudChamber gifs/boomerang big.gif" alt="GIF Display" class="responsive-image" >
-            <canvas class="responsive-canvas" id="datCanvas"></canvas>
+            <img src="../CloudChamber gifs/boomerang big.gif" alt="GIF Display" class="responsive-image">
+            <canvas class="responsive-canvas" id="particlesCanvas"></canvas>
           </div>
           <table class="options" style="display:block;">
             <tr><td>
               <div class="slider-container">
-                <p class="slider-desc">Number of particles</p>
+                <p class="slider-desc">Particles</p>
                   <div class="box-container">
-                      <input type="range" min="1" max="3000" value="50" class="box f slider" id="numParticlesSlider">
-                          <span class="box-text" id = "numParticlesText"></span>
-                      </input>
-                  </div>
-              </div>
-              </td>
-              <td style="padding-right:20px">
-              <div class="slider-container">
-                <p class="slider-desc">Width of Trail</p>
-                  <div class="box-container">
-                      <input type="range" min="1" max="50" value="2" class="box f slider" id="trailWidthSlider">
-                          <span class="box-text" id = "trailWidthText"></span>
-                      </input>
+                    <div class="box" onclick="particleClicked('e-');">
+                        <span class="box-text">\(e^-\)</span>
+                    </div>
+                    <div class="box" onclick="particleClicked('mu-');">
+                        <span class="box-text">\(\mu^-\)</span>
+                    </div>
                   </div>
               </div>
               </td>
             </tr>
           </table>
-          <p id="sumValue"></p><p id ="SliderTest"></p>
+          <p style="text-align:left;" id="sumValue"></p><p id ="SliderTest"></p>
+        <script src="helper_functions.js"></script>
         <script src="test_script.js"></script>
         </td>
     </tr>

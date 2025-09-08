@@ -47,6 +47,7 @@ class Particle {
         this.particleCanvas.width = bw;
         this.particleCanvas.height = bh;
         this.particleContext = this.particleCanvas.getContext('2d'); 
+        keepGrainyDiffusion(this.particleContext);
         
         // this.drawBufferZone() // For debugging
     }
@@ -177,6 +178,7 @@ class CloudChamber {
         
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
+        keepGrainyDiffusion(this.context);
         this.isRunning = false;
         // drawBoard(this.context);  // coordinate system
         
@@ -607,4 +609,12 @@ function changeFieldColour(button) {
     // Set colour for the clicked button
     button.style.backgroundColor = '#aaaaaa';
     button.toggleClass('disable');
+}
+
+function keepGrainyDiffusion(context){
+    context.imageSmoothingEnabled = false;
+    context.webkitImageSmoothingEnabled = false;
+    context.mozImageSmoothingEnabled = false;
+    context.msImageSmoothingEnabled = false;
+    context.oImageSmoothingEnabled = false;
 }

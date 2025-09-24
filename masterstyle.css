@@ -448,3 +448,7 @@ td:nth-child(2){valign: center;}
     .dates{display:none;}
     .navbar{display: none;}          
 }
+
+.headanchor{
+    scroll-margin-top: 80px;
+}

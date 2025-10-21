@@ -230,6 +230,16 @@ a.clickables:hover{
   color: white;
 }
 
+.phd{
+    background-color: #7a92f9;
+    outline: #011576 thick solid;
+    td.grids{
+        background-color: #3c5af0;
+        border-left: #011576 thick solid;
+    }
+}
+.phd .clickables{background-color: #22a194;border: 0px #22a194;}
+
 .hamilton{
     background-color: #d0d0eb;
     outline: #7f61b0 thick solid;
@@ -239,6 +249,7 @@ a.clickables:hover{
     }
 }
 .hamilton .clickables{background-color: #22a194;border: 0px #22a194;}
+
 .essay{
     background-color: #bbf0ef;
     outline: #089e9c thick solid;

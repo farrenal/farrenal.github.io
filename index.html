@@ -14,14 +14,14 @@
     <script defer data-domain="farrenal.github.io" src="https://plausible.io/js/script.js"></script>
     <script src="/MathJax/MathJax.js" type="text/javascript">
         MathJax.Hub.Config({
-        config: ["MMLorHTML.js"],
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/SVG"],
-        tex2jax: {inlineMath: ["\\(","\\)"], displayMath: ["\$$","\$$"]}
+            config: ["MMLorHTML.js"],
+            extensions: ["tex2jax.js"],
+            jax: ["input/TeX", "output/SVG"],
+            tex2jax: {inlineMath: ["\\(","\\)"], displayMath: ["\$$","\$$"]}
         });
-    </script>
+        </script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body> 
@@ -56,59 +56,34 @@
     </table>
     <hr class="mainhr">
 </div>
-<div class="mobile-only mobile-only-intro">
-    <h1 class="mobile-only-intro name">
-        Alexander Farren
-    </h1>
-    <p class="mobile-only-intro email">
-        amf94@cam.ac.uk
-    </p>
-    <img class="mobile-only-intro headshot" src="Images/headshot.jpg" alt="Photo of me">
-    <hr class="mainhr">
-    <table class="mobile-only-intro about-me" cellspacing="10px">
-        <tr>
-            <td>
-                <h2>
-                    About me
-                </h2>
-                <main>
-                    <b>2025-2029:</b> PhD in Theoretical Physics at Cambridge.
-                    <br>
-                    <b>2024-2025:</b> MASt in Mathematics at Cambridge.
-                    <br>
-                    <b>2020-2024:</b> BA in Theoretical Physics at Trinity College, Dublin. 
-                    <br>
-                    <br>
-                    This site showcases extracurricular work as well as my bachelor thesis and Part III essay.
-                </main>
-            </td>
-        </tr>
-    </table>
-    <hr class="mainhr">
-</div>
 
-<div class="navbar">
-    <nav>
-        <a href="#Research">        Research</a> 
-        <a href="#Visualisations">  Visualisations</a> 
-        <a href="#Communication">   Communication</a> 
-        <a href="#Miscellaneous">   Miscellaneous</a>
-    </nav>
-</div>
+<nav id="navbar">
+    <a class="tabButton Research"        onclick="tabClicked('Research');">         Research</a> 
+    <a class="tabButton Visualisations"  onclick="tabClicked('Visualisations');">   Visualisations</a> 
+    <a class="tabButton Communication"   onclick="tabClicked('Communication');">    Communication</a> 
+    <a class="tabButton Miscellaneous"   onclick="tabClicked('Miscellaneous');">    Miscellaneous</a>
+    <a class="toggleButton"              onclick="toggleOpenAll();">                &#8615;</a>
+</nav>
+
+<!-- <div>
+    <div id="debugText"></div>
+</div> -->
 
 <table class="maintable">
+
+<tbody class="tabContent Research">
     <tr class="headanchor" id="Research">
         <td>
-            <h1>Research</h1>
+        <h1>Research</h1>
         </td>
     </tr>
     <tr class="phd">
         <td>
             <h2 class="project-title">
-                PhD  <div class="dates">&#x2013; \((\eta=0)\)</div> 
+            PhD  <div class="dates">&#x2013; \((\eta=0)\)</div> 
             </h2> 
             <main>
-                Studying loops in de Sitter. 
+            Studying loops in de Sitter. 
             </main>
             <br>
         </td>
@@ -119,7 +94,7 @@
     <tr class="hamilton">
         <td>
             <h2 class="project-title">
-                Research Experience <div class="dates">&#x2013;  Summer 2024</div>
+            Research Experience <div class="dates">&#x2013;  Summer 2024</div>
             </h2> 
             <main>
                 Participated in the Hamilton Trust Summer Internship with <a href="https://elizasomerville.github.io">Eliza Somerville</a> and Mikey Whelan.
@@ -127,9 +102,9 @@
             </main>
             <hr class="bumphr"/>
             <main>
-                <a class="clickables" href="Documents/Hamilton_report.pdf">Report</a>
-                <a class="clickables" href="Documents/Hamilton_presentation.pdf" >Slides</a>
-                <a class="clickables" href="Documents/Hamilton_poster.pdf" >Poster</a>
+            <a class="clickables" href="Documents/Hamilton_report.pdf">Report</a>
+            <a class="clickables" href="Documents/Hamilton_presentation.pdf" >Slides</a>
+            <a class="clickables" href="Documents/Hamilton_poster.pdf" >Poster</a>
             </main>
         </td>
         <td class="grids">
@@ -139,18 +114,18 @@
     <tr class="naughton">
         <td>
             <h2 class="project-title">
-                Research Experience <div class="dates">&#x2013; Summer 2023</div>
+            Research Experience <div class="dates">&#x2013; Summer 2023</div>
             </h2> 
             <main> 
-                Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">
-                Naughton Fellowship</a> to do an REU at the University of Notre Dame. 
-                Worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on 
-                spurious isospin symmetry breaking in the IMSRG formalism of <i>ab initio</i> many-body nuclear theory.</main>
+            Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">
+            Naughton Fellowship</a> to do an REU at the University of Notre Dame. 
+            Worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on 
+            spurious isospin symmetry breaking in the IMSRG formalism of <i>ab initio</i> many-body nuclear theory.</main>
             <hr class="bumphr"/>
             <main>
-                <a class="clickables" href="Documents/SpuriousISB_report.pdf" >Report</a>
-                <a class="clickables" href="Documents/SpuriousISB_presentation.pdf" >Slides</a>
-                <a class="clickables" href="https://arxiv.org/abs/2412.10693" id="paper">Pre-print (nucl-th/2412.10693)</a>
+            <a class="clickables" href="Documents/SpuriousISB_report.pdf" >Report</a>
+            <a class="clickables" href="Documents/SpuriousISB_presentation.pdf" >Slides</a>
+            <a class="clickables" href="https://arxiv.org/abs/2412.10693" id="paper">Pre-print (nucl-th/2412.10693)</a>
             </main>
         </td>
         <td class="grids">
@@ -160,16 +135,16 @@
     <tr class="essay">
         <td>
             <h2 class="project-title">
-                Part III Essay <div class="dates">&#x2013; 2025</div>
+            Part III Essay <div class="dates">&#x2013; 2025</div>
             </h2> 
             <main> 
-                In my essay I discussed what happens when one scatters a fermion off a magnetic monopole&#x2014;a story dating back to the 70's. After solving the Dirac equation in the presence of a monopole, 
-                it turns out the lowest angular momentum mode of fermions exhibits the peculiar behaviour of states being split into either in or out, such that quantum numbers 
-                like chirality and electric charge are violated. Strange consequences arise when combining this effect with GUTs. My essay setter was <a href="https://www.damtp.cam.ac.uk/user/tong/">Prof. David Tong</a>.
+            In my essay I discussed what happens when one scatters a fermion off a magnetic monopole&#x2014;a story dating back to the 70's. After solving the Dirac equation in the presence of a monopole, 
+            it turns out the lowest angular momentum mode of fermions exhibits the peculiar behaviour of states being split into either in or out, such that quantum numbers 
+            like chirality and electric charge are violated. Strange consequences arise when combining this effect with GUTs. My essay setter was <a href="https://www.damtp.cam.ac.uk/user/tong/">Prof. David Tong</a>.
             </main>
             <hr class="bumphr"/>
             <main>
-                <a class="clickables" href="Documents/Essay.pdf" >Essay</a>
+            <a class="clickables" href="Documents/Essay.pdf" >Essay</a>
             </main>
         </td>
         <td class="grids">
@@ -179,46 +154,49 @@
     <tr class="fyp">
         <td>
             <h2 class="project-title">
-                Bachelor Thesis <div class="dates">&#x2013; 2023/2024</div>
+            Bachelor Thesis <div class="dates">&#x2013; 2023/2024</div>
             </h2> 
             <main> 
-                My thesis was a review of <a href="https://arxiv.org/abs/0901.4937"> Foundations of the \(\small\text{AdS}_5\times S^5\) Superstring</a> in which
-                I reproduced many of the results from the first two chapters. It involved learning about basic string theory, superalgebras, the Green-Schwarz superstring
-                in \(\small\text{AdS}_5\times S^5\), and how one could go about quantising it in the light-cone gauge. It turns out to be difficult to quantise the model
-                directly so one resorts to a perturbative approach in the limit as the string length goes to infinity. My supervisor was <a href="https://www.maths.tcd.ie/~frolovs/">Prof. Sergey Frolov</a>.
+            My thesis was a review of <a href="https://arxiv.org/abs/0901.4937"> Foundations of the \(\small\text{AdS}_5\times S^5\) Superstring</a> in which
+            I reproduced many of the results from the first two chapters. It involved learning about basic string theory, superalgebras, the Green-Schwarz superstring
+            in \(\small\text{AdS}_5\times S^5\), and how one could go about quantising it in the light-cone gauge. It turns out to be difficult to quantise the model
+            directly so one resorts to a perturbative approach in the limit as the string length goes to infinity. My supervisor was <a href="https://www.maths.tcd.ie/~frolovs/">Prof. Sergey Frolov</a>.
             </main>
             <hr class="bumphr"/>
             <main>
-                <a class="clickables" href="Documents/FYP.pdf" >Thesis</a>
-                <a class="clickables" href="Documents/FYP_presentation.pdf" >Slides</a>
-                <a class="clickables" href="Documents/FYP_poster.pdf" >Poster</a>
+            <a class="clickables" href="Documents/FYP.pdf" >Thesis</a>
+            <a class="clickables" href="Documents/FYP_presentation.pdf" >Slides</a>
+            <a class="clickables" href="Documents/FYP_poster.pdf" >Poster</a>
             </main>
         </td>
         <td class="grids">
             <img src="Images/worldsheet.jpeg">
         </td>
     </tr>
-    
+</tbody> 
+<!--End of tab Research-->
+
+<tbody class = "tabContent Visualisations">
     <tr class="headanchor" id="Visualisations">
         <td>
-            <h1>Visualisations</h1>
+        <h1>Visualisations</h1>
         </td>
     </tr>
     <tr class="cloudchamber">
         <td>
             <h2 class="project-title">
-                Interactive Cloud Chamber <div class="dates">&#x2013; Nov 2024</div>
+            Interactive Cloud Chamber <div class="dates">&#x2013; Nov 2024</div>
             </h2> 
             <main> 
-                A cloud chamber reveals charged particles which are usually invisible to the naked eye. These basic experiments
-                played a historical role in our understanding of particle physics, and can be made at home with a bit of effort! 
-                I created this interactive webpage as a convenient version of the real thing, where you can choose which particle
-                to observe.
+            A cloud chamber reveals charged particles which are usually invisible to the naked eye. These basic experiments
+            played a historical role in our understanding of particle physics, and can be made at home with a bit of effort! 
+            I created this interactive webpage as a convenient version of the real thing, where you can choose which particle
+            to observe.
             </main>
             <hr class="bumphr" />
             <main>
-                <!-- <a class="clickables" href="Documents/CloudChamber_report.pdf">Explanation</a> -->
-                <a class="clickables" href="CloudChamber" >Interactive chamber</a>
+            <!-- <a class="clickables" href="Documents/CloudChamber_report.pdf">Explanation</a> -->
+            <a class="clickables" href="CloudChamber" >Interactive chamber</a>
             </main>
         </td>
         <td class="grids">
@@ -228,18 +206,18 @@
     <tr class="potts">
         <td>
             <h2 class="project-title">
-                Interactive Potts Model <div class="dates">&#x2013; Oct 2023</div>
+            Interactive Potts Model <div class="dates">&#x2013; Oct 2023</div>
             </h2> 
             <main> 
-                Following an independent reading project on statistical field theory, my interest 
-                in critical behaviour led to this visual showcase of the square lattice Potts model. To play around with the 
-                lattice, see the interactive gallery (best on desktop). If you want to skip straight to the theory behind it,
-                see the explanation.
+            Following an independent reading project on statistical field theory, my interest 
+            in critical behaviour led to this visual showcase of the square lattice Potts model. To play around with the 
+            lattice, see the interactive gallery (best on desktop). If you want to skip straight to the theory behind it,
+            see the explanation.
             </main>
             <hr class="bumphr" />
             <main>
-                <a class="clickables" href="Documents/Potts_report.pdf">Explanation</a>
-                <a class="clickables" href="Potts" >Interactive gallery</a>
+            <a class="clickables" href="Documents/Potts_report.pdf">Explanation</a>
+            <a class="clickables" href="Potts" >Interactive gallery</a>
             </main>
         </td>
         <td class="grids">
@@ -249,38 +227,42 @@
     <tr class="solitons">
         <td>
             <h2 class="project-title">
-                Solitons in 1 dimension <div class="dates">&#x2013; Nov 2023</div>
+            Solitons in 1 dimension <div class="dates">&#x2013; Nov 2023</div>
             </h2> 
             <main> 
-                Learned about basic soliton theory with <a href="https://elizasomerville.github.io">Eliza Somerville</a> and wrote a 
-                short introduction to solitons in 1+1 dimensions, namely solutions to the KdV equation and kink solitons for a \(\small\phi^4\) potential and a sine-Gordon potential.
+            Learned about basic soliton theory with <a href="https://elizasomerville.github.io">Eliza Somerville</a> and wrote a 
+            short introduction to solitons in 1+1 dimensions, namely solutions to the KdV equation and kink solitons for a \(\small\phi^4\) potential and a sine-Gordon potential.
             </main>
             <hr class="bumphr"/>
             <main>
-                <a class="clickables" href="Documents/Solitons_report.pdf" >Explanation</a>
-                <a class="clickables" href="Solitons" >Satisfying animations</a>
+            <a class="clickables" href="Documents/Solitons_report.pdf" >Explanation</a>
+            <a class="clickables" href="Solitons" >Satisfying animations</a>
             </main>
         </td>
         <td class="grids">
             <img class="grids fit" src="Images/Solitons.gif">
         </td>
     </tr>
+</tbody> 
+<!--End of tab Visualisations-->
+
+<tbody class = "tabContent Communication">
     <tr class="headanchor" id="Communication">
         <td>
-            <h1>Communication</h1>
+        <h1>Communication</h1>
         </td>
     </tr>
     <tr class="partiiitalk">
         <td>
             <h2 class="project-title">
-                Part III Seminar <div class="dates">&#x2013; Dec 2024</div>
+            Part III Seminar <div class="dates">&#x2013; Dec 2024</div>
             </h2> 
             <main>
-                I enjoyed learning about the on-shell bootstrap techniques for tree-level amplitudes from Cliff Cheung's <a href="https://www.youtube.com/watch?v=Ks6nuuFxRqM">TASI lectures</a>, so I decided to prepare
-                a student seminar for my master's cohort on the Parke-Taylor formula and loop amplitudes.
+            I enjoyed learning about the on-shell bootstrap techniques for tree-level amplitudes from Cliff Cheung's <a href="https://www.youtube.com/watch?v=Ks6nuuFxRqM">TASI lectures</a>, so I decided to prepare
+            a student seminar for my master's cohort on the Parke-Taylor formula and loop amplitudes.
             </main>
             <main>
-                <a class="clickables" href="Documents/PartIII_talk.pdf">Slides</a>
+            <a class="clickables" href="Documents/PartIII_talk.pdf">Slides</a>
             </main>
             <br>
         </td>
@@ -291,34 +273,34 @@
     <tr class="physcomm">
         <td>
             <h2 class="project-title">
-                TPSA lectures <div class="dates">&#x2013; 2023</div>
+            TPSA lectures <div class="dates">&#x2013; 2023</div>
             </h2> 
             <main>
-                Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation 
-                convention for the Theoretical Physics Student Association (TPSA).
+            Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation 
+            convention for the Theoretical Physics Student Association (TPSA).
             </main>
             <main>
-                <a class="clickables" href="https://www.youtube.com/watch?v=RrZWrJcV5ZM">ESC #1</a>
-                <a class="clickables" href="https://www.youtube.com/watch?v=qBqU5paaXLk">ESC #2</a>
-                <div class="desktop-only">
-                <a class="clickables" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3 - Classical Field Theory</a>
-                </div>
-                <div class="mobile-only">
-                <a class="clickables" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3</a>
-                </div>
+            <a class="clickables" href="https://www.youtube.com/watch?v=RrZWrJcV5ZM">ESC #1</a>
+            <a class="clickables" href="https://www.youtube.com/watch?v=qBqU5paaXLk">ESC #2</a>
+            <div class="desktop-only">
+            <a class="clickables" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3 - Classical Field Theory</a>
+            </div>
+            <div class="mobile-only">
+            <a class="clickables" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3</a>
+            </div>
             </main>
             <br style="clear:both" />
             <br>
             <main>
-                Made a video on the critical temperature of the Ising Model with Mikey Whelan.
+            Made a video on the critical temperature of the Ising Model with Mikey Whelan.
             </main>
             <main>
-                <div class="desktop-only">
-                <a class="clickables" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Critical Temperature of the 2D Ising Model</a>
-                </div>
-                <div class="mobile-only">
-                <a class="clickables" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Ising model</a>
-                </div>
+            <div class="desktop-only">
+            <a class="clickables" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Critical Temperature of the 2D Ising Model</a>
+            </div>
+            <div class="mobile-only">
+            <a class="clickables" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Ising model</a>
+            </div>
             </main>
             <br>
         </td>
@@ -326,6 +308,10 @@
             <img class="grids fit" src="Images/physcomm.jpeg">
         </td>
     </tr>
+</tbody>
+<!--End of tab Communication-->
+
+<tbody class = "tabContent Miscellaneous">
     <tr class="headanchor" id="Miscellaneous">
         <td>
             <h1>Miscellaneous</h1>
@@ -334,18 +320,18 @@
     <tr class="ireland">
         <td>
             <h2 class="project-title">
-                Electoral Redistricting <div class="dates">&#x2013; May 2023</div>
+            Electoral Redistricting <div class="dates">&#x2013; May 2023</div>
             </h2> 
             <main> 
-                Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a> 
-                hackathon event, applied multi-objective optimisation and data science techniques to the electoral 
-                redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>, 
-                Ben McGloin and Mikey Whelan.
+            Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a> 
+            hackathon event, applied multi-objective optimisation and data science techniques to the electoral 
+            redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>, 
+            Ben McGloin and Mikey Whelan.
             </main>
             <hr class="bumphr" />
             <main>
-                <a class="clickables" href="https://elizasomerville.github.io/Files/Redistricting_Ireland_Report.pdf">Report</a>
-                <a class="clickables" href="https://github.com/elizasomerville/IrishConstituencyOptimisation">Github</a>
+            <a class="clickables" href="https://elizasomerville.github.io/Files/Redistricting_Ireland_Report.pdf">Report</a>
+            <a class="clickables" href="https://github.com/elizasomerville/IrishConstituencyOptimisation">Github</a>
             </main>
         </td>
         <td class="grids">
@@ -355,15 +341,15 @@
     <tr class="mathhack">
         <td>
             <h2 class="project-title">
-                MathDeriver <div class="dates">&#x2013; Oct 2024</div>
+            MathDeriver <div class="dates">&#x2013; Oct 2024</div>
             </h2> 
             <main> 
-                As part of the 1-day <a href="https://lu.ma/o07b5s8m">Flywheel: Tools for Science</a> 
-                hackathon event, I collaborated with <a href="https://joebacchus.github.io/">Joe Bacchus George</a> and Piotr Toka to create a python script capabale of providing users with the derivation of numbered equations from arXiv articles.
+            As part of the 1-day <a href="https://lu.ma/o07b5s8m">Flywheel: Tools for Science</a> 
+            hackathon event, I collaborated with <a href="https://joebacchus.github.io/">Joe Bacchus George</a> and Piotr Toka to create a python script capabale of providing users with the derivation of numbered equations from arXiv articles.
             </main>
             <hr class="bumphr" />
             <main>
-                <a class="clickables" href="https://github.com/joebacchus/Maths_Deriver">Github</a>
+            <a class="clickables" href="https://github.com/joebacchus/Maths_Deriver">Github</a>
             </main>
         </td>
         <td class="grids">
@@ -373,25 +359,29 @@
     <tr class="rocket">
         <td>
             <h2 class="project-title">
-                Rocket Launch <div class="dates">&#x2013; Jan 2024</div>
+            Rocket Launch <div class="dates">&#x2013; Jan 2024</div>
             </h2> 
             <main> 
-                Built a simple model rocket, <i>Puffin 1</i>, with the Rocketry Comittee of the Trinity Space Society. Some wind led to the launch going sideways... Pictured are myself, Nathan Besch, Grace Madison and Oskar García García de las Heras.
+            Built a simple model rocket, <i>Puffin 1</i>, with the Rocketry Comittee of the Trinity Space Society. Some wind led to the launch going sideways... Pictured are myself, Nathan Besch, Grace Madison and Oskar García García de las Heras.
             </main>
             <hr class="bumphr" />
             <main>
-                <a class="clickables" href="https://trinitynews.ie/2024/04/the-skys-no-limit-the-trinity-space-society-rocket-launch/">Trinity News article<a>
-                <a class="clickables" href="Images/rocketlaunch.mp4">Video of launch</a>
+            <a class="clickables" href="https://trinitynews.ie/2024/04/the-skys-no-limit-the-trinity-space-society-rocket-launch/">Trinity News article<a>
+            <a class="clickables" href="Images/rocketlaunch.mp4">Video of launch</a>
             </main>
         </td>
         <td class="grids">
             <img class="grids" src="Images/rocket.jpg">
         </td>
     </tr>
+</tbody>
+<!--End of tab Miscellaneous-->
+
 </table>
 
 <script> 
    $('.clickables').attr('target', '_blank'); 
 </script>
+<script src="tabs.js"></script>
 </body>
 </html>

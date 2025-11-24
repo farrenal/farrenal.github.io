@@ -4,6 +4,8 @@ body {
     color: black;
     letter-spacing: -1px;
     background-color: #f0f0f0;
+    padding-bottom: 50px;
+    padding-top:10px;
     /*Beige #f2e6d9 --- Dark grey #222325 --- Off white #f0f0f0 */
 }
 
@@ -138,11 +140,12 @@ table.mobile-only-intro.about-me{
     color: #4066b3;
 }
 
-.navbar{
-    padding: 10px 0px 10px 0px;
+#navbar{
+    display:flex;
     margin-left: auto;
     margin-right: auto;
     max-width: fit-content;
+    /* padding:10px 0px 10px 0px; */
     text-align: center;
     
     position: -webkit-sticky; /* Safari */
@@ -153,24 +156,44 @@ table.mobile-only-intro.about-me{
     background-color: #ffffff;
     border-radius: 5px;
     border: 4px solid #dddddd;
+    /* outline: 4px solid #000000; */
+
+    overflow:hidden;
     
     a{
-        padding: 0px 25px 0px 25px;
+        padding: 10px 25px 10px 25px;
         color: black;
+        border:0px;
+        border-radius:0px;
+        outline:0px;
+        margin:0px;
     }
-    a:hover{
-        color: #4066b3;
+    .tabButton:hover{
+        background-color: #4066b3;
+        color: #ffffff;
+        cursor:pointer;
     }
-    nav{
-        padding: 0px;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: fit-content;
+    .tabButton.active{
+        background-color: #2d487e;
+        color: #ffffff;
+    }
+    .toggleButton{
+        border-left: inherit;
+    }
+    .toggleButton:hover{
+        background-color:#a25d5d;
+        color: #ffffff;
+        cursor:pointer;
+    }
+    .toggleButton.active{
+        background-color:#9b3434;
+        color: #ffffff;
     }
 }
 
+
 table.maintable{
-    color: black;
+    /* color: ; */
     margin-left: auto;
     margin-right: auto;
     border-spacing: 0px 20px;
@@ -231,11 +254,11 @@ a.clickables:hover{
 }
 
 .phd{
-    background-color: #7a92f9;
-    outline: #011576 thick solid;
+    background-color: #ce9c99;
+    outline: #9a2710 thick solid;
     td.grids{
-        background-color: #3c5af0;
-        border-left: #011576 thick solid;
+        background-color: #c47470;
+        border-left: #9a2710 thick solid;
     }
 }
 .phd .clickables{background-color: #22a194;border: 0px #22a194;}
@@ -249,7 +272,6 @@ a.clickables:hover{
     }
 }
 .hamilton .clickables{background-color: #22a194;border: 0px #22a194;}
-
 .essay{
     background-color: #bbf0ef;
     outline: #089e9c thick solid;
@@ -457,7 +479,7 @@ td:nth-child(2){valign: center;}
     .desktop-only-intro{display: none;}
     .mobile-only-intro{display: block;}
     .dates{display:none;}
-    .navbar{display: none;}          
+    #navbar{display: none;}          
 }
 
 .headanchor{
@@ -465,3 +487,8 @@ td:nth-child(2){valign: center;}
 }
 
 html { scroll-behavior: smooth; }
+
+.tabContent{
+    /* outline:2px solid black; */
+    display: none;
+}

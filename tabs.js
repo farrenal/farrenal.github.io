@@ -24,7 +24,7 @@ function updateButtons(){
 }
 
 function tabClicked(tabClass) {
-  if (!openAll){
+  if (!openAll && !matchMedia('(pointer:coarse)').matches){
     closeAllTabs();
   };
   updateButtons();

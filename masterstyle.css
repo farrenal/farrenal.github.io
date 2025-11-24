@@ -472,6 +472,11 @@ td:nth-child(2){valign: center;}
 .destop-only-intro{display: block;}
 .mobile-only-intro{display: none;}
 
+.tabContent{
+    /* outline:2px solid black; */
+    display: none;
+}
+
 @media(pointer:coarse){
     /* custom css for "touch targets" */
     td:nth-child(2){display: none;}
@@ -493,7 +498,3 @@ td:nth-child(2){valign: center;}
 
 html { scroll-behavior: smooth; }
 
-.tabContent{
-    /* outline:2px solid black; */
-    display: none;
-}

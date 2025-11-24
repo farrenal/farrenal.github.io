@@ -215,6 +215,10 @@ table.maintable{
     }
 }
 
+td.grids{
+    min-width:400px;
+}
+
 .dates{
   display: inline;
   color: #636363;
@@ -478,8 +482,9 @@ td:nth-child(2){valign: center;}
     .mobile-only{display: block;}
     .desktop-only-intro{display: none;}
     .mobile-only-intro{display: block;}
-    .dates{display:none;}
-    #navbar{display: none;}          
+    .dates{display: none;}
+    #navbar{display: none;}
+    .tabContent{display: block;}          
 }
 
 .headanchor{

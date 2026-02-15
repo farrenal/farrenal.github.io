@@ -67,7 +67,7 @@ function toggleOpenAll(){
 
 // Initialise open tab with Research
 var openedTabClass = "Research";
-tabClicked(openedTabClass);
+// tabClicked(openedTabClass);
 
 // Start with single tab view
 var openAll = false;

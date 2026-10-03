@@ -223,14 +223,18 @@ a.clickables:hover{
 /* ---- Chamber ----
    The chamber fills the width of its frame, and the two canvases (the solid objects, and the mist on top of them)
    fill the chamber exactly. */
+/* The cell which holds the chamber and its controls has no space around the chamber */
+.maintable td.stage{padding: 0 0 10px 0;}
 .gif-container{
     aspect-ratio: 1000 / 600;
     width:100%;
     position:relative;
     z-index:1;
     overflow: hidden;
-    outline: 5px solid #444444;
-    border-radius: 10px;
+    /* The chamber reaches the top, left and right edges of its frame, so the border of the frame is its border too
+       (and its top corners are rounded like those of the frame). Only underneath does it need a line of its own. */
+    border-bottom: 5px solid #444444;
+    border-radius: 10px 10px 0 0;
     background: black;
 }
 .responsive-canvas{
@@ -249,7 +253,7 @@ a.clickables:hover{
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 28px;
-    margin: 16px 2px 4px 2px;
+    margin: 16px 12px 4px 12px;
     text-align: left;
     letter-spacing: 0;
     font-size: 15px;

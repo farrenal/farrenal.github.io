@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Alexander Farren</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link href='https://fonts.googleapis.com/css?family=Fira Sans Condensed' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+    <link rel="apple-touch-icon" type="image/png" href="https://farrenal.github.io/Images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="https://farrenal.github.io/Images/android-chrome-512x512.png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="/MathJax/MathJax.js" type="text/javascript">
+        MathJax.Hub.Config({
+        config: ["MMLorHTML.js"],
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX"],
+        tex2jax: {inlineMath: ["\\(","\\)"]}
+        });
+    </script>
+    <script defer data-domain="farrenal.github.io/potts" src="https://plausible.io/js/script.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="desktop-only-intro">
+    <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1>
+    <div align="center">
+        <h1 class="title">Interactive Potts Model</h1>
+        <table class="headtable"> 
+                <tr class="names">
+                    <td>Alexander Farren</td>
+                    <td>Mikey Whelan</td>
+                    <td>Luke Hodgkiss</td>
+                </tr>
+                <tr class="email">  
+                    <td><a href="mailto:farrenal@tcd.ie">farrenal@tcd.ie</a></td>
+                    <td><a href="mailto:whelam17@tcd.ie">whelam17@tcd.ie</a></td>
+                    <td><a href="mailto:hodgkisl@tcd.ie">hogkisl@tcd.ie</a></td>
+                </tr>
+        </table>
+    </div>
+</div>
+<div class="mobile-only-intro">
+    <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1><br>
+    <h1 class="title">Interactive Potts Model</h1>
+    <table class="headtable"> 
+            <tr class="names">
+                <td>A. Farren</td>
+                <td>M. Whelan</td>
+                <td>L. Hodgkiss</td>
+            </tr>
+            <tr class="email">  
+                <td>farrenal@tcd.ie</td>
+                <td>whelam17@tcd.ie</td>
+                <td>hodgkisl@tcd.ie</td>
+            </tr>
+    </table>
+</div>
+
+<hr>
+
+<table class="maintable">
+    <tr>
+        <td>
+            <h2>What is this?</h2> 
+            <main style="bottom:0px;font-size:120%;width:100%;"> 
+                Here you will find an interactive gallery where you can pick the system temperature \(T\) and 
+                magnetic field strength \(H\) of the \(q\)-Potts model for different values of \(q\), which is 
+                the number of states available to a lattice site.
+                <br><br>
+                Over our 2022 Christmas break Mikey Whelan, Luke Hodgkiss and I independently studied Prof. Tong's
+                <a href="http://www.damtp.cam.ac.uk/user/tong/sft.html"> Part III notes</a> on statistical field 
+                theory. I found the concept of criticality interesting so I proposed to study in more detail the 
+                behaviour of the Potts model and came up with this fun way of presenting the topic. (Visuals take a moment to load.)
+                <br><br>
+                <div class="explanation"><a class="clickables" href="../../Documents/Potts_report.pdf">Explanation</a></div>
+            </main>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <h2 class="qTH">Select \(q\), \( \ T\) and \(H\) values below</h2>
+            <div class="box-container">
+                <div class="box" onclick="boxClicked('q2');changeColor(this)">
+                    <span class="box-text">\(q=2\)
+                    <br>
+                    <div class="rectangle s0"></div>
+                    <div class="rectangle s1"></div>   
+                    </span>
+                </div>
+                <div class="box" onclick="boxClicked('q3');changeColor(this)">
+                    <span class="box-text">\(q=3\)
+                    <br>
+                    <div class="rectangle s0"></div>
+                    <div class="rectangle s1"></div>
+                    <div class="rectangle s2"></div>
+                    </span>
+                </div> 
+                <div class="box" onclick="boxClicked('q4');changeColor(this)">
+                    <span class="box-text">\(q=4\)
+                    <br>
+                    <div class="rectangle s0"></div>
+                    <div class="rectangle s1"></div>
+                    <div class="rectangle s2"></div>
+                    <div class="rectangle s3"></div>
+                    </span>
+                </div>
+                <div class="box" onclick="boxClicked('q5');changeColor(this)">
+                    <span class="box-text">\(q=5\)
+                    <br>
+                    <div class="rectangle s0"></div>
+                    <div class="rectangle s1"></div>
+                    <div class="rectangle s2"></div>
+                    <div class="rectangle s3"></div>
+                    <div class="rectangle s4"></div>
+                    </span>
+                </div>  
+            </div>
+          <div class="gif-container" id="poopoo">
+            <img src="Potts gifs/q3_TA_HW-min.gif" alt="GIF Display" class="responsive-image" id="gifImage">
+          </div>
+          <div class="slider-container">
+            <p class="slider-desc">Select temperature \(T\)</p>
+            <input type="range" min="0" max="3" value="2" step="1" list="Ttickmarks" class="slider" id="slider1">
+            <datalist id="Ttickmarks">
+              <option value="0" label="Low"></option>
+              <option value="1" label="Below Critical" class="desktop-only"></option>
+              <option value="2" label="Above Critical" class="desktop-only"></option>
+              <option value="3" label="High"></option>
+            </datalist>
+          </div>
+          <div class="slider-container">
+            <p class="slider-desc">Select magnetic field \(H\)</p>
+            <input type="range" min="0" max="3" value="1" step="1" class="slider" list="Ttickmarks" id="slider2" id="datalist">
+            <datalist id="Htickmarks">
+              <option value="0" label="None"></option>
+              <option value="1" label="Weak" class="desktop-only"></option>
+              <option value="2" label="Medium" class="desktop-only"></option>
+              <option value="3" label="Strong"></option>
+            </datalist>    
+          </div>
+          <p style="visibility:hidden;" id="sumValue">showing gif:</p>
+        <script src="script.js"></script>
+        </td>
+    </tr>
+</table>
+
+<script> 
+   $('.clickables').attr('target', '_blank'); 
+</script>
+</body>
+</html>

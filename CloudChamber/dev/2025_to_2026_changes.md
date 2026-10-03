@@ -22,7 +22,8 @@ All open problems listed in `web_claude_summary.md` under "Trail rendering and a
 | `particle_class.js` | `Particle`: 3D motion, energy loss, scattering, delta rays, ionisation | rewritten |
 | `droplet_class.js` | `DropletPool`: storage, ageing, motion and drawing of droplets | new |
 | `flow_class.js` | `FlowField` (swirls of the gas) and `MistPatches` (uneven mist) | new |
-| `image_class.js` | `ChamberImage`: light collection, glow, exposure | new |
+| `image_class.js` | `ChamberImage`: light collection, glow, exposure, worked out by the processor (the fallback) | new |
+| `image_gl_class.js` | `ChamberImageGL`: the same picture drawn by the graphics card with WebGL (used wherever supported) | new |
 | `cloudchamber_class.js` | `CloudChamber`: clocks, frame loop, particle generation, events | heavily changed |
 | `helper_functions.js` | `depositDroplets`, button handlers, Random loop | heavily changed |
 | `index.html`, `CC_styles.css` | Page and control panel | control panel rearranged, background gif removed |
@@ -112,6 +113,7 @@ Each species now spawns with its own range of $\beta$:
 ## 5. Droplets
 
 - **Deposition per unit path length.** `depositDroplets` creates droplets at a fixed rate per canvas pixel of three-dimensional path, carrying the remainder between substeps. In 2025 the droplet density depended on how the path was cut into segments, and therefore on the slider.
+- **Fineness.** `trackFineness` multiplies the number of droplets on a track and divides the brightness of each by the same factor (7 on the graphics card, 3 on the processor), so tracks are smooth threads of mist and not rows of distinct specks.
 - **Shape of the trail.** Droplets are placed in a bell-shaped cloud around the path (no hard edge, unlike the fixed rows of 2025). The width wanders by about 30 % along the track, and droplets in the core are larger.
 - **Independent lives.** Droplets belong to the chamber, not to a particle. Each has its own lifetime (1 to 2.6 s on the droplet clock), appears over 0.08 s, stays bright for most of its life and then fades. A track dissolves droplet by droplet, instead of fading as one image.
 - **Storage.** Droplets are 8 numbers each in one flat `Float32Array` per pool, with evaporated droplets compacted away during the drawing pass. There is one pool for tracks and one for the background mist.
@@ -125,13 +127,16 @@ Each species now spawns with its own range of $\beta$:
 
 **2025.** One full-size canvas per particle, composited every frame, with every droplet ever drawn refilled as a tiny arc each frame for the flicker. The cost grew without limit on long spirals.
 
-**2026.** One image (`ChamberImage`), built in three steps each frame:
+**2026.** One image, built in three steps each frame. There are two implementations with the same interface and the same look: `ChamberImageGL` draws on the graphics card with WebGL 2 and is used wherever the device supports it, and `ChamberImage` works every pixel out on the processor and is the fallback (it can be forced with `?renderer=cpu`). The steps:
 
 1. Start from darkness.
 2. Every droplet adds light, shared between the four nearest pixels and scaled by its size and by a lamp that is brighter on the left.
 3. Develop: about a third of the light is spread into a soft glow on a coarse grid, then brightness $= 1 - e^{-\text{exposure}\,\times\,\text{light}}$, so dense tracks saturate to white.
 
-The image is 900 by 540 pixels (`imageScale` = 0.6), independent of the simulation's 1500 by 900 canvas-pixel coordinates. A whole frame costs about 3.5 ms in headless Chrome on a desktop, with roughly 12,000 mist droplets and several thousand track droplets. Developing the image is about 2.3 ms of that and does not depend on the number of droplets.
+The resolution of the image (`imageScale` image pixels per canvas pixel) is independent of the simulation's 1500 by 900 canvas-pixel coordinates. It is chosen to match the pixels of the screen, when the page loads and again whenever the user zooms or resizes the window. A droplet and the glow cover the same area of the chamber at every resolution, so the look does not change.
+
+- *Graphics card.* Each droplet is a point drawn as a tiny disc with a slightly soft edge (`crispDropletRadius`, 0.6 canvas pixels, and `crispDropletSoftness`) with additive blending into a half-float texture, the glow is read from the mipmap chain of that texture, and a final pass applies the exposure. With `alwaysFinestImage` set (as it is), the picture is always 4050 by 2430 pixels, so zooming in never changes it. Otherwise it has one pixel per screen pixel at the current zoom. If frame work averages over 14 ms, the picture is made 30 % smaller, repeatedly if needed. The work on the processor is then only the droplet loop, about 1.3 ms per frame in a natural-rate scene, whatever the resolution. If a device only imitates a graphics card on its processor (frames then take over 25 ms), the page reloads itself once with the processor version.
+- *Processor.* `imageScale` is one of 0.6, 0.8 and 1.0, and is lowered in steps if the work for a frame averages more than 10 ms on the device. Above 0.6 a droplet is drawn as a round spot. A frame costs about 3 ms at 0.6 and 8 ms at 1.0.
 
 ## 8. Random mode, events and the control panel
 

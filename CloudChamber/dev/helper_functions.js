@@ -20,7 +20,7 @@ function depositDroplets(particle, x0, y0, x1, y1, pathLength, visibility){
     var dy = y1 - y0;
 
     // Set by the ionisation of the particle at its current speed
-    var rate = particle.dropletsPerPixel * dropletSpacing * visibility;
+    var rate = particle.dropletsPerPixel * dropletSpacing * visibility * trackFineness;
     var baseSigma = particle.trailSigma;
     var maxSize = particle.maxDropletSize;
 
@@ -51,7 +51,7 @@ function depositDroplets(particle, x0, y0, x1, y1, pathLength, visibility){
 
             // Biggest droplets in the core of the trail, the smallest at the fringe
             var size = 1 + Math.floor(Math.random() * maxSize * Math.exp(-0.7 * distance));
-            var brightness = 0.5 + 0.5 * Math.random();
+            var brightness = (0.5 + 0.5 * Math.random()) / trackFineness;
 
             particle.addDroplet(path_x + sigma * offset_x, path_y + sigma * offset_y, size, brightness);
         }
@@ -237,6 +237,21 @@ function updatePausePlayButton() {
     icon.textContent = theCC.isRunning ? 'pause' : 'play_arrow';
     button.classList.toggle('is-active', !theCC.isRunning);
 }
+
+// Zooming in or out (with the browser or by pinching) and resizing the window change how many screen pixels the
+// chamber covers. Once the change has settled, let the chamber pick the resolution which suits the new size.
+var imageScaleTimeoutID = null;
+function imageScaleMayHaveChanged() {
+    clearTimeout(imageScaleTimeoutID);
+    imageScaleTimeoutID = setTimeout(() => theCC.updateImageScale(), 250);
+}
+window.addEventListener('resize', imageScaleMayHaveChanged);
+if (window.visualViewport) window.visualViewport.addEventListener('resize', imageScaleMayHaveChanged);
+
+// The browser may take the graphics card away from the page for a moment (for example when the computer wakes up,
+// or when too many pages use it). Ask to get it back, and when it is back, set the image up again from scratch.
+canvas.addEventListener('webglcontextlost', (event) => event.preventDefault());
+canvas.addEventListener('webglcontextrestored', () => theCC.rebuildImage());
 
 document.addEventListener('visibilitychange', function() {
     if (document.hidden) {

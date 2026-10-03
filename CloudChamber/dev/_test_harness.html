@@ -17,11 +17,13 @@ body{margin:0;background:#888;}
 <pre id="out"></pre>
 <script>
 window.$ = function(){ return {toggleClass(){}, attr(){}}; };
+const realRequestAnimationFrame = window.requestAnimationFrame.bind(window);
 window.requestAnimationFrame = () => 0;     // frames are driven by hand below
 </script>
 <script src="header.js"></script>
 <script src="flow_class.js"></script>
 <script src="image_class.js"></script>
+<script src="image_gl_class.js"></script>
 <script src="source_images.js"></script>
 <script src="droplet_class.js"></script>
 <script src="particle_class.js"></script>
@@ -36,6 +38,11 @@ const params = new URLSearchParams(location.search);
 const sliderValue = Number(params.get('speed') || 100);
 const frames = Number(params.get('frames') || 30);
 const field = params.get('field') || 'in';
+
+// With ?budget=N the time allowed for a frame is N milliseconds (a tiny value forces the picture to get coarser)
+if (params.get('budget')) frameBudget = Number(params.get('budget'));
+log("picture drawn by the " + (useWebGL ? "graphics card (WebGL)" : "processor") + " (" + webGLStatus + ")");
+log("screen pixels per CSS pixel: " + window.devicePixelRatio + ", image at the start: " + imageWidth + " x " + imageHeight + " (imageScale " + imageScale.toFixed(2) + ")");
 
 // --- Numerical checks, no rendering involved ---
 theCC.updateMagField('in');
@@ -132,6 +139,14 @@ for (let f = 0; f <= frames; f++) {
     mostDroplets = Math.max(mostDroplets, theCC.trackDroplets.count);
 }
 const T1 = performance.now();
+// With ?zoom=N the screen is made to report N times as many pixels after the frames have run, as when the user zooms in
+if (params.get('zoom')) {
+    Object.defineProperty(window, 'devicePixelRatio', {value: Number(params.get('zoom')), configurable: true});
+    theCC.updateImageScale();
+    for (let f = frames + 1; f <= frames + 5; f++) theCC.animate(f * 1000 / 60);
+    log("after zooming to " + params.get('zoom') + ": image " + imageWidth + " x " + imageHeight);
+}
+log("image at the end: " + imageWidth + " x " + imageHeight + " (imageScale " + imageScale.toFixed(2) + ")");
 log("ran " + frames + " frames = " + (frames / 60).toFixed(2) + " s, average ms per frame: " + ((T1 - T0) / (frames + 1)).toFixed(2));
 log("track droplets now: " + theCC.trackDroplets.count + " (most: " + mostDroplets + "), background droplets: " + theCC.backgroundDroplets.count
     + ", particles still flying: " + theCC.particlesArray.reduce((n, x) => n + x.length, 0));
@@ -139,6 +154,25 @@ log("track droplets now: " + theCC.trackDroplets.count + " (most: " + mostDrople
 </body>
 </html>
 <script>
+// How much of the picture is lit, read back from the canvas (works for both ways of drawing)
+{
+    const copy = document.createElement('canvas'); copy.width = 300; copy.height = 180;
+    const copyContext = copy.getContext('2d');
+    theCC.image.clear(); theCC.backgroundDroplets.render(theCC.image, theCC.flow, 0); theCC.trackDroplets.render(theCC.image, theCC.flow, 0); theCC.image.develop();
+    copyContext.drawImage(canvas, 0, 0, 300, 180);
+    const data = copyContext.getImageData(0, 0, 300, 180).data;
+    let lit = 0, total = 0;
+    for (let i = 3; i < data.length; i += 4) { if (data[i] > 8) lit++; total += data[i]; }
+    if (useWebGL) log("WebGL error code after drawing (0 means none): " + gl.getError());
+    log("picture read back: " + lit + " of 54000 sample pixels lit, average opacity " + (total / 54000).toFixed(2) + " of 255");
+}
+// A picture drawn by the graphics card is only kept until it has been shown once, so keep redrawing it
+// (without letting any time pass) for as long as the page is open, for screenshots
+(function keepShowing() {
+    if (params.get('timing')) return;
+    theCC.image.clear(); theCC.backgroundDroplets.render(theCC.image, theCC.flow, 0); theCC.trackDroplets.render(theCC.image, theCC.flow, 0); theCC.image.develop();
+    realRequestAnimationFrame(keepShowing);
+})();
 // Cost of the separate parts of a frame, with whatever droplets are left (only with ?timing=1, it spoils the picture)
 if (params.get('timing')) {
     const time = (label, repeat, work) => { const t = performance.now(); for (let r = 0; r < repeat; r++) work(); log(label + ": " + ((performance.now() - t) / repeat).toFixed(2) + " ms"); };

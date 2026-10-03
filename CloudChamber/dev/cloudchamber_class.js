@@ -4,10 +4,7 @@ class CloudChamber {
     constructor(canvas) {
         
         this.canvas = canvas;
-        this.context = canvas.getContext('2d');
-        // keepGrainyDiffusion(this.context);
         this.isRunning = false;
-        // drawBoard(this.context);  // coordinate system
         
         // Define particle species and their properties
         this.electronArray = [];     //  0 e-
@@ -23,8 +20,14 @@ class CloudChamber {
         
         this.Bz = 0;
 
-        // Image of the whole chamber, which collects the light of every droplet each frame (see image_class.js)
-        this.image = new ChamberImage(this.context);
+        // Image of the whole chamber, which collects the light of every droplet each frame.
+        // It is drawn by the graphics card if this device supports that (see image_gl_class.js),
+        // and by the processor if not (see image_class.js).
+        this.image = createChamberImage();
+
+        // Time spent on the work of the last frames, to notice if this device cannot keep up (see the end of animate)
+        this.workTime = 0;
+        this.workFrames = 0;
 
         // Slow swirls of the gas, which carry the droplets along (see flow_class.js)
         this.flow = new FlowField();
@@ -416,6 +419,7 @@ class CloudChamber {
         this.lastFrameTime = currentTime;
         const simTime = realTime * this.ticksPerSecond;
         const clockStep = realTime * this.dropletClockRate;
+        const workStarted = performance.now();
 
         // Start the image from darkness, and let the swirls of the gas change a little
         this.image.clear();
@@ -459,8 +463,64 @@ class CloudChamber {
         this.trackDroplets.render(this.image, this.flow, clockStep);
         this.image.develop();
 
+        // Only if the picture is drawn by the processor: if the work for a frame takes too long on average,
+        // this device cannot keep up at this resolution. Carry on with a coarser picture (which looks the same,
+        // only softer). The resolution is never raised again.
+        this.workTime += performance.now() - workStarted;
+        this.workFrames++;
+        if (this.workFrames >= frameBudgetFrames) {
+            const averageWork = this.workTime / this.workFrames;
+            if (!useWebGL && averageWork > frameBudget && imageScale > minImageScale) {
+                imageScaleLimit = imageScale - imageScaleStep;
+                this.updateImageScale();
+            }
+            // If the picture is drawn by the graphics card and frames take too long, the picture is too large for
+            // this graphics card: carry on with a picture which has 30 percent fewer pixels across, and do not go back up.
+            if (useWebGL && averageWork > busyGraphicsCard && imageScale > minImageScale + 1e-6) {
+                imageScaleLimit = Math.max(minImageScale, 0.7 * imageScale);
+                this.updateImageScale();
+            }
+            // If the picture is already as small as it gets and frames are still far too slow, the "graphics card"
+            // is being imitated on the processor. A canvas cannot change the way it is drawn, so load the page
+            // again and let the processor draw the picture itself.
+            else if (useWebGL && averageWork > slowGraphicsCard) {
+                const address = new URL(window.location.href);
+                address.searchParams.set('renderer', 'cpu');
+                window.location.replace(address.href);
+            }
+            this.workTime = 0;
+            this.workFrames = 0;
+        }
+
         // Keep loop going
         this.animationID = requestAnimationFrame((time) => this.animate(time));
+    }
+
+    // Make sure that the picture has the resolution which suits the screen at this moment (see header.js).
+    // Called when the user zooms or resizes the window, and when this device turns out to be too slow.
+    updateImageScale() {
+        const newScale = chooseImageScale();
+        if (Math.abs(newScale - imageScale) < 1e-6) return;
+        this.rebuildImage(newScale);
+        this.workTime = 0;
+        this.workFrames = 0;
+        // While the animation is paused nothing would redraw the picture, so draw one frame which lasts no time
+        if (!this.isRunning) {
+            this.image.clear();
+            this.backgroundDroplets.render(this.image, this.flow, 0);
+            this.trackDroplets.render(this.image, this.flow, 0);
+            this.image.develop();
+        }
+    }
+
+    // Replace the image by a new one with this resolution (or with the same resolution, if left out)
+    rebuildImage(newScale) {
+        if (this.image.dispose) this.image.dispose();
+        setImageScale((newScale === undefined) ? imageScale : newScale);
+        this.image = createChamberImage();
+        // The solid objects are redrawn at the new resolution as well
+        sizeObjectsCanvas();
+        drawSourceImage(this.activeSource);
     }
 
     setAnimationSpeed(speedValue) {

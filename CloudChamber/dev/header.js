@@ -14,26 +14,157 @@ const bw = canvas.width * scale;
 const bh = Math.round(bw / distortionRatio);
 const p = 10;
 
-// The picture itself has fewer pixels than that: imageScale image pixels per canvas pixel.
-// This costs less to draw, and a droplet smaller than an image pixel looks like a soft speck of mist.
-const imageScale = 0.6;
-const imageWidth  = Math.round(bw * imageScale);
-const imageHeight = Math.round(bh * imageScale);
-canvas.width  = imageWidth;
-canvas.height = imageHeight;
+// The picture itself has a different number of pixels: imageScale image pixels per canvas pixel.
+// More pixels give a sharper picture on a screen which can show them. There are two ways of drawing the picture:
+//
+//   - On the graphics card (WebGL, see image_gl_class.js). All pixels are worked out at the same time, so the picture
+//     simply gets one pixel for every pixel of the screen, however far the user zooms in.
+//     Used on every device which supports it.
+//   - On the processor (see image_class.js). Every pixel is worked out one after the other for every frame,
+//     so the cost of a frame grows quickly with imageScale (about 3 ms at 0.6 and 8 ms at 1.0 on a desktop
+//     computer, out of the 16.7 ms which a frame may take). imageScale is one of 0.6, 0.8 and 1.0, and if frames
+//     turn out to take too long on this device it is lowered and is not allowed to go back up (see CloudChamber.animate).
+//     This is the fallback. It can also be forced by adding ?renderer=cpu to the address of the page.
+//
+// In both cases imageScale is chosen when the page loads, and again whenever the user zooms in or out or resizes
+// the window. The look of the droplets does not depend on imageScale.
+const referenceImageScale = 0.6;    // the resolution for which the look of the droplets and of the glow was tuned
+const minImageScale = 0.6;          // never coarser than this
+const maxImageScale = 1.0;          // on the processor: never finer than this (1500 x 900 pixels)
+const maxImageScaleGL = 2.7;        // on the graphics card: never finer than this (4050 x 2430 pixels)
+// On the graphics card: should the picture always have the finest scale which the device allows (true), or only as
+// many pixels as the screen can show at the current zoom (false)? With true nothing changes when the user zooms in,
+// so there is no moment at which the picture suddenly becomes sharper, but every frame draws the largest picture
+// (about 10 million pixels, 100 MB of memory on the graphics card) even when it is shown small.
+const alwaysFinestImage = true;
+const imageScaleStep = 0.2;         // on the processor: the steps between the scales which are used
+var frameBudget = 10;               // on the processor: the work for one frame should take less than this many milliseconds on average...
+const frameBudgetFrames = 120;      // ...over this many frames
+const busyGraphicsCard = 14;        // on the graphics card: if the work for one frame takes more than this many milliseconds on
+                                    // average, the picture is made smaller (see CloudChamber.animate)...
+const slowGraphicsCard = 25;        // ...and if it takes more than this with the smallest picture, there is no real
+                                    // graphics card, and the page changes to the processor
+
+// Can the graphics card of this device collect light in a picture (numbers which add up and can exceed 1)?
+// This is tried out on a canvas which is thrown away, because a canvas can only ever be drawn in one way.
+// Some devices have no usable graphics card and imitate one on the processor, which is much slower than
+// our own way of drawing on the processor: failIfMajorPerformanceCaveat makes the browser say no in that case.
+// Returns "yes", or the reason why not.
+function graphicsCardCanDrawThePicture() {
+    try {
+        const test = document.createElement('canvas').getContext('webgl2', {failIfMajorPerformanceCaveat: true});
+        if (!test) {
+            // Find out which of the two it is
+            if (document.createElement('canvas').getContext('webgl2')) {
+                return "no: the browser says its graphics would be slow (hardware acceleration is switched off or the graphics card is not trusted)";
+            }
+            return "no: this browser has no WebGL 2";
+        }
+        if (!test.getExtension('EXT_color_buffer_float') && !test.getExtension('EXT_color_buffer_half_float')) {
+            return "no: the graphics card cannot draw into pictures with numbers above 1";
+        }
+        const texture = test.createTexture();
+        test.bindTexture(test.TEXTURE_2D, texture);
+        test.texStorage2D(test.TEXTURE_2D, 1, test.RGBA16F, 4, 4);
+        test.bindFramebuffer(test.FRAMEBUFFER, test.createFramebuffer());
+        test.framebufferTexture2D(test.FRAMEBUFFER, test.COLOR_ATTACHMENT0, test.TEXTURE_2D, texture, 0);
+        if (test.checkFramebufferStatus(test.FRAMEBUFFER) != test.FRAMEBUFFER_COMPLETE) {
+            return "no: the graphics card refused a picture with numbers above 1";
+        }
+        return "yes";
+    }
+    catch (error) {
+        return "no: trying it out failed (" + error.message + ")";
+    }
+}
+
+// Decide how the picture is drawn, and get hold of the canvas in that way.
+// webGLStatus says what was decided and why: type it into the console of the browser to find out.
+var webGLStatus;
+if (/[?&]renderer=cpu/.test(window.location.search)) {
+    webGLStatus = "no: the address of the page ends in renderer=cpu (added by hand, or by the page itself after the graphics card turned out to be too slow)";
+}
+else webGLStatus = graphicsCardCanDrawThePicture();
+var useWebGL = (webGLStatus == "yes");
+var gl = null;              // the graphics card, if it is used
+var context2d = null;       // the ordinary way of drawing on a canvas, if it is not
+if (useWebGL) {
+    // The picture is see-through where there is no mist, so that the solid objects underneath it show
+    gl = canvas.getContext('webgl2', {alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false,
+                                      failIfMajorPerformanceCaveat: true});
+    if (!gl) {
+        useWebGL = false;
+        webGLStatus = "no: the graphics card worked on a test canvas but not on the real one";
+    }
+}
+if (!useWebGL) context2d = canvas.getContext('2d');
+
+// The finest scale which may be used on this device
+var imageScaleLimit = maxImageScale;    // (on the processor this is lowered if the device turns out to be too slow)
+if (useWebGL) imageScaleLimit = Math.min(maxImageScaleGL, gl.getParameter(gl.MAX_TEXTURE_SIZE) / bw);
+
+var imageScale, imageWidth, imageHeight;
+function setImageScale(newScale) {
+    imageScale  = Math.min(imageScaleLimit, Math.max(minImageScale, newScale));
+    imageWidth  = Math.round(bw * imageScale);
+    imageHeight = Math.round(bh * imageScale);
+    canvas.width  = imageWidth;
+    canvas.height = imageHeight;
+}
+
+// The scale to use on this screen at this moment
+function chooseImageScale() {
+    // The scale which would give exactly one image pixel per screen pixel: screen pixels across the chamber
+    // (which grow when the user zooms in), divided by canvas pixels across the chamber
+    const pinchZoom = (window.visualViewport && window.visualViewport.scale) || 1;
+    const matchingImageScale = canvas.clientWidth * (window.devicePixelRatio || 1) * pinchZoom / bw;
+
+    // On the graphics card: the finest scale if that is asked for, otherwise exactly the matching scale
+    // (rounded a little, so that a tiny change of the window changes nothing)
+    if (useWebGL && alwaysFinestImage) return imageScaleLimit;
+    if (useWebGL) return Math.min(imageScaleLimit, Math.max(minImageScale, Math.round(matchingImageScale * 20) / 20));
+
+    // On the processor: the finest of the scales 0.6, 0.8, 1.0 which is not (noticeably) finer than that.
+    // Anything in between costs more than the step below it for a gain which cannot be seen.
+    var chosen = minImageScale;
+    while (chosen + imageScaleStep <= Math.min(imageScaleLimit, matchingImageScale + 0.05) + 1e-9) chosen += imageScaleStep;
+    return chosen;
+}
+setImageScale(chooseImageScale());
 
 // Solid objects in the chamber (the radioactive sources) are drawn on a second canvas, underneath the picture
-// of the mist. It is drawn rarely, so it can afford one pixel per canvas pixel (see source_images.js).
+// of the mist (see source_images.js). It is drawn rarely, so it can afford at least one pixel per canvas pixel,
+// and more if the picture of the mist is finer than that, so that the objects are as sharp as the mist.
 var objectsCanvas = document.getElementById('objectsCanvas');
-objectsCanvas.width  = bw;
-objectsCanvas.height = bh;
 var objectsContext = objectsCanvas.getContext('2d');
+function sizeObjectsCanvas() {
+    const objectsScale = Math.max(1, imageScale);
+    objectsCanvas.width  = Math.round(bw * objectsScale);
+    objectsCanvas.height = Math.round(bh * objectsScale);
+    // Everything is still drawn in canvas pixels, and stretched onto the pixels of this canvas
+    objectsContext.setTransform(objectsScale, 0, 0, objectsScale, 0, 0);
+}
+sizeObjectsCanvas();
 
 // Camera and lighting (see image_class.js)
 const exposure = 1.3;               // how quickly light turns into brightness: brightness = 1 - exp(-exposure * light)
 const exposureTableMax = 8;         // light above this amount is treated as this amount (it is fully white anyway)
-const glowStrength = 0.35;          // fraction of the light which is spread out into a soft glow around its source
-const glowCell = 4;                 // the glow is worked out on a grid of cells of this many image pixels, so it is a few cells wide
+const glowStrength = 0.25;          // fraction of the light which is spread out into a soft glow around its source
+// Size of the round spot which a droplet makes in the picture (at resolutions above referenceImageScale, where there
+// are enough pixels to draw one). The radius of the spot is this many times 1.67 canvas pixels. A smaller spot is
+// brighter in its centre, since it holds the same light: crisper droplets. A larger one gives softer, mistier droplets.
+// On the processor, below about 1 the spot becomes too small for the pixels to draw it evenly.
+// (This is for the picture drawn by the processor. The graphics card draws crisp droplets instead, see below.)
+const dropletSpotRadius = 1.15;
+// On the graphics card there are enough pixels to draw a droplet as what it is: a tiny, evenly bright disc with
+// a sharp edge, which stays sharp when the user zooms in. Its radius is in canvas pixels (0.6 is 0.08 mm in the
+// 20 cm wide chamber, about the size of the dots in the old animations made with Python).
+// A droplet always scatters the same light, so a smaller disc is a brighter one.
+const crispDropletRadius = 0.6;
+// How soft the edge of that disc is: 0 is a perfectly sharp edge, 1 is a spot which fades all the way from its centre.
+// The brightness falls from full to nothing between (1 - softness) and (1 + softness) times the radius.
+const crispDropletSoftness = 0.5;
+const glowCell = 4;                 // the glow is worked out on a grid of cells of this many image pixels (at referenceImageScale), so it is a few cells wide
 const lampFalloff = 0.3;            // the lamp is on the left: droplets at the right edge receive this much less light
 const mistColour = 0xfff4ea;        // colour of the droplets as blue, green, red (two hex digits each): white, slightly cool
 
@@ -58,7 +189,7 @@ const flowCell = 15 * scale;        // distance between the grid points on which
 // Everything seen in the chamber is made of individual droplets, each with its own life (see droplet_class.js).
 // A droplet appears, is carried along by the gas, and fades away as it sinks out of the sensitive layer.
 // Times are in seconds on the droplet clock.
-const dropletTwinkle = 0.3;         // fraction of a droplet's brightness which flickers from frame to frame
+const dropletTwinkle = 0.15;        // fraction of a droplet's brightness which flickers from frame to frame
 const dropletGrowTime = 0.08;       // time a droplet takes to appear
 const dropletLifeMin = 1.0;         // shortest life of a droplet on a track
 const dropletLifeMax = 2.6;         // longest
@@ -100,6 +231,11 @@ const trailWobbleLength = 40 * scale/5; // canvas pixels of path over which the 
 //      trail width        = mipTrailSigma       * ionisation^0.15 * (1 + ionisation/ionisationKnee)^0.35
 // Below the knee the trail grows slowly with ionisation, above it (alphas) the number of droplets grows in proportion.
 const mipDropletsPerPixel = 0.6;    // droplets per canvas pixel of path for ionisation = 1 (sparse enough to look beaded)
+// A track can be made of fewer, brighter droplets or of more, fainter ones, with the same amount of light in total.
+// trackFineness multiplies the number of droplets on a track and divides the brightness of each by the same factor:
+// 1 gives a grainy track made of distinct specks, higher values give a smoother thread of mist (and cost more to draw).
+// Droplets are cheap for the graphics card, and cost the processor more, so the processor version uses fewer.
+const trackFineness = useWebGL ? 7 : 3;
 const mipTrailSigma = 0.75 * scale/5;   // spread of droplets across the trail for ionisation = 1 (canvas pixels)
 const ionisationKnee = 1100;
 const ionisationCap = 4000;         // largest ionisation, reached by particles which have almost stopped

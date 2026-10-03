@@ -39,8 +39,10 @@ class CloudChamber {
         // Start with a chamber which has been running for a while
         for (let n = 0; n < backgroundCount; n++) this.addBackgroundDroplet(true);
 
-        // Radioactive source of alphas in the middle of the chamber, switched on and off by a button
-        this.alphaSourceOn = false;
+        // Radioactive source in the middle of the chamber: the name of the active one (see sources in header.js), or null
+        this.activeSource = null;
+        // Things which are due to happen a little later, as {wait: seconds on the droplet clock, action: function}
+        this.pending = [];
 
         // Simulation clock: each frame, simulation time advances by (real time since last frame) * ticksPerSecond.
         // Droplet clock: each frame, droplets age by (real time since last frame) * dropletClockRate.
@@ -59,7 +61,18 @@ class CloudChamber {
         return particle;
     }
 
-    generateRandomParticle(species) {
+    // A particle of this species enters the chamber from a random side.
+    // willDecay (optional, muons only): true for a slow muon which stops inside the chamber and decays, false for
+    // an ordinary fast one. If left out, this is decided at random (see muonDecayChance in header.js).
+    generateRandomParticle(species, willDecay) {
+        if (species == 2 || species == 3) {
+            if (willDecay === undefined) willDecay = (Math.random() < muonDecayChance);
+            if (willDecay) {
+                this.generateStoppingMuon(species);
+                return;
+            }
+        }
+
         // Create placeholders for initial properties
         var x   = 0;
         var y   = 0;
@@ -142,8 +155,17 @@ class CloudChamber {
     //     this.particleCount = Math.sum(this.particleCountArray)
     // }
 
-    // An electron is knocked out of the gas by a gamma ray: it starts anywhere in the chamber, in any direction on screen
-    generateGammaElectron() {
+    // A gamma ray from the surroundings does something in the chamber. The gamma ray itself leaves no track.
+    // makesPair (optional): true if it turns into an electron and a positron, false if it knocks an electron out of the gas.
+    // If left out, this is decided at random (see gammaPairChance in header.js).
+    generateGamma(makesPair) {
+        if (makesPair === undefined) makesPair = (Math.random() < gammaPairChance);
+        if (makesPair) {
+            this.generatePair();
+            return;
+        }
+
+        // The electron starts anywhere in the chamber, in any direction on screen
         const x = bw * Math.random();
         const y = bh * Math.random();
         const z = layerThickness * Math.random();
@@ -166,10 +188,13 @@ class CloudChamber {
                 return;
             }
         }
-        this.generateGammaElectron();
+        this.generateGamma();
     }
 
     //---------- Events ---------------------------------------------------------------------------------------------------------------
+    // These are not called by the buttons directly. They are possible outcomes of generateGamma() and of
+    // generateRandomParticle() for a muon, and the event buttons ask those two for this outcome.
+
     // Pair production: an electron and a positron appear at the same point, moving in nearly the same direction.
     // In a magnetic field they curl away from each other.
     generatePair() {
@@ -194,9 +219,8 @@ class CloudChamber {
 
     // Muon decay: a slow muon enters through the upper face of the layer, slows down and stops in the middle of the layer.
     // Its track gets thicker as it slows. Where it stops, a fast electron (or positron, for a positive muon) flies off.
-    generateMuonDecay() {
-        const species = (Math.random() < 0.5) ? 2 : 3;
-
+    // species: 2 for a negative muon, 3 for a positive one
+    generateStoppingMuon(species) {
         // Where it stops, and the direction on screen in which it travels
         const stop_x = bw * getRandom(0.3, 0.7);
         const stop_y = bh * getRandom(0.3, 0.7);
@@ -233,27 +257,129 @@ class CloudChamber {
         };
     }
 
-    // The alpha source sends out one alpha, in a random direction, starting at its surface
-    emitFromAlphaSource() {
+    //---------- Radioactive sources --------------------------------------------------------------------------------------------------
+    // Switch to this source (a name from sources in header.js), or to no source at all with null
+    setSource(sourceName) {
+        this.activeSource = sourceName;
+        // A source which has a direction is put into the chamber in a new, random direction every time it is switched on
+        if (sourceName !== null && sources[sourceName].angle !== undefined) {
+            sources[sourceName].angle = twoPI * Math.random();
+        }
+        drawSourceImage(sourceName);
+    }
+
+    // Send out a particle in a random direction (with the usual limited angle to the layer).
+    // upwardOnly (optional): true for a particle which leaves an object on the floor, and so can only travel upwards
+    emitInRandomDirection(species, x, y, z, beta, startDistance, upwardOnly) {
         const direction = twoPI * Math.random();
-        const sinDip = getRandom(-dipSpread, dipSpread);
+        const sinDip = getRandom(upwardOnly ? 0 : -dipSpread, dipSpread);
         const cosDip = Math.sqrt(1 - sinDip*sinDip);
         const dir_x = cosDip * Math.cos(direction);
         const dir_y = cosDip * Math.sin(direction);
-        this.generateParticle(4, 0.5 * bw + alphaSourceRadius * dir_x, 0.5 * bh + alphaSourceRadius * dir_y,
-                              alphaSourceBeta * dir_x, alphaSourceBeta * dir_y, 0.5 * layerThickness, alphaSourceBeta * sinDip);
+        this.generateParticle(species, x + startDistance * dir_x, y + startDistance * dir_y, beta * dir_x, beta * dir_y, z, beta * sinDip);
     }
 
-    // The source itself is a solid speck which the lamp lights up: a small, evenly lit disc
-    drawAlphaSource() {
-        const step = 1 / imageScale;    // one image pixel, in canvas pixels
-        for (let dy = -alphaSourceRadius; dy <= alphaSourceRadius; dy += step) {
-            for (let dx = -alphaSourceRadius; dx <= alphaSourceRadius; dx += step) {
-                if (dx*dx + dy*dy <= alphaSourceRadius*alphaSourceRadius) {
-                    this.image.addLight(0.5 * bw + dx, 0.5 * bh + dy, alphaSourceLight);
-                }
+    // A random point on the rod of this source, as seen on screen: anywhere along its length and across its thickness
+    randomPointOnRod(source) {
+        const along  = source.length    * bw * getRandom(-0.5, 0.5);
+        const across = source.thickness * bw * getRandom(-0.5, 0.5);
+        const cos_a = Math.cos(source.angle);
+        const sin_a = Math.sin(source.angle);
+        return {x: 0.5 * bw + along * cos_a - across * sin_a,
+                y: 0.5 * bh + along * sin_a + across * cos_a};
+    }
+
+    // The active source sends out one particle, starting at its surface
+    emitFromSource() {
+        const source = sources[this.activeSource];
+        const x = 0.5 * bw;
+        const y = 0.5 * bh;
+        const z = 0.5 * layerThickness;
+
+        // Alpha source: one of its alpha energies, each as often as its share says
+        if (source.alphaEnergies) {
+            const energy = pickByShare(source.alphaEnergies, source.alphaShares);
+            const beta = betaFromEnergy(energy, alphaRestEnergy);
+
+            if (source.shape == "button") {
+                // From the edge of the foil in the centre of the button, upwards
+                this.emitInRandomDirection(4, x, y, sourceFloorDepth, beta, source.foilRadius * bw, true);
+            }
+            if (source.shape == "rod") {
+                // From anywhere on the rod, upwards
+                const point = this.randomPointOnRod(source);
+                this.emitInRandomDirection(4, point.x, point.y, sourceFloorDepth, beta, 0, true);
             }
         }
+
+        // Beta source: an electron or positron with a random energy below the endpoint of one of its decays.
+        // It leaves the point of the needle, which is in the middle of the chamber and half way through the layer.
+        if (source.betaEndpoints) {
+            const endpoint = source.betaEndpoints[Math.floor(Math.random() * source.betaEndpoints.length)];
+            const energy = randomBetaEnergy(endpoint);
+            this.emitInRandomDirection(source.betaSpecies, x, y, z, betaFromEnergy(energy, electronRestEnergy), source.thickness * bw);
+        }
+
+        // Gamma source: an electron knocked out of the gas by a gamma ray
+        if (source.gammaEnergy) this.generateComptonElectron(source);
+    }
+
+    // Compton scattering: a gamma ray from the source hits an electron of the gas somewhere in the chamber.
+    // The gamma ray is deflected by some angle and carries on unseen, the electron recoils and leaves a track.
+    generateComptonElectron(source) {
+        // Where: gamma rays thin out with distance, but further out there is more gas at that distance.
+        // In a thin layer the two cancel, so every distance from the source is equally likely.
+        var x, y, away_x, away_y;
+        do {
+            const distance = getRandom(0.5 * source.length * bw, source.gammaReach * bw);
+            const direction = twoPI * Math.random();
+            away_x = Math.cos(direction);       // direction of the gamma ray
+            away_y = Math.sin(direction);
+            x = 0.5 * bw + distance * away_x;
+            y = 0.5 * bh + distance * away_y;
+        } while (x < 0 || x > bw || y < 0 || y > bh);
+        const z = layerThickness * Math.random();
+
+        // How hard the electron is hit depends on the angle by which the gamma ray is deflected.
+        // Conservation of energy and momentum gives the energy of the electron and the angle at which it leaves.
+        const gammaOverRest = source.gammaEnergy / electronRestEnergy;
+        var beta, electronAngle;
+        do {
+            const cosDeflection = getRandom(-1, 1);
+            const transfer = gammaOverRest * (1 - cosDeflection);
+            const energy = source.gammaEnergy * transfer / (1 + transfer);
+            const tanHalf = Math.sqrt((1 - cosDeflection) / (1 + cosDeflection + 1e-9));
+            electronAngle = Math.atan(1 / ((1 + gammaOverRest) * tanHalf + 1e-9));     // between the electron and the gamma ray
+            beta = betaFromEnergy(energy, electronRestEnergy);
+        } while (beta < deltaBetaMin);      // too slow to leave a visible track: try again
+
+        // The electron leaves at that angle from the gamma ray, in a random direction around it
+        const around = twoPI * Math.random();
+        const forward = Math.cos(electronAngle);
+        const sideways = Math.sin(electronAngle) * Math.cos(around);    // on screen, perpendicular to the gamma ray
+        const depth    = Math.sin(electronAngle) * Math.sin(around);    // along the depth
+        this.generateParticle(0, x, y,
+                              beta * (forward * away_x - sideways * away_y), beta * (forward * away_y + sideways * away_x),
+                              z, beta * depth);
+    }
+
+    // Thoron: two alphas from the same spot in the gas near the source, the second a moment after the first
+    generateThoronPair(source) {
+        // The gas escapes from somewhere on the rod and spreads out from there
+        const escape = this.randomPointOnRod(source);
+        var x, y;
+        do {
+            x = escape.x + source.thoronSpread * bw * randomGaussian();
+            y = escape.y + source.thoronSpread * bw * randomGaussian();
+        } while (x < 0 || x > bw || y < 0 || y > bh);
+        const z = layerThickness * Math.random();
+
+        this.emitInRandomDirection(4, x, y, z, betaFromEnergy(source.thoronEnergies[0], alphaRestEnergy), 0);
+        // Radioactive decay: the wait is random, usually shorter than the average and now and then much longer
+        const wait = -Math.log(1 - Math.random()) * source.thoronDelay;
+        this.pending.push({wait: wait, action: () => {
+            this.emitInRandomDirection(4, x, y, z, betaFromEnergy(source.thoronEnergies[1], alphaRestEnergy), 0);
+        }});
     }
 
     // A mist droplet condenses somewhere in the chamber without the help of a particle
@@ -296,11 +422,19 @@ class CloudChamber {
         this.flow.update(clockStep);
         this.mistPatches.update(clockStep);
 
-        // Alpha source: the chance of an alpha during this frame is (alphas per second) * (seconds on the droplet clock)
-        if (this.alphaSourceOn) {
-            if (Math.random() < alphaSourceRate * clockStep) this.emitFromAlphaSource();
-            this.drawAlphaSource();
+        // Active source: the chance of a particle during this frame is (particles per second) * (seconds on the droplet clock)
+        if (this.activeSource !== null) {
+            const source = sources[this.activeSource];
+            if (Math.random() < source.rate * clockStep) this.emitFromSource();
+            if (source.thoronRate && Math.random() < source.thoronRate * clockStep) this.generateThoronPair(source);
         }
+
+        // Things which were due to happen later: count down, and do the ones whose time has come
+        for (const item of this.pending) {
+            item.wait -= clockStep;
+            if (item.wait <= 0) item.action();
+        }
+        this.pending = this.pending.filter((item) => item.wait > 0);
 
         // Fly each particle of each species, which creates new droplets along its path
         for (let species = 0; species < this.numSpecies; species ++){
@@ -339,6 +473,9 @@ class CloudChamber {
         // Droplets age in real time at top speed. In slow motion they are slowed down too, but less than the particles
         // (see dropletSlowMotion), so that a track being drawn slowly stays visible for a good part of its length.
         this.dropletClockRate = Math.pow(this.ticksPerSecond / maxTicksPerSecond, dropletSlowMotion);
+
+        // Tell the user what this setting means
+        updateSpeedReadout(this);
     }
 
     start() {
@@ -364,7 +501,7 @@ class CloudChamber {
             if (randomButtonTimeoutID && randomButtonTimeoutID !== "paused") {
                 clearTimeout(randomButtonTimeoutID);
                 randomButtonTimeoutID = "paused";
-                randomButton.style.backgroundColor = '#ffaa00'; // Different color for paused
+                updateRandomButton();
             }
         } else {
             this.start();
@@ -382,12 +519,13 @@ class CloudChamber {
         if (randomButtonTimeoutID && randomButtonTimeoutID !== null) {
             clearTimeout(randomButtonTimeoutID);
             randomButtonTimeoutID = null;
-            randomButton.style.backgroundColor = '';
+            updateRandomButton();
         }
         
-        // Switch the alpha source off
-        this.alphaSourceOn = false;
-        updateAlphaSourceButton();
+        // Switch the source off, and forget what was still due to happen
+        this.setSource(null);
+        this.pending = [];
+        updateSourceButtons();
 
         // Clear all particles and the droplets of their tracks
         for (var species = 0; species < this.numSpecies; species++) {

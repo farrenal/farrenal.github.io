@@ -10,10 +10,10 @@ body{margin:0;background:#888;}
 </style>
 </head>
 <body>
-<div class="gif-container"><canvas class="responsive-canvas" id="particlesCanvas"></canvas></div>
+<div class="gif-container"><canvas class="responsive-canvas" id="objectsCanvas"></canvas><canvas class="responsive-canvas" id="particlesCanvas"></canvas></div>
 <p id="debugText"></p><p id="debuggText"></p><p id="debugggText"></p>
 <input type="range" min="1" max="100" value="100" id="speedSlider">
-<div id="randomButton"></div><div id="pausePlay"><i></i></div>
+<button id="randomButton"></button><button id="pausePlay"><i></i></button>
 <pre id="out"></pre>
 <script>
 window.$ = function(){ return {toggleClass(){}, attr(){}}; };
@@ -22,6 +22,7 @@ window.requestAnimationFrame = () => 0;     // frames are driven by hand below
 <script src="header.js"></script>
 <script src="flow_class.js"></script>
 <script src="image_class.js"></script>
+<script src="source_images.js"></script>
 <script src="droplet_class.js"></script>
 <script src="particle_class.js"></script>
 <script src="cloudchamber_class.js"></script>
@@ -82,13 +83,16 @@ if (randomCount > 0) {
     const mix = [0, 1, 0, 2, 0, 3, 1, 4, 0, 5];
     for (let n = 0; n < randomCount; n++) theCC.generateRandomParticle(mix[n % mix.length]);
 }
-// With ?event=pair, ?event=decay or ?event=source the scene is that event (three of them, or the source left on)
+// With ?event=pair or ?event=decay the scene is three of that event. With ?source=Am-241 (or another name) that source is on.
 const eventName = params.get('event');
 if (eventName) {
     theCC.particlesArray.forEach(list => list.length = 0);
-    if (eventName == 'pair')    for (let n = 0; n < 3; n++) theCC.generatePair();
-    if (eventName == 'decay')   for (let n = 0; n < 3; n++) theCC.generateMuonDecay();
-    if (eventName == 'source')  theCC.alphaSourceOn = true;
+    if (eventName == 'pair')    for (let n = 0; n < 3; n++) theCC.generateGamma(true);
+    if (eventName == 'decay')   for (let n = 0; n < 3; n++) theCC.generateRandomParticle(2 + n % 2, true);
+}
+if (params.get('source')) {
+    theCC.particlesArray.forEach(list => list.length = 0);
+    theCC.setSource(params.get('source'));
 }
 // With ?natural=S the scene is S seconds of particles arriving at the natural rates
 const naturalSeconds = Number(params.get('natural') || 0);
@@ -104,6 +108,20 @@ if (naturalSeconds > 0) {
     }
     theCC.lastFrameTime = null;
     log("natural arrivals in " + naturalSeconds + " s: " + arrivals);
+}
+// Outcomes chosen at random: count them over many muons and gamma rays, without flying anything
+{
+    const before = theCC.particlesArray.map(list => list.slice());
+    let muonsStopping = 0, pairs = 0;
+    const trials = 20000;
+    const realStopping = theCC.generateStoppingMuon, realPair = theCC.generatePair, realParticle = theCC.generateParticle;
+    theCC.generateStoppingMuon = () => { muonsStopping++; };
+    theCC.generatePair = () => { pairs++; };
+    theCC.generateParticle = () => null;
+    for (let n = 0; n < trials; n++) { theCC.generateRandomParticle(2); theCC.generateGamma(); }
+    theCC.generateStoppingMuon = realStopping; theCC.generatePair = realPair; theCC.generateParticle = realParticle;
+    theCC.particlesArray = before;
+    log("of " + trials + " muons, " + muonsStopping + " decay in the chamber (expected " + trials * muonDecayChance + "); of " + trials + " gamma rays, " + pairs + " make a pair (expected " + trials * gammaPairChance + ")");
 }
 log("slider " + sliderValue + ": ticks per second " + theCC.ticksPerSecond.toFixed(1) + ", droplet clock rate " + theCC.dropletClockRate.toFixed(3));
 

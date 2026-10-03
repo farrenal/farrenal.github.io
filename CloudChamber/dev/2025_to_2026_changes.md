@@ -26,6 +26,7 @@ All open problems listed in `web_claude_summary.md` under "Trail rendering and a
 | `cloudchamber_class.js` | `CloudChamber`: clocks, frame loop, particle generation, events | heavily changed |
 | `helper_functions.js` | `depositDroplets`, button handlers, Random loop | heavily changed |
 | `index.html`, `CC_styles.css` | Page and control panel | control panel rearranged, background gif removed |
+| `source_images.js` | Pictures of the solid sources, drawn on a canvas underneath the mist | new |
 | `_test_harness.html` | Test page, not part of the site (see section 9) | new |
 
 Snapshots: `decent_2025/` is the 2025 code. `before_depth/` is the 2026 code just before depth, mist rendering and the moving gas were added (flat motion, sharp pixel droplets, clean spirals).
@@ -39,6 +40,7 @@ Snapshots: `decent_2025/` is the 2025 code. `before_depth/` is the 2026 code jus
 - **Simulation clock.** Each frame, simulation time advances by (real time since the last frame) $\times$ `ticksPerSecond`. The slider maps logarithmically onto 2 to 4000 ticks per second. At the top setting a track appears within a frame or two, which is the "realistic" instantaneous look.
 - **Fixed substeps.** Each particle chooses one substep at birth, small enough that it never moves more than 4 canvas pixels or turns more than 0.02 rad. The slider only decides how many substeps run per frame (often zero in slow motion, thousands at top speed). The trajectory is therefore identical at every slider setting. This resolves the central problem of the 2025 work: spiral shape is independent of animation speed.
 - **Droplet clock.** Droplets age on a second clock. At top speed it runs in real time. In slow motion it is slowed by the factor (`ticksPerSecond` / `maxTicksPerSecond`)$^{0.5}$, so droplets are slowed less than particles and a slowly drawn track stays visible for a good part of its length (`dropletSlowMotion`).
+- **Readout.** One tick stands for 78 ps of real time (from the 20 cm chamber and the speed of light in the simulation), so the slider runs from about 3 million times slower than reality at the top to 6 billion times slower at the bottom. The playback panel shows this as "particles 140 million × slower", or "real time" at the top, where a track forms within one frame. The slider's tooltip adds how much the mist is slowed.
 - The frame loop uses the time stamp of `requestAnimationFrame`, so it works at any refresh rate.
 
 ## 4. Physics
@@ -133,16 +135,21 @@ The image is 900 by 540 pixels (`imageScale` = 0.6), independent of the simulati
 
 ## 8. Random mode, events and the control panel
 
-- **Natural rates.** Random mode sends particles at sea-level rates for a 20 cm by 12 cm chamber, with random (exponentially distributed) waits: muons 3.6 per second, cosmic electrons and positrons 1.0, electrons from background gamma rays 1.5 (the least certain number), protons 0.05, alphas 0.035. Gamma electrons start anywhere in the chamber. In slow motion the arrivals are slowed with the droplet clock.
+- **Natural rates.** Random mode sends particles at sea-level rates for a 20 cm by 12 cm chamber, with random (exponentially distributed) waits: muons 3.6 per second, cosmic electrons and positrons 1.0, background gamma rays which interact in the chamber 1.5 (the least certain number), protons 0.05, alphas 0.035. A gamma ray nearly always knocks out an electron, which starts anywhere in the chamber. In slow motion the arrivals are slowed with the droplet clock.
+- **Outcomes decided at creation.** Every muon is created with a random yes or no for "is slow, stops in the chamber and decays" (`muonDecayChance`), and every gamma ray with a random choice between knocking out an electron and making a pair (`gammaPairChance`). Both chances are set to 3 %, far above their natural values, so that these events turn up now and then in Random mode and when sending in muons by hand. The event buttons create the same muon or gamma ray with the outcome fixed.
 - **Events.**
   - *Pair production*, $\gamma \to e^+e^-$: an electron and a positron from one point, curling opposite ways in the field.
   - *Muon decay*, $\mu \to e\,\nu\bar\nu$: a slow muon whose speed is computed from the energy loss law so that it stops in mid-chamber, followed by a fast electron from the stopping point. This uses a new `whenStopped` hook on `Particle`.
-  - *Alpha source* (toggle): a lit speck in the centre emitting about 3 alphas per second at 5.5 MeV.
-- **Control panel.** Left column: magnetic field, animation controls, and a wide "Random particles" toggle. Right column: "Send in particle" and "Activate event". The stop button also switches the alpha source off.
+- **Radioactive sources** (toggles, one active at a time), in the centre of the chamber. Each is drawn as the real object, on a second canvas underneath the mist (`source_images.js`): americium as a smoke detector button with a gold foil, thorium as a thoriated welding rod with a red tip, strontium and sodium as needle sources in a cork and a blue plastic handle, caesium as a sealed steel capsule. All but the button take a new random direction each time they are switched on, and are shaded according to where the lamp is. The button and the rod lie on the floor and send their alphas upwards into the sensitive layer, from the foil and from anywhere along the rod. The needles send electrons from their point.
+  - *Am-241* ($\alpha$): alphas of a single energy, 5.49 MeV.
+  - *Th-232* ($\alpha$): alphas of five energies from the decay chain, plus thoron "V" tracks, two alphas from one point in the gas a fraction of a second apart.
+  - *Sr-90* ($\beta^-$) and *Na-22* ($\beta^+$): electrons or positrons drawn from a continuous beta spectrum.
+  - *Cs-137* ($\gamma$): Compton electrons appearing anywhere in the chamber, with energy and angle from Compton kinematics.
+- **Control panel.** Two columns of three panels under the chamber, each a small label and one row of equally wide buttons, with no boxes around them. Left: magnetic field, playback (speed, pause, clear), natural background (the "Random particles" toggle). Right: "Send in particle", "Activate event", "Activate source". Buttons are white until pressed: toggles which are on are gold, the selected field is grey, a paused animation is orange, and one-shot buttons flash for a moment (red for a negative particle, blue for a positive one, green for an event). The clear button also switches the source off.
 
 ## 9. Testing
 
-`_test_harness.html` loads the real scripts with a hand-driven frame clock, so scenes are reproducible in headless Chrome. It reports two numerical checks (speed conservation, and circle radius against $\gamma m v/(qB)$) and takes URL parameters: `speed`, `frames`, `field`, `random=N`, `natural=S`, `event=pair|decay|source`, `timing=1`. It should not be deployed.
+`_test_harness.html` loads the real scripts with a hand-driven frame clock, so scenes are reproducible in headless Chrome. It reports two numerical checks (speed conservation, and circle radius against $\gamma m v/(qB)$) and takes URL parameters: `speed`, `frames`, `field`, `random=N`, `natural=S`, `event=pair|decay`, `source=Am-241` (or another source name), `timing=1`. It should not be deployed.
 
 Everything in this document was verified with that page and with screenshots of `index.html`. Nothing was tested on a phone.
 
@@ -153,7 +160,7 @@ Everything in this document was verified with that page and with screenshots of 
 - **Trail response** to ionisation is compressed (section 4.2).
 - **Ranges** run up to twice the real values, because the logarithmic term of the Bethe formula is omitted.
 - **Delta rays and gamma electrons** do not come with the photon or the nucleus that caused them, and the muon in a decay event decays the moment it stops.
-- **Not yet done:** rare large-angle scattering kinks, depletion of the vapour by earlier tracks, Compton and beta sources, the thoron "V" double alpha, device-pixel-ratio handling, and tests on phones.
+- **Not yet done:** rare large-angle scattering kinks, depletion of the vapour by earlier tracks, device-pixel-ratio handling, and tests on phones.
 
 ## 11. A visual artefact seen along the way (obsolete)
 

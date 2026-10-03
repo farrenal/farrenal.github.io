@@ -22,6 +22,13 @@ const imageHeight = Math.round(bh * imageScale);
 canvas.width  = imageWidth;
 canvas.height = imageHeight;
 
+// Solid objects in the chamber (the radioactive sources) are drawn on a second canvas, underneath the picture
+// of the mist. It is drawn rarely, so it can afford one pixel per canvas pixel (see source_images.js).
+var objectsCanvas = document.getElementById('objectsCanvas');
+objectsCanvas.width  = bw;
+objectsCanvas.height = bh;
+var objectsContext = objectsCanvas.getContext('2d');
+
 // Camera and lighting (see image_class.js)
 const exposure = 1.3;               // how quickly light turns into brightness: brightness = 1 - exp(-exposure * light)
 const exposureTableMax = 8;         // light above this amount is treated as this amount (it is fully white anyway)
@@ -139,6 +146,12 @@ const lightSpeed = 35 * scale;      // canvas pixels per tick, so beta = speed /
 const stopBeta = 0.015;             // a particle which has slowed down to this beta has stopped
 const magScale = 32 * scale;        // an electron turns by magScale * dt / gamma radians per tick
 
+// Real units: the chamber is 20 cm wide (see the energy loss section), and light covers lightSpeed canvas pixels per tick,
+// which fixes how much real time one tick stands for (78 picoseconds)
+const chamberWidthMetres = 0.2;
+const realLightSpeed = 299792458;   // metres per second
+const secondsPerTick = (lightSpeed / bw) * chamberWidthMetres / realLightSpeed;
+
 // Simulation clock: the speed slider sets how many ticks of simulation time pass per second of real time.
 // It never changes the physics, only how fast we watch it.
 const minTicksPerSecond = 2;      // slider at 1:   slow motion, watch the spirals being drawn
@@ -180,31 +193,113 @@ const properties = [[ -1,      m_e,    0.35,          0.85 ],       // e-
 //      Cosmic electrons:   the soft part of the cosmic rays, about a quarter of the total.
 //      Cosmic protons:     1 to 2 percent of the total.
 //      Alphas:             from radon in the air (20 to 100 decays per second per cubic metre indoors).
-//      Gamma electrons:    electrons knocked out of the gas and the walls by gamma rays from the surroundings.
-//                          They start anywhere in the chamber, in any direction on screen, and are fairly slow.
+//      Gamma rays:         gamma rays from the surroundings leave no track themselves. We only count the ones which
+//                          do something in the chamber: nearly always they knock an electron out of the gas or the
+//                          walls, which starts anywhere in the chamber, in any direction on screen, and is fairly slow.
 //                          This rate is the least certain one, it depends on what the chamber and the room are made of.
 // Rates are per second, in the same order as the properties: e-, e+, mu-, mu+, alpha, proton
 const naturalRates = [0.6, 0.4, 1.6, 2.0, 0.035, 0.05];
-const gammaElectronRate = 1.5;
-const gammaElectronBetaMin = 0.3;   // range of speeds of gamma electrons
+const gammaRate = 1.5;
+const gammaElectronBetaMin = 0.3;   // range of speeds of the electrons knocked out by gamma rays
 const gammaElectronBetaMax = 0.7;
 
-// Events (the "Activate event" buttons)
+// Outcomes: what happens to a particle is decided at random when it is created.
+// The "Activate event" buttons create the same particles, but with the outcome fixed.
+// Both chances are far higher here than in nature, so that these events turn up now and then:
+//      - only about 1 in 100000 cosmic muons is slow enough to stop in 1.5 cm of gas;
+//      - only gamma rays above 1.02 MeV can make a pair at all, and even those rarely do.
+const muonDecayChance = 0.03;       // chance that a muon is a slow one, which stops inside the chamber and decays
+const gammaPairChance = 0.03;       // chance that a gamma ray makes an electron-positron pair instead of knocking out an electron
+
+// Events
 // Pair production: a gamma ray, which we cannot see, turns into an electron and a positron in the middle of the gas
 const pairBetaMin = 0.75;           // range of speeds of the two particles
 const pairBetaMax = 0.95;
 const pairAngleMin = 0.05;          // range of the angle between each particle and the direction of the gamma ray (radians)
 const pairAngleMax = 0.2;
-// Muon decay: a slow muon stops inside the chamber. It then decays into an electron (and two neutrinos, which we cannot see)
+// Muon decay: a slow muon stops inside the chamber. It then decays into an electron (and two neutrinos, which we cannot see).
+// A fast muon also decays in the end, but long after it has left the chamber.
 const decayMuonRangeMin = 0.3;      // how far the muon travels in the chamber before it stops, as a fraction of the chamber width
 const decayMuonRangeMax = 0.5;
 const decayElectronBeta = 0.98;     // the electron is very fast: it takes up to half of the rest energy of the muon
-// Alpha source: a speck of radioactive material (such as americium-241) in the middle of the chamber.
-// All of its alphas have the same energy, so their tracks all have the same length.
-const alphaSourceRate = 3;          // alphas per second
-const alphaSourceBeta = 0.054;      // 5.5 MeV
-const alphaSourceRadius = 1.6 * scale;  // size of the speck, canvas pixels (1 mm)
-const alphaSourceLight = 0.5;       // how bright the speck itself appears
+
+// Radioactive sources (the "Activate source" buttons). A source is a solid object in the middle of the chamber
+// (their pictures are in source_images.js). Only one source is active at a time.
+// Energies are kinetic energies in MeV, as found in tables of radioactive decays. Sizes are fractions of the chamber width.
+// Every source except the round button is put into the chamber in a new, random direction each time it is
+// switched on: that direction is its angle (radians, 0 is to the right).
+//
+// The button and the rod lie on the floor of the chamber, just below the sensitive layer.
+// Their alphas start at the surface of the object and travel upwards into the layer.
+const sourceFloorDepth = 0.15 * layerThickness;     // depth at which particles leave an object on the floor
+const electronRestEnergy = 0.511;   // MeV
+const alphaRestEnergy = 3727;       // MeV
+const sources = {
+    // Americium-241: every alpha has the same energy, so every track has the same length (unless it leaves the layer)
+    "Am-241": {
+        rate: 3,                                    // particles per second
+        alphaEnergies: [5.49],
+        alphaShares:   [1],
+        shape: "button",                            // a metal button as found in a smoke detector...
+        radius: 0.0125,                             // ...5 mm across...
+        foilRadius: 0.005                           // ...with the americium in a foil 2 mm across in its centre
+    },
+    // Thorium-232 with all of its decay products (a thoriated welding rod, a gas mantle): six different alphas,
+    // from 2.5 cm to 12 cm long here. One of the products is a gas, thoron (radon-220), which escapes from the rod.
+    // A thoron atom emits an alpha somewhere in the gas and becomes polonium-216, which emits a second alpha
+    // from the same spot a fraction of a second later: two tracks in the shape of a V.
+    "Th-232": {
+        rate: 3,
+        alphaEnergies: [4.01, 5.42, 5.69, 6.05, 8.78],    // Th-232, Th-228, Ra-224, Bi-212, Po-212
+        alphaShares:   [1,    1,    1,    0.36, 0.64],
+        thoronRate: 0.6,                            // V's per second
+        thoronSpread: 0.12,                         // how far the gas spreads from the rod
+        thoronEnergies: [6.29, 6.78],               // Rn-220, then Po-216
+        thoronDelay: 0.21,                          // average wait for the second alpha, seconds (half-life 0.145 s)
+        shape: "rod",                               // a thoriated welding rod: alphas leave it anywhere along its length
+        length: 0.25,                               // 5 cm
+        thickness: 0.012,                           // 2.4 mm
+        angle: 0                                    // direction in which its red tip points
+    },
+    // Strontium-90 (and its decay product yttrium-90): electrons. In a beta decay the energy is shared at random
+    // with a neutrino, so the electrons have every energy from zero up to the endpoint energy of the decay.
+    "Sr-90": {
+        rate: 4,
+        betaSpecies: 0,                             // e-
+        betaEndpoints: [0.546, 2.28],               // Sr-90, Y-90 (equally often)
+        shape: "needle",                            // a steel needle with the strontium on its point, which is in the middle
+        length: 0.22,                               // of the chamber, half way through the sensitive layer. 4.4 cm long...
+        thickness: 0.005,                           // ...1 mm thick...
+        handle: "cork",                             // ...and stuck in a cork
+        handleLength: 0.07,
+        handleThickness: 0.035,
+        angle: 0                                    // direction from the point towards the handle
+    },
+    // Sodium-22: the same, with positrons
+    "Na-22": {
+        rate: 4,
+        betaSpecies: 1,                             // e+
+        betaEndpoints: [0.546],
+        shape: "needle",                            // the same needle, in a blue plastic handle
+        length: 0.22,
+        thickness: 0.005,
+        handle: "plastic",
+        handleLength: 0.07,
+        handleThickness: 0.035,
+        angle: 0
+    },
+    // Caesium-137: gamma rays, which leave no track. Now and then one of them knocks an electron out of the gas
+    // (Compton scattering), anywhere in the chamber, and that electron is what we see.
+    "Cs-137": {
+        rate: 4,                                    // visible electrons per second
+        gammaEnergy: 0.662,
+        gammaReach: 0.5,                            // how far from the source electrons are still made
+        shape: "capsule",                           // sealed in a small capsule of stainless steel...
+        length: 0.06,                               // ...12 mm long...
+        thickness: 0.03,                            // ...and 6 mm thick
+        angle: 0                                    // direction in which it lies
+    }
+};
 
 // Dictionaries
 var nameToSpecies = {"e-":0, "e+":1, "mu-":2, "mu+":3, "a+":4, "p+":5};

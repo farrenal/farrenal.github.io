@@ -407,15 +407,112 @@ input{width:50%;}
 
 }
 
-/* ---- Control panel additions ---- */
-/* A button which spans the width of its panel (the Random toggle) */
-.box.wide{
-    width: calc(100% - 64px);
-    max-width: 344px;
+/* ---- Control panel ----
+   Two columns of three panels underneath the chamber. A panel is a small label and one row of buttons,
+   with no box around it: the labels and the white space keep the panels apart.
+   Buttons are white until they are pressed or switched on, and each kind of button then has its own colour. */
+/* The frame around the chamber and the controls has a fixed width (it used to take its width from the
+   buttons inside it, so it changed whenever a label changed) */
+.maintable{
+    width: min(960px, 96vw);
 }
-/* Labels of the event buttons are longer than those of the particle buttons, so they are smaller */
-.box-text.event{font-size: 19px;}
-@media (pointer:coarse){
-    .box.wide{width: 60vw; max-width: none; margin-top: 4px;}
-    .box-text.event{font-size: 150%;}
+.controls{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 28px;
+    margin: 16px 2px 4px 2px;
+    text-align: left;
+    letter-spacing: 0;
+    font-size: 15px;
+    color: #222222;
+}
+.controls-column{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+.panel-title{
+    margin: 0 0 6px 1px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #6b6b6b;
+}
+/* A remark at the right end of a label, in ordinary letters (how much the animation is slowed down) */
+.panel-note{
+    float: right;
+    margin-right: 1px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 12.5px;
+}
+.button-row{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+/* Every button in a row gets the same share of the width */
+.btn{
+    flex: 1 1 0;
+    min-width: 0;
+    height: 40px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    font: inherit;
+    font-size: 21px;            /* buttons which hold a symbol */
+    letter-spacing: 0;
+    color: #222222;
+    background-color: #ffffff;
+    border: 1px solid #c9c9c9;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn.text{font-size: 14.5px;}   /* buttons which hold words */
+.btn.event{font-size: 17px;}
+.btn.s{font-size: 12.5px; padding: 0 2px;}     /* five source buttons share a row, so their labels are the smallest */
+.btn:hover{background-color: #efefef;}
+.btn:disabled{cursor: default; color: #222222;}
+/* The selected magnetic field */
+.btn.f.is-active, .btn.f.is-active:hover{background-color: #aaaaaa; border-color: #aaaaaa;}
+/* Toggles which are switched on: Random particles and the sources */
+.btn.is-active, .btn.is-active:hover{background-color: #ffd700; border-color: #e0bd00;}
+/* The pause button while the animation is paused, and Random particles while it waits for the animation to resume */
+#pausePlay.is-active, #pausePlay.is-active:hover,
+.btn.is-paused, .btn.is-paused:hover{background-color: #ffaa00; border-color: #e09600;}
+/* For a moment after a click on a button which is not a toggle: green for an event,
+   red for a negative particle and blue for a positive one */
+.btn.is-flash{background-color: #aaffaa;}
+.btn.is-flash-negative{background-color: #ffaaaa;}
+.btn.is-flash-positive{background-color: #aaaaff;}
+/* Square buttons which hold an icon */
+.btn.icon{flex: 0 0 40px; padding: 0;}
+.btn .material-icons{font-size: 24px;}
+/* The speed slider takes up the rest of its row */
+.speed{
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14.5px;
+    color: #222222;
+}
+.speed input{
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    margin: 0;
+    accent-color: #444444;      /* the slider keeps the dark grey of the frame of the chamber */
+}
+/* Narrow screens: one column, and rows of many buttons may wrap */
+@media (max-width: 640px), (pointer:coarse){
+    .controls{grid-template-columns: 1fr; row-gap: 14px;}
+    .button-row{flex-wrap: wrap;}
+    .btn.s{flex: 1 1 30%; font-size: 14.5px;}
 }

@@ -59,6 +59,43 @@ function depositDroplets(particle, x0, y0, x1, y1, pathLength, visibility){
     particle.depositCarry = along - pathLength;
 }
 
+//--------------- Radioactivity utils --------------------------------------------------------
+// Speed (as a fraction of the speed of light) of a particle with this kinetic energy and rest energy (same units):
+// gamma = 1 + kinetic energy / rest energy,  beta = sqrt(1 - 1/gamma^2)
+function betaFromEnergy(kineticEnergy, restEnergy){
+    var gamma = 1 + kineticEnergy / restEnergy;
+    return Math.sqrt(1 - 1 / (gamma * gamma));
+}
+
+// Pick one of the values at random, each as often as its share says
+function pickByShare(values, shares){
+    var pick = Math.random() * shares.reduce((sum, share) => sum + share, 0);
+    for (var n = 0; n < values.length; n++) {
+        pick -= shares[n];
+        if (pick < 0) return values[n];
+    }
+    return values[values.length - 1];
+}
+
+// How often an electron leaves a beta decay with kinetic energy T (MeV), if the decay has the given endpoint energy:
+//      number ~ momentum * total energy * (endpoint - T)^2
+// (the simplest form of the beta spectrum: no electrons at zero energy, none at the endpoint, most in between)
+function betaSpectrum(T, endpoint){
+    var momentum = Math.sqrt(T * T + 2 * T * electronRestEnergy);
+    return momentum * (T + electronRestEnergy) * (endpoint - T) * (endpoint - T);
+}
+
+// Random kinetic energy (MeV) from that spectrum: pick an energy at random, and accept it with a chance
+// in proportion to the height of the spectrum there, otherwise pick again
+function randomBetaEnergy(endpoint){
+    var highest = 0;
+    for (var n = 1; n < 40; n++) highest = Math.max(highest, betaSpectrum(endpoint * n / 40, endpoint));
+    while (true) {
+        var T = endpoint * Math.random();
+        if (Math.random() * 1.05 * highest < betaSpectrum(T, endpoint)) return T;
+    }
+}
+
 // Random number from a bell curve with mean 0 and standard deviation 1 (Box-Muller)
 function randomGaussian(){
     return Math.sqrt(-2 * Math.log(1 - Math.random())) * Math.cos(twoPI * Math.random());
@@ -78,32 +115,73 @@ speedSlider.oninput = function() {
     theCC.setAnimationSpeed(Number(speedUp));
 }
 
+// A large number in words, to two digits: 140000000 becomes "140 million"
+function numberInWords(number) {
+    const names = [[1e9, " billion"], [1e6, " million"], [1e3, " thousand"]];
+    for (const [size, name] of names) {
+        if (number >= size) return Number((number / size).toPrecision(2)) + name;
+    }
+    return String(Number(number.toPrecision(2)));
+}
+
+// Tell the user what the speed slider means, next to the label of its panel and in the tooltip of the slider.
+// Particles: one tick of simulation time stands for secondsPerTick of real time, and ticksPerSecond of them are
+// shown per second. Mist: droplets are slowed down by 1 / dropletClockRate (see CloudChamber.setAnimationSpeed).
+function updateSpeedReadout(chamber) {
+    if (!speedSliderText) return;
+    const particlesSlower = 1 / (chamber.ticksPerSecond * secondsPerTick);
+    const mistSlower = 1 / chamber.dropletClockRate;
+
+    if (Number(speedSlider.value) >= Number(speedSlider.max)) {
+        // Even here a particle is millions of times slower than a real one, but its track forms within
+        // one frame of the animation, and a real track would not look any different
+        speedSliderText.textContent = "real time";
+        speedSlider.title = "The mist moves at its real speed. Tracks form within one frame, as fast as the eye can tell. "
+                          + "(The particles are in fact still slowed down " + numberInWords(particlesSlower) + " times.)";
+    }
+    else {
+        speedSliderText.textContent = "particles " + numberInWords(particlesSlower) + " × slower";
+        speedSlider.title = "Particles are slowed down " + numberInWords(particlesSlower) + " times, so that you can watch a track being drawn. "
+                          + "The mist is slowed down " + numberInWords(mistSlower) + " times.";
+    }
+}
+
 function particleClicked(particleName) {
     clickedParticle = particleName;
     var species = nameToSpecies[particleName];
     theCC.generateRandomParticle(species);
 }
 
+// The event buttons create an ordinary gamma ray or muon, but with its outcome fixed instead of left to chance
 function eventClicked(eventName) {
-    if (eventName == 'pair')        theCC.generatePair();
-    if (eventName == 'muonDecay')   theCC.generateMuonDecay();
+    if (eventName == 'pair') {
+        theCC.generateGamma(true);
+    }
+    if (eventName == 'muonDecay') {
+        const species = (Math.random() < 0.5) ? nameToSpecies['mu-'] : nameToSpecies['mu+'];
+        theCC.generateRandomParticle(species, true);
+    }
 }
 
-function toggleAlphaSource() {
-    theCC.alphaSourceOn = !theCC.alphaSourceOn;
-    updateAlphaSourceButton();
+// Switch a source on, or off if it is the active one. Only one source is active at a time.
+function toggleSource(sourceName) {
+    theCC.setSource((theCC.activeSource == sourceName) ? null : sourceName);
+    updateSourceButtons();
 }
 
-// Toggle buttons stay coloured while they are switched on
-function updateAlphaSourceButton() {
-    const button = document.getElementById('alphaSourceButton');
-    if (button) button.style.backgroundColor = theCC.alphaSourceOn ? '#ffd700' : '';
+// The button of the active source stays marked
+function updateSourceButtons() {
+    document.querySelectorAll('.btn.s').forEach((button) => {
+        button.classList.toggle('is-active', button.dataset.source == theCC.activeSource);
+    });
 }
 
-// Colour a button for a moment to show that the click was received
-function flashButton(button) {
-    button.style.backgroundColor = '#aaffaa';
-    window.setTimeout(() => { button.style.backgroundColor = ''; }, 250);
+// Colour a button for a moment to show that the click was received.
+// flashClass (optional): which colour, see the .is-flash classes in CC_styles.css. Green if left out.
+function flashButton(button, flashClass) {
+    if (flashClass === undefined) flashClass = 'is-flash';
+    button.classList.add(flashClass);
+    window.setTimeout(() => button.classList.remove(flashClass), 250);
 }
 
 function fieldClicked(fieldStatus) {
@@ -112,24 +190,29 @@ function fieldClicked(fieldStatus) {
 
 const randomButton = document.getElementById('randomButton');
 
+// The Random button stays coloured while random particles are switched on,
+// in a different colour while they wait for a paused animation to resume
+function updateRandomButton() {
+    randomButton.classList.toggle('is-active', Boolean(randomButtonTimeoutID));
+    randomButton.classList.toggle('is-paused', randomButtonTimeoutID === "paused");
+}
+
 function toggleRandom() {
     // If an interval is already running, clear it
     if (randomButtonTimeoutID && randomButtonTimeoutID !== "paused") {
         clearTimeout(randomButtonTimeoutID);
-        randomButton.style.backgroundColor = '';
         randomButtonTimeoutID = null;
+        updateRandomButton();
         return;
     };
-    // Otherwise start generating random particles, colourfully!
-    randomButton.style.backgroundColor = '#ffd700';
-
-    // Generate!
+    // Otherwise start generating random particles
     randomLoop();
+    updateRandomButton();
 }
 
 // Particles per second of all kinds together
 function totalNaturalRate() {
-    return naturalRates.reduce((sum, rate) => sum + rate, 0) + gammaElectronRate;
+    return naturalRates.reduce((sum, rate) => sum + rate, 0) + gammaRate;
 }
 
 function randomLoop() {
@@ -146,17 +229,13 @@ function randomLoop() {
     }, randomWaitTime);
 }
 
+// The button shows what a click on it will do: pause while the animation runs, play while it is paused.
+// It stays marked while the animation is paused.
 function updatePausePlayButton() {
     const button = document.getElementById('pausePlay');
     const icon = button.querySelector('i');
-    
-    if (theCC.isRunning) {
-        icon.textContent = 'play_circle_filled';
-        button.style.backgroundColor = '';
-    } else {
-        icon.textContent = 'pause_circle_filled';
-        button.style.backgroundColor = '#ffaa00';
-    }
+    icon.textContent = theCC.isRunning ? 'pause' : 'play_arrow';
+    button.classList.toggle('is-active', !theCC.isRunning);
 }
 
 document.addEventListener('visibilitychange', function() {
@@ -231,34 +310,21 @@ function getOrthDir(vel){
 var clickedParticle = 'e-';
 var clickedField = 'off';
 
-function resetColour(particleOrField) {
-    // Reset colour for all buttons of type .p or .f
-    const buttons = document.querySelectorAll(`.box.${particleOrField}`);
-    buttons.forEach(btn => {
-        btn.style.backgroundColor = '';
-        if (particleOrField == 'p') $(btn).toggleClass('disable');
-    });
-}
-
+// A particle button is coloured for a moment (red for a negative particle, blue for a positive one), and all
+// particle buttons are switched off for a short while (longer in slow motion), so that particles cannot be
+// sent in faster than they can be seen
 function changeParticleColour(button) {
-    // Reset colour for all particle (p) buttons
-    resetColour('p');
-    // Set colour for the clicked button
-    if (clickedParticle == 'e-' || clickedParticle == 'mu-'){
-        button.style.backgroundColor = '#ffaaaa';
-    }
-    else {
-        button.style.backgroundColor = '#aaaaff';
-    };
+    const isNegative = (properties[nameToSpecies[clickedParticle]][0] < 0);
+    flashButton(button, isNegative ? 'is-flash-negative' : 'is-flash-positive');
+    const buttons = document.querySelectorAll('.btn.p');
+    buttons.forEach((each) => { each.disabled = true; });
     var waitTime = 150 * 10/Math.sqrt(speedUp);
-    window.setTimeout(resetColour, waitTime, 'p');
+    window.setTimeout(() => buttons.forEach((each) => { each.disabled = false; }), waitTime);
 }
 
+// The button of the chosen magnetic field stays marked
 function changeFieldColour(button) {
-    // Reset colour for all field (f) buttons
-    resetColour('f');
-    // Set colour for the clicked button
-    button.style.backgroundColor = '#aaaaaa';
+    document.querySelectorAll('.btn.f').forEach((each) => each.classList.toggle('is-active', each === button));
 }
 
 function keepGrainyDiffusion(context){

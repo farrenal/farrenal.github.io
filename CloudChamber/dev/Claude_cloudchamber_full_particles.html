@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Chamber - Full Particle Physics Simulation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        canvas {
+            border: 2px solid #333;
+            background: #001122;
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.3);
+        }
+        
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            background: #2a5aa0;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        button:hover {
+            background: #3a6ab0;
+        }
+        
+        input[type="range"] {
+            width: 120px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        .stat-item {
+            background: rgba(42, 90, 160, 0.2);
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .warning {
+            color: #ff6666;
+            margin: 10px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .performance-monitor {
+            display: flex;
+            gap: 20px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cloud Chamber - Full Particle Physics Simulation</h1>
+    <p>Individual gas molecules undergo phase transitions when ionized</p>
+    <div class="warning">⚠️ Computationally intensive - may cause performance issues</div>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ffff44;"></div>
+            <span>Electron</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff4444;"></div>
+            <span>Proton</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #44ff44;"></div>
+            <span>Alpha</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff44ff;"></div>
+            <span>Muon</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: rgba(100, 150, 255, 0.6);"></div>
+            <span>Gas Molecules</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: rgba(150, 220, 255, 0.8);"></div>
+            <span>Liquid Droplets</span>
+        </div>
+    </div>
+    
+    <canvas id="canvas" width="800" height="600"></canvas>
+    
+    <div class="performance-monitor">
+        <span>FPS: <span id="fps">0</span></span>
+        <span>Frame Time: <span id="frameTime">0</span>ms</span>
+        <span>Update Time: <span id="updateTime">0</span>ms</span>
+    </div>
+    
+    <div class="controls">
+        <div class="control-group">
+            <label>Gas Density</label>
+            <input type="range" id="gasDensity" min="100" max="2000" step="100" value="800">
+            <span id="gasDensityValue">800</span>
+        </div>
+        <div class="control-group">
+            <label>Temperature</label>
+            <input type="range" id="temperature" min="200" max="350" step="10" value="250">
+            <span id="temperatureValue">250K</span>
+        </div>
+        <div class="control-group">
+            <label>Supersaturation</label>
+            <input type="range" id="supersaturation" min="1" max="3" step="0.1" value="1.8">
+            <span id="supersaturationValue">1.8</span>
+        </div>
+        <div class="control-group">
+            <label>Magnetic Field</label>
+            <input type="range" id="magneticField" min="0" max="0.01" step="0.001" value="0.002">
+            <span id="magneticFieldValue">0.002</span>
+        </div>
+        <button onclick="addElectron()">Add Electron</button>
+        <button onclick="addProton()">Add Proton</button>
+        <button onclick="addAlpha()">Add Alpha</button>
+        <button onclick="addMuon()">Add Muon</button>
+        <button onclick="clearChamber()">Clear</button>
+        <button onclick="togglePause()"">Pause/Resume</button>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-item">
+            <strong>Gas Molecules:</strong> <span id="gasCount">0</span>
+        </div>
+        <div class="stat-item">
+            <strong>Charged Particles:</strong> <span id="chargedCount">0</span>
+        </div>
+        <div class="stat-item">
+            <strong>Liquid Droplets:</strong> <span id="dropletCount">0</span>
+        </div>
+        <div class="stat-item">
+            <strong>Ionization Events:</strong> <span id="ionizations">0</span>
+        </div>
+        <div class="stat-item">
+            <strong>Condensation Events:</strong> <span id="condensations">0</span>
+        </div>
+        <div class="stat-item">
+            <strong>Average Kinetic Energy:</strong> <span id="avgEnergy">0</span>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Performance monitoring
+        let lastTime = performance.now();
+        let frameCount = 0;
+        let fps = 0;
+        let isPaused = false;
+        
+        // Physical constants
+        const BOLTZMANN = 1.38e-23;
+        const AVOGADRO = 6.022e23;
+        const IONIZATION_ENERGY = 15.8; // eV for typical gas
+        const CONDENSATION_RADIUS = 5;
+        
+        // Simulation parameters
+        let gasMolecules = [];
+        let chargedParticles = [];
+        let liquidDroplets = [];
+        let ionizationCount = 0;
+        let condensationCount = 0;
+        
+        // Gas molecule class
+        class GasMolecule {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.phase = 'gas'; // 'gas' or 'liquid'
+                this.ionized = false;
+                this.ionizationTime = 0;
+                this.mass = 18; // Water molecule mass (amu)
+                this.radius = 1;
+                this.condensationProbability = 0;
+                this.neighborCount = 0;
+            }
+            
+            update() {
+                if (this.phase === 'gas') {
+                    // Brownian motion for gas molecules
+                    const temperature = parseFloat(document.getElementById('temperature').value);
+                    const thermalVelocity = Math.sqrt(3 * BOLTZMANN * temperature / (this.mass * 1.66e-27));
+                    const scaledThermalVelocity = thermalVelocity * 0.001; // Scale for visualization
+                    
+                    this.vx += (Math.random() - 0.5) * scaledThermalVelocity * 0.1;
+                    this.vy += (Math.random() - 0.5) * scaledThermalVelocity * 0.1;
+                    
+                    // Damping to prevent runaway velocities
+                    this.vx *= 0.99;
+                    this.vy *= 0.99;
+                    
+                    // Update position
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    // Boundary conditions
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                    this.x = Math.max(0, Math.min(canvas.width, this.x));
+                    this.y = Math.max(0, Math.min(canvas.height, this.y));
+                    
+                    // Check for condensation
+                    this.checkCondensation();
+                }
+                
+                // Decay ionization over time
+                if (this.ionized && Date.now() - this.ionizationTime > 10000) {
+                    this.ionized = false;
+                }
+            }
+            
+            checkCondensation() {
+                if (!this.ionized) return;
+                
+                const supersaturation = parseFloat(document.getElementById('supersaturation').value);
+                const temperature = parseFloat(document.getElementById('temperature').value);
+                
+                // Count neighboring molecules
+                this.neighborCount = 0;
+                for (let other of gasMolecules) {
+                    if (other !== this && other.phase === 'gas') {
+                        const dx = this.x - other.x;
+                        const dy = this.y - other.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < CONDENSATION_RADIUS) {
+                            this.neighborCount++;
+                        }
+                    }
+                }
+                
+                // Condensation probability based on supersaturation, temperature, and local density
+                this.condensationProbability = 
+                    (supersaturation - 1) * 
+                    (1 / (temperature / 273)) * 
+                    (this.neighborCount / 10) * 
+                    0.01;
+                
+                if (Math.random() < this.condensationProbability) {
+                    this.condense();
+                }
+            }
+            
+            condense() {
+                this.phase = 'liquid';
+                this.radius = 2;
+                this.vx *= 0.1; // Slower movement for liquid
+                this.vy *= 0.1;
+                condensationCount++;
+                
+                // Create a visible droplet
+                liquidDroplets.push(new LiquidDroplet(this.x, this.y));
+            }
+            
+            ionize() {
+                this.ionized = true;
+                this.ionizationTime = Date.now();
+                ionizationCount++;
+            }
+            
+            draw() {
+                if (this.phase === 'gas') {
+                    if (this.ionized) {
+                        ctx.fillStyle = 'rgba(255, 255, 100, 0.8)';
+                    } else {
+                        ctx.fillStyle = 'rgba(100, 150, 255, 0.6)';
+                    }
+                } else {
+                    ctx.fillStyle = 'rgba(150, 220, 255, 0.9)';
+                }
+                
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Show condensation probability for ionized molecules
+                if (this.ionized && this.condensationProbability > 0.001) {
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${this.condensationProbability * 100})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, CONDENSATION_RADIUS, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // Liquid droplet class
+        class LiquidDroplet {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = 1;
+                this.maxRadius = 3;
+                this.age = 0;
+                this.maxAge = 2000;
+                this.alpha = 1;
+            }
+            
+            update() {
+                this.age++;
+                
+                // Grow droplet
+                if (this.radius < this.maxRadius) {
+                    this.radius += 0.01;
+                }
+                
+                // Fade out over time
+                this.alpha = 1 - (this.age / this.maxAge);
+                
+                return this.age < this.maxAge;
+            }
+            
+            draw() {
+                ctx.fillStyle = `rgba(150, 220, 255, ${this.alpha * 0.8})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Highlight effect
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha * 0.3})`;
+                ctx.beginPath();
+                ctx.arc(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // Charged particle class
+        class ChargedParticle {
+            constructor(x, y, vx, vy, charge, mass, color, name) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.charge = charge;
+                this.mass = mass;
+                this.color = color;
+                this.name = name;
+                this.trail = [];
+                this.age = 0;
+                this.maxAge = 3000;
+                this.energy = 0.5 * mass * (vx * vx + vy * vy);
+            }
+            
+            update() {
+                this.age++;
+                
+                // Store trail
+                this.trail.push({x: this.x, y: this.y});
+                if (this.trail.length > 100) {
+                    this.trail.shift();
+                }
+                
+                // Apply magnetic field (Lorentz force)
+                const magneticField = parseFloat(document.getElementById('magneticField').value);
+                if (magneticField > 0) {
+                    const forceMagnitude = Math.abs(this.charge) * magneticField * 
+                                         Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                    const forceAngle = Math.atan2(this.vy, this.vx) + Math.PI / 2 * Math.sign(this.charge);
+                    
+                    this.vx += Math.cos(forceAngle) * forceMagnitude / this.mass * 0.01;
+                    this.vy += Math.sin(forceAngle) * forceMagnitude / this.mass * 0.01;
+                }
+                
+                // Energy loss through ionization
+                this.energy *= 0.9995;
+                const speedScale = Math.sqrt(this.energy / (0.5 * this.mass * (this.vx * this.vx + this.vy * this.vy)));
+                this.vx *= speedScale;
+                this.vy *= speedScale;
+                
+                // Update position
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                // Ionize nearby gas molecules
+                this.ionizeGasMolecules();
+                
+                // Boundary wrapping
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+                
+                return this.age < this.maxAge && this.energy > 0.01;
+            }
+            
+            ionizeGasMolecules() {
+                const ionizationRadius = 5 + Math.abs(this.charge) * 2;
+                
+                for (let molecule of gasMolecules) {
+                    if (molecule.phase === 'gas' && !molecule.ionized) {
+                        const dx = this.x - molecule.x;
+                        const dy = this.y - molecule.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < ionizationRadius) {
+                            const ionizationProbability = Math.abs(this.charge) * 
+                                                        (1 - distance / ionizationRadius) * 
+                                                        0.05;
+                            
+                            if (Math.random() < ionizationProbability) {
+                                molecule.ionize();
+                                this.energy *= 0.99; // Lose energy when ionizing
+                            }
+                        }
+                    }
+                }
+            }
+            
+            draw() {
+                // Draw particle
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2 + Math.abs(this.charge), 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw trail
+                if (this.trail.length > 1) {
+                    ctx.strokeStyle = this.color + '60';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(this.trail[0].x, this.trail[0].y);
+                    for (let i = 1; i < this.trail.length; i++) {
+                        const alpha = i / this.trail.length;
+                        ctx.globalAlpha = alpha * 0.5;
+                        ctx.lineTo(this.trail[i].x, this.trail[i].y);
+                    }
+                    ctx.globalAlpha = 1;
+                    ctx.stroke();
+                }
+                
+                // Draw ionization field
+                ctx.strokeStyle = this.color + '20';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 5 + Math.abs(this.charge) * 2, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        }
+        
+        // Initialize gas molecules
+        function initializeGasMolecules() {
+            gasMolecules = [];
+            const density = parseInt(document.getElementById('gasDensity').value);
+            
+            for (let i = 0; i < density; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                gasMolecules.push(new GasMolecule(x, y));
+            }
+        }
+        
+        // Animation loop
+        let lastFrameTime = performance.now();
+        function animate() {
+            if (isPaused) {
+                requestAnimationFrame(animate);
+                return;
+            }
+            
+            const currentTime = performance.now();
+            const frameTime = currentTime - lastFrameTime;
+            lastFrameTime = currentTime;
+            
+            // Performance monitoring
+            frameCount++;
+            if (frameCount % 60 === 0) {
+                fps = Math.round(1000 / frameTime);
+                document.getElementById('fps').textContent = fps;
+                document.getElementById('frameTime').textContent = frameTime.toFixed(1);
+            }
+            
+            const updateStart = performance.now();
+            
+            // Clear canvas
+            ctx.fillStyle = 'rgba(0, 17, 34, 0.02)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Update gas molecules
+            for (let molecule of gasMolecules) {
+                molecule.update();
+                molecule.draw();
+            }
+            
+            // Update charged particles
+            chargedParticles = chargedParticles.filter(particle => {
+                const alive = particle.update();
+                if (alive) particle.draw();
+                return alive;
+            });
+            
+            // Update liquid droplets
+            liquidDroplets = liquidDroplets.filter(droplet => {
+                const alive = droplet.update();
+                if (alive) droplet.draw();
+                return alive;
+            });
+            
+            const updateTime = performance.now() - updateStart;
+            document.getElementById('updateTime').textContent = updateTime.toFixed(1);
+            
+            // Update statistics
+            updateStatistics();
+            
+            requestAnimationFrame(animate);
+        }
+        
+        function updateStatistics() {
+            document.getElementById('gasCount').textContent = gasMolecules.filter(m => m.phase === 'gas').length;
+            document.getElementById('chargedCount').textContent = chargedParticles.length;
+            document.getElementById('dropletCount').textContent = liquidDroplets.length;
+            document.getElementById('ionizations').textContent = ionizationCount;
+            document.getElementById('condensations').textContent = condensationCount;
+            
+            // Calculate average kinetic energy
+            let totalEnergy = 0;
+            let count = 0;
+            for (let particle of chargedParticles) {
+                totalEnergy += particle.energy;
+                count++;
+            }
+            const avgEnergy = count > 0 ? (totalEnergy / count).toFixed(2) : 0;
+            document.getElementById('avgEnergy').textContent = avgEnergy;
+        }
+        
+        // Particle creation functions
+        function addElectron() {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 3 + Math.random() * 4;
+            chargedParticles.push(new ChargedParticle(
+                x, y, 
+                Math.cos(angle) * speed, 
+                Math.sin(angle) * speed,
+                -1, 1, '#ffff44', 'Electron'
+            ));
+        }
+        
+        function addProton() {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 1.5 + Math.random() * 2;
+            chargedParticles.push(new ChargedParticle(
+                x, y, 
+                Math.cos(angle) * speed, 
+                Math.sin(angle) * speed,
+                1, 1836, '#ff4444', 'Proton'
+            ));
+        }
+        
+        function addAlpha() {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 1 + Math.random() * 1.5;
+            chargedParticles.push(new ChargedParticle(
+                x, y, 
+                Math.cos(angle) * speed, 
+                Math.sin(angle) * speed,
+                2, 7296, '#44ff44', 'Alpha'
+            ));
+        }
+        
+        function addMuon() {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 4 + Math.random() * 5;
+            chargedParticles.push(new ChargedParticle(
+                x, y, 
+                Math.cos(angle) * speed, 
+                Math.sin(angle) * speed,
+                -1, 207, '#ff44ff', 'Muon'
+            ));
+        }
+        
+        function clearChamber() {
+            chargedParticles = [];
+            liquidDroplets = [];
+            ionizationCount = 0;
+            condensationCount = 0;
+            initializeGasMolecules();
+        }
+        
+        function togglePause() {
+            isPaused = !isPaused;
+        }
+        
+        // Control event listeners
+        document.getElementById('gasDensity').addEventListener('input', (e) => {
+            document.getElementById('gasDensityValue').textContent = e.target.value;
+            initializeGasMolecules();
+        });
+        
+        document.getElementById('temperature').addEventListener('input', (e) => {
+            document.getElementById('temperatureValue').textContent = e.target.value + 'K';
+        });
+        
+        document.getElementById('supersaturation').addEventListener('input', (e) => {
+            document.getElementById('supersaturationValue').textContent = e.target.value;
+        });
+        
+        document.getElementById('magneticField').addEventListener('input', (e) => {
+            document.getElementById('magneticFieldValue').textContent = e.target.value;
+        });
+        
+        // Initialize and start
+        initializeGasMolecules();
+        animate();
+        
+        // Add initial particles after a delay
+        setTimeout(() => {
+            addElectron();
+            addProton();
+        }, 1000);
+    </script>
+</body>
+</html>

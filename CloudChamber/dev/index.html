@@ -3,44 +3,79 @@
 <head>
     <title>Alexander Farren</title>
     <meta charset="utf-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href='https://fonts.googleapis.com/css?family=Fira Sans Condensed' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="apple-touch-icon" type="image/png" href="https://farrenal.github.io/Images/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="https://farrenal.github.io/Images/android-chrome-512x512.png">
     <link rel="stylesheet" href="CC_styles.css">
-    <script src="/MathJax/MathJax.js" type="text/javascript">
-        MathJax.Hub.Config({
-        config: ["MMLorHTML.js"],
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX"],
-        tex2jax: {inlineMath: ["\\(","\\)"]}
-        });
-    </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- MathJax draws the mathematics written between \( and \), in the description and on the buttons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 
 <body>
-<div class = "desktop-only-intro">
-    <h1 class="title">Interactive Cloud Chamber</h1>
+<div class="desktop-only-intro">
+    <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1>
+    <div align="center">
+        <h1 class="title">Interactive Cloud Chamber</h1>
+        <table class="headtable">
+                <tr class="names">
+                    <td>Alexander Farren</td>
+                </tr>
+                <tr class="email">
+                    <td><a href="mailto:amf94@cam.ac.uk">amf94@cam.ac.uk</a></td>
+                </tr>
+        </table>
+    </div>
 </div>
 <div class="mobile-only-intro">
+    <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1><br>
     <h1 class="title">Interactive Cloud Chamber</h1>
+    <table class="headtable">
+            <tr class="names">
+                <td>A. Farren</td>
+            </tr>
+            <tr class="email">
+                <td>amf94@cam.ac.uk</td>
+            </tr>
+    </table>
 </div>
+
+<hr>
 
 <table class="maintable">
   <tr>
+    <td>
+      <h2>The first particle detector</h2>
+      <main style="bottom:0px;font-size:120%;width:100%;">
+        Cloud chambers are setup in a way such that any charged particle passing through will
+        leave behind a trail. Typically this is done by permeating the space with a gas in a supercritical state,
+        such that any charged particle will ionise and reliquify the gas to form droplets.
+        In the absence of an radioactive sources, cloud chambers detect cosmic rays and their products from cosmic
+        showers. By placing the cloud chamber in a magnetic field, the particles' mass and charge reveal themselves
+        through the radius of its cycloidal motion. This is how the first anti-particle was discovered when Blackett
+        and Anderson saw an electron veering in the wrong direction! Cloud chambers also discovered the muon and
+        the anti-muon.
+        <br><br>
+        In particular, the electron has mass \(m_e\simeq 0.5\,\mathrm{MeV}\) while
+        the muon has \(m_{\mu}\simeq 100\, \mathrm{MeV}\). What does this tell us about their trajectory's radius in
+        the chamber? (Hint: Think radially!)
+        <br><br>
+        This project started with me wanting to build my own cloud chamber for cheap, for example as showcased in
+        <a href="https://youtu.be/gt3Ad5_Z5IA" target="_blank">this video</a>. I realised it would be a challenge (and also free) to
+        just code one up and let people play with a limited version themselves.
+        <br><br>
+        <i style="color:#666666">Over time I might implement cooler features such as an interactive quiz.</i>
+        <br><br>
+        <div class="explanation"><a class="clickables broken">Explanation (<i>in progress</i>)</a></div>
+      </main>
+    </td>
+  </tr>
+  <tr>
     <td style="padding:10px">
-      <div class="gif-container" id="poopoo">
+      <div class="gif-container">
         <canvas class="responsive-canvas" id="objectsCanvas"></canvas>
         <canvas class="responsive-canvas" id="particlesCanvas"></canvas>
       </div>
-      <p id="debugText" hidden></p>
-      <p id="debuggText" hidden></p>
-      <p id="debugggText" hidden></p>
       <div class="controls">
         <div class="controls-column">
           <section class="panel">
@@ -112,9 +147,5 @@
     </td>
   </tr>
 </table>
-
-<script> 
-   $('.clickables').attr('target', '_blank'); 
-</script>
 </body>
 </html>

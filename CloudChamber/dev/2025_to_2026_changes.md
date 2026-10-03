@@ -1,6 +1,6 @@
 # Cloud Chamber Simulation: changes from the 2025 version to the 2026 version
 
-*Compiled in October 2026. The starting point is the snapshot in `decent_2025/` (the state reached with web-based Claude in September 2025, described in `web_claude_summary.md`). The end point is the code in this directory.*
+*Compiled in October 2026. The starting point is the snapshot in `decent_2025/` (the state reached with web-based Claude in September 2025, described in `web_claude_summary.md`). The end point is the code in this directory, which is also the version published in the main `CloudChamber/` folder. The gif-based version which was live before is in `CloudChamber/old/`.*
 
 ## 1. Summary
 
@@ -10,7 +10,8 @@ The 2025 version drew each track as white dots on its own full-size canvas, adva
 - Particles move in **three dimensions** through a thin sensitive layer, and obey one consistent set of physical laws: Lorentz force with relativistic momentum, ionisation energy loss, multiple scattering and delta-ray production.
 - Everything visible is made of **individual droplets** that condense, drift with a moving gas, and evaporate on their own.
 - The picture is built by **collecting the light** of all droplets and developing it like a camera exposure.
-- The **Random** mode sends particles at natural sea-level rates, and the user can trigger **events**: pair production, muon decay and a radioactive alpha source.
+- The picture is drawn by the **graphics card** (WebGL) at the full resolution of the screen wherever that is supported, and by the processor otherwise.
+- The **Random** mode sends particles at natural sea-level rates, and the user can trigger **events** (pair production, muon decay) and switch on one of five **radioactive sources**.
 
 All open problems listed in `web_claude_summary.md` under "Trail rendering and animation" and "Physics" are resolved. The render queue, the arc-drawing code, the `compensationFactor` idea and the per-particle canvases no longer exist.
 
@@ -26,11 +27,14 @@ All open problems listed in `web_claude_summary.md` under "Trail rendering and a
 | `image_gl_class.js` | `ChamberImageGL`: the same picture drawn by the graphics card with WebGL (used wherever supported) | new |
 | `cloudchamber_class.js` | `CloudChamber`: clocks, frame loop, particle generation, events | heavily changed |
 | `helper_functions.js` | `depositDroplets`, button handlers, Random loop | heavily changed |
-| `index.html`, `CC_styles.css` | Page and control panel | control panel rearranged, background gif removed |
+| `index.html`, `CC_styles.css` | Page: title, name and link back to the homepage, description, chamber, control panel | rewritten |
+| `CC_script.js` | Starts the chamber | trimmed |
 | `source_images.js` | Pictures of the solid sources, drawn on a canvas underneath the mist | new |
 | `_test_harness.html` | Test page, not part of the site (see section 9) | new |
 
-Snapshots: `decent_2025/` is the 2025 code. `before_depth/` is the 2026 code just before depth, mist rendering and the moving gas were added (flat motion, sharp pixel droplets, clean spirals).
+The page needs the twelve files above the test page in this table and nothing else, apart from MathJax and the Material Icons font, which it loads from the web. jQuery is no longer used.
+
+Snapshots (all in `dev/`, none of them published): `decent_2025/` is the 2025 code. `before_depth/` is the 2026 code just before depth, mist rendering and the moving gas were added (flat motion, sharp pixel droplets, clean spirals). `before_fancy_images/` is the code before the sources were drawn as objects, and `before_fancy_graphics/` is the last version drawn only by the processor.
 
 ## 3. Timing and the speed slider
 
@@ -156,7 +160,9 @@ The resolution of the image (`imageScale` image pixels per canvas pixel) is inde
 
 `_test_harness.html` loads the real scripts with a hand-driven frame clock, so scenes are reproducible in headless Chrome. It reports two numerical checks (speed conservation, and circle radius against $\gamma m v/(qB)$) and takes URL parameters: `speed`, `frames`, `field`, `random=N`, `natural=S`, `event=pair|decay`, `source=Am-241` (or another source name), `timing=1`. It should not be deployed.
 
-Everything in this document was verified with that page and with screenshots of `index.html`. Nothing was tested on a phone.
+Everything in this document was verified with that page and with screenshots of `index.html` in headless Chrome. The finished page was also tried by hand on a laptop and on a phone, where it runs smoothly. Not tested: what happens when the browser takes the graphics card away and gives it back (for example after the laptop has been asleep).
+
+**Clean-up before publication.** Code which was no longer used was removed: the old styles of the boxed control panel and of the gif version, the debug text lines, the mouse tracker, four unused helper functions, unused variables, and the jQuery and local MathJax script tags. The page went from about 540 to 350 lines of styles.
 
 ## 10. Known departures from reality, and open questions
 
@@ -165,7 +171,8 @@ Everything in this document was verified with that page and with screenshots of 
 - **Trail response** to ionisation is compressed (section 4.2).
 - **Ranges** run up to twice the real values, because the logarithmic term of the Bethe formula is omitted.
 - **Delta rays and gamma electrons** do not come with the photon or the nucleus that caused them, and the muon in a decay event decays the moment it stops.
-- **Not yet done:** rare large-angle scattering kinks, depletion of the vapour by earlier tracks, device-pixel-ratio handling, and tests on phones.
+- **Ideas which were raised and not built:** rare large-angle scattering kinks, depletion of the vapour by earlier tracks, annihilation of a positron which stops, a puff of thoron whose track rate halves every 55 s, labels which name each track, a legend, clicking in the chamber to place a source, a read-out of radius and momentum, and sound.
+- **Small things left as they are:** the page asks phones not to pinch-zoom (the `viewport` line in `index.html`), and the size of the picture is only ever lowered during a visit, never raised again, once a device has shown that it is too slow.
 
 ## 11. A visual artefact seen along the way (obsolete)
 

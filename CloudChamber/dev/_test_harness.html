@@ -11,12 +11,10 @@ body{margin:0;background:#888;}
 </head>
 <body>
 <div class="gif-container"><canvas class="responsive-canvas" id="objectsCanvas"></canvas><canvas class="responsive-canvas" id="particlesCanvas"></canvas></div>
-<p id="debugText"></p><p id="debuggText"></p><p id="debugggText"></p>
 <input type="range" min="1" max="100" value="100" id="speedSlider">
 <button id="randomButton"></button><button id="pausePlay"><i></i></button>
 <pre id="out"></pre>
 <script>
-window.$ = function(){ return {toggleClass(){}, attr(){}}; };
 const realRequestAnimationFrame = window.requestAnimationFrame.bind(window);
 window.requestAnimationFrame = () => 0;     // frames are driven by hand below
 </script>

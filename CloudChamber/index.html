@@ -4,22 +4,12 @@
     <title>Alexander Farren</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<link href='https://fonts.googleapis.com/css?family=Fira Sans Condensed' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="apple-touch-icon" type="image/png" href="https://farrenal.github.io/Images/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="https://farrenal.github.io/Images/android-chrome-512x512.png">
-    <link rel="stylesheet" href="styles.css">
-    <script src="/MathJax/MathJax.js" type="text/javascript">
-        MathJax.Hub.Config({
-        config: ["MMLorHTML.js"],
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX"],
-        tex2jax: {inlineMath: ["\\(","\\)"]}
-        });
-    </script>
-    <script defer data-domain="farrenal.github.io/potts" src="https://plausible.io/js/script.js"></script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="CC_styles.css">
+    <!-- MathJax draws the mathematics written between \( and \), in the description and on the buttons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 
 <body>
@@ -27,11 +17,11 @@
     <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1>
     <div align="center">
         <h1 class="title">Interactive Cloud Chamber</h1>
-        <table class="headtable"> 
+        <table class="headtable">
                 <tr class="names">
                     <td>Alexander Farren</td>
                 </tr>
-                <tr class="email">  
+                <tr class="email">
                     <td><a href="mailto:amf94@cam.ac.uk">amf94@cam.ac.uk</a></td>
                 </tr>
         </table>
@@ -40,11 +30,11 @@
 <div class="mobile-only-intro">
     <h1 class="backlink"><a href="https://farrenal.github.io">Back to homepage</a></h1><br>
     <h1 class="title">Interactive Cloud Chamber</h1>
-    <table class="headtable"> 
+    <table class="headtable">
             <tr class="names">
                 <td>A. Farren</td>
             </tr>
-            <tr class="email">  
+            <tr class="email">
                 <td>amf94@cam.ac.uk</td>
             </tr>
     </table>
@@ -53,103 +43,108 @@
 <hr>
 
 <table class="maintable">
-    <tr>
-        <td>
-            <h2>The first particle detector</h2> 
-            <main style="bottom:0px;font-size:120%;width:100%;"> 
-                Cloud chambers are setup in a way such that any charged particle passing through will
-                leave behind a trail. Typically this is done by permeating the space with a gas in a supercritical state,
-                such that any charged particle will ionise and reliquify the gas to form droplets.
-                In the absence of an radioactive sources, cloud chambers detect cosmic rays and their products from cosmic
-                showers. By placing the cloud chamber in a magnetic field, the particles' mass and charge reveal themselves
-                through the radius of its cycloidal motion. This is how the first anti-particle was discovered when Blackett
-                and Anderson saw an electron veering in the wrong direction! Cloud chambers also discovered the muon and 
-                the anti-muon. 
-                <br><br>
-                In particular, the electron has mass \(m_e\simeq 0.5\,\mathrm{MeV}\) while
-                the muon has \(m_{\mu}\simeq 100\, \mathrm{MeV}\). What does this tell us about their trajectory's radius in
-                the chamber? (Hint: Think radially!)
-                <br><br>
-                This project started with me wanting to build my own cloud chamber for cheap, for example as showcased in 
-                <a href="https://youtu.be/gt3Ad5_Z5IA">this video</a>. I realised it would be a challenge (and also free) to
-                just code one up and let people play with a limited version themselves.
-                <br><br>
-                <i style="color:#666666">Over time I might implement cooler features such as decay/pair creation, or an interactive quiz. 
-                If you have some relevant programming experience, feel free to send me suggestions about how you would render these animations.</i>
-                <br><br>
-                <div class="explanation"><a class="clickables broken" style="on-hover:">Explanation (<i>in progress</i>)</a></div>
-            </main>
-        </td>
-    </tr>
-    <tr>
-        <td style="padding-top:10px">
-        <!--<h2 class="qTH">Choose a particle to send in!</h2>-->
-          <div class="gif-container" id="poopoo">
-            <img src="CloudChamber gifs/boomerang big.gif" alt="GIF Display" class="responsive-image" >
-            <img class="responsive-image overlayed static" id="gifImage"></img>
-            <img class="responsive-image overlayed cycling" id="gifImageA"></img>
-            <img class="responsive-image overlayed cycling" id="gifImageB"></img>
-            <img class="responsive-image overlayed cycling" id="gifImageC"></img>
-            <img class="responsive-image overlayed cycling" id="gifImageD"></img>
-          </div>
-          <table class="options" style="display:block;">
-              <tr><td style="padding:0;">
-              <div class="slider-container">
-                <p class="slider-desc">Select magnetic field</p>
-                  <div class="box-container">
-                      <div class="box f" onclick="fClicked('out');changefColor(this)">
-                          <span class="box-text">\(\bigodot\)</span>
-                      </div>
-                      <div class="box f" onclick="fClicked('in');changefColor(this)">
-                          <span class="box-text">\(\bigotimes\)</span>
-                      </div>
-                      <div class="box f" onclick="fClicked('off');changefColor(this)" style="background-color:#aaaaaa">
-                          <span class="box-text">off </span>
-                      </div>
-                  </div>
-              </div>
-              </td>
-              <td style="padding-right:20px">
-              <div class="slider-container particle" >
-                <p class="slider-desc">Select particle type</p>
-                <div class="box-container">
-                    <div class="box p" onclick="pClicked('p+');changepColor(this)">
-                        <span class="box-text">\(p\)</span>
-                    </div>
-                    <div class="box p" onclick="pClicked('mu-');changepColor(this)">
-                        <span class="box-text">\(\mu^{-}\)</span>
-                    </div>
-                    <div class="box p" onclick="pClicked('e-');changepColor(this)">
-                        <span class="box-text">\(e^{-}\)</span>
-                    </div> 
-                    <div class="box p" onclick="pClicked('a+');changepColor(this)">
-                        <span class="box-text">\(\alpha\)</span>
-                    </div> 
-                    <div class="box p" onclick="pClicked('mu+');changepColor(this)">
-                        <span class="box-text">\(\mu^{+}\)</span>
-                    </div>
-                    <div class="box p" onclick="pClicked('e+');changepColor(this)">
-                        <span class="box-text">\(e^{+}\)</span>
-                    </div> 
-                 </div>
-              </div>
-              </td>
-              <td>
-              <div class="box-container" style="max-width:75px">
-                  <div class="box bg" onclick="cycleImages();">
-                      <span class="box-text">Random</span>
-                  </div>
-              </div>
-              </td></tr>
-          </table>
-          <p style="visibility:hidden;" id="sumValue">showing gif:</p>
-        <script src="script.js"></script>
-        </td>
-    </tr>
+  <tr>
+    <td>
+      <h2>The first particle detector</h2>
+      <main style="bottom:0px;font-size:120%;width:100%;">
+        Cloud chambers are setup in a way such that any charged particle passing through will
+        leave behind a trail. Typically this is done by permeating the space with a gas in a supersaturated state,
+        such that any charged particle will ionise and reliquify the gas to form droplets.
+        In the absence of a radioactive sources, cloud chambers detect cosmic rays and their products from cosmic
+        showers. By placing the cloud chamber in a magnetic field, the particles' mass and charge reveal themselves
+        through the radius of its cycloidal motion. This is how the first anti-particle was discovered when Blackett
+        and Anderson saw an electron veering in the wrong direction! Cloud chambers also discovered the muon and
+        the anti-muon.
+        <br><br>
+        In particular, the electron has mass \(m_e\simeq 0.5\,\mathrm{MeV}\) while
+        the muon has \(m_{\mu}\simeq 100\, \mathrm{MeV}\). What does this tell us about their trajectory's radius in
+        the chamber? (Hint: Think radially!)
+        <br><br>
+        If you want to build your own cloud chamber for cheap, for example I recommend
+        <a href="https://youtu.be/gt3Ad5_Z5IA" target="_blank">this video</a>.
+        <br><br>
+        <!-- <i style="color:#666666">Over time I might implement cooler features such as an interactive quiz.</i>
+        <br><br> -->
+        <div class="explanation"><a class="clickables broken">Explanation (<i>in progress</i>)</a></div>
+      </main>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:10px">
+      <div class="gif-container">
+        <canvas class="responsive-canvas" id="objectsCanvas"></canvas>
+        <canvas class="responsive-canvas" id="particlesCanvas"></canvas>
+      </div>
+      <div class="controls">
+        <div class="controls-column">
+          <section class="panel">
+            <h3 class="panel-title">Magnetic field</h3>
+            <div class="button-row">
+              <button type="button" class="btn f" title="Field pointing out of the screen" onclick="fieldClicked('out');changeFieldColour(this);">\(\bigodot\)</button>
+              <button type="button" class="btn f" title="Field pointing into the screen" onclick="fieldClicked('in');changeFieldColour(this);">\(\bigotimes\)</button>
+              <button type="button" class="btn f text is-active" title="No field" onclick="fieldClicked('off');changeFieldColour(this);">off</button>
+            </div>
+          </section>
+          <section class="panel">
+            <h3 class="panel-title">Playback <span class="panel-note" id="speedSliderText"></span></h3>
+            <div class="button-row">
+              <label class="speed">Speed
+                <input type="range" min="1" max="100" value="100" id="speedSlider">
+              </label>
+              <button type="button" class="btn icon" id="pausePlay" title="Pause or resume" onclick="theCC.toggleAnimation();"><i class="material-icons">pause</i></button>
+              <button type="button" class="btn icon" id="clearCC" title="Clear the chamber" onclick="theCC.clearAnimation();"><i class="material-icons">stop</i></button>
+            </div>
+          </section>
+          <section class="panel">
+            <h3 class="panel-title">Natural background</h3>
+            <div class="button-row">
+              <button type="button" class="btn text" id="randomButton" title="Cosmic rays and background radiation, at their natural rates" onclick="toggleRandom();">Random particles</button>
+            </div>
+          </section>
+        </div>
+        <div class="controls-column">
+          <section class="panel">
+            <h3 class="panel-title">Send in particle</h3>
+            <div class="button-row">
+              <button type="button" class="btn p" onclick="particleClicked('e-');changeParticleColour(this);">\(e^{-}\)</button>
+              <button type="button" class="btn p" onclick="particleClicked('e+');changeParticleColour(this);">\(e^{+}\)</button>
+              <button type="button" class="btn p" onclick="particleClicked('mu-');changeParticleColour(this);">\(\mu^{-}\)</button>
+              <button type="button" class="btn p" onclick="particleClicked('mu+');changeParticleColour(this);">\(\mu^{+}\)</button>
+              <button type="button" class="btn p" onclick="particleClicked('p+');changeParticleColour(this);">\(p\)</button>
+              <button type="button" class="btn p" onclick="particleClicked('a+');changeParticleColour(this);">\(\alpha\)</button>
+            </div>
+          </section>
+          <section class="panel">
+            <h3 class="panel-title">Activate event</h3>
+            <div class="button-row">
+              <button type="button" class="btn event" title="A gamma ray turns into an electron and a positron" onclick="eventClicked('pair');flashButton(this);">\(\gamma \to e^{+}e^{-}\)</button>
+              <button type="button" class="btn event" title="A slow muon stops and decays into an electron" onclick="eventClicked('muonDecay');flashButton(this);">\(\mu \to e\,\nu\bar{\nu}\)</button>
+            </div>
+          </section>
+          <section class="panel">
+            <h3 class="panel-title">Activate source</h3>
+            <div class="button-row">
+              <button type="button" class="btn s text" data-source="Am-241" title="Americium-241: alpha particles which all have the same energy" onclick="toggleSource('Am-241');">Am-241 (\(\alpha\))</button>
+              <button type="button" class="btn s text" data-source="Th-232" title="Thorium-232 and its decay products: alpha particles of several energies, and pairs of alphas from thoron gas" onclick="toggleSource('Th-232');">Th-232 (\(\alpha\))</button>
+              <button type="button" class="btn s text" data-source="Sr-90" title="Strontium-90: electrons with a wide spread of energies" onclick="toggleSource('Sr-90');">Sr-90 (\(\beta^{-}\))</button>
+              <button type="button" class="btn s text" data-source="Na-22" title="Sodium-22: positrons with a wide spread of energies" onclick="toggleSource('Na-22');">Na-22 (\(\beta^{+}\))</button>
+              <button type="button" class="btn s text" data-source="Cs-137" title="Caesium-137: gamma rays, seen only through the electrons which they knock out of the gas" onclick="toggleSource('Cs-137');">Cs-137 (\(\gamma\))</button>
+            </div>
+          </section>
+        </div>
+      </div>
+      <script src="header.js"></script>
+      <script src="flow_class.js"></script>
+      <script src="image_class.js"></script>
+      <script src="image_gl_class.js"></script>
+      <script src="source_images.js"></script>
+      <script src="droplet_class.js"></script>
+      <script src="particle_class.js"></script>
+      <script src="cloudchamber_class.js"></script>
+      <script src="helper_functions.js"></script>
+      <script src="CC_script.js"></script>
+    </td>
+  </tr>
 </table>
-
-<script> 
-   $('.clickables').attr('target', '_blank'); 
-</script>
 </body>
 </html>

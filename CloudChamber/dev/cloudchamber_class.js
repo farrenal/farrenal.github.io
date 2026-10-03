@@ -27,7 +27,7 @@ class CloudChamber {
 
         // Time spent on the work of the last frames, to notice if this device cannot keep up (see the end of animate)
         this.workTime = 0;
-        this.workFrames = 0;
+        this.workFrames = -warmUpFrames;
 
         // Slow swirls of the gas, which carry the droplets along (see flow_class.js)
         this.flow = new FlowField();
@@ -466,8 +466,10 @@ class CloudChamber {
         // Only if the picture is drawn by the processor: if the work for a frame takes too long on average,
         // this device cannot keep up at this resolution. Carry on with a coarser picture (which looks the same,
         // only softer). The resolution is never raised again.
-        this.workTime += performance.now() - workStarted;
+        // (The first frames after the image has been set up include work which is only done once, such as
+        // preparing the shaders, so they are not counted: workFrames starts below zero.)
         this.workFrames++;
+        if (this.workFrames > 0) this.workTime += performance.now() - workStarted;
         if (this.workFrames >= frameBudgetFrames) {
             const averageWork = this.workTime / this.workFrames;
             if (!useWebGL && averageWork > frameBudget && imageScale > minImageScale) {
@@ -503,7 +505,7 @@ class CloudChamber {
         if (Math.abs(newScale - imageScale) < 1e-6) return;
         this.rebuildImage(newScale);
         this.workTime = 0;
-        this.workFrames = 0;
+        this.workFrames = -warmUpFrames;
         // While the animation is paused nothing would redraw the picture, so draw one frame which lasts no time
         if (!this.isRunning) {
             this.image.clear();

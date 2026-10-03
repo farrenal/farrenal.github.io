@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Cloud chamber thumbnail</title>
+    <meta charset="utf-8">
+    <style>
+        /* The chamber fills this little page, which the homepage shows inside the frame of the thumbnail */
+        html, body{margin: 0; height: 100%; overflow: hidden; background: black;}
+        canvas{position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+    </style>
+</head>
+
+<body>
+<canvas id="objectsCanvas"></canvas>
+<canvas id="particlesCanvas"></canvas>
+<!-- The code of the gallery reads the speed of the animation from its slider: this one stays at real time -->
+<input type="range" min="1" max="100" value="100" id="speedSlider" hidden>
+
+<script>
+// The thumbnail runs the code of the gallery itself, with a header of its own (a smaller chamber, see header.js)
+// and thumbnail.js in the place of the buttons.
+const chamberFiles = ["header.js",
+                      "../flow_class.js",
+                      "../image_class.js",
+                      "../image_gl_class.js",
+                      "../source_images.js",
+                      "../droplet_class.js",
+                      "../particle_class.js",
+                      "../cloudchamber_class.js",
+                      "../helper_functions.js",
+                      "thumbnail.js"];
+
+// The size of the chamber is fixed when the code is loaded, so that has to wait until this page has a size:
+// it has none while the tab of the homepage which holds it is closed.
+var loadedWidth = 0;
+var loadedHeight = 0;
+function loadChamber() {
+    if (loadedWidth > 0 || window.innerWidth == 0 || window.innerHeight == 0) return;
+    loadedWidth = window.innerWidth;
+    loadedHeight = window.innerHeight;
+    for (const file of chamberFiles) {
+        const script = document.createElement('script');
+        script.src = file;
+        script.async = false;       // run the files in this order
+        document.body.appendChild(script);
+    }
+}
+loadChamber();
+
+// If the thumbnail gets another size later on, start again with a chamber of that size
+var resizeTimeoutID = null;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeoutID);
+    resizeTimeoutID = setTimeout(() => {
+        if (loadedWidth == 0) loadChamber();
+        else if (window.innerWidth > 0 && window.innerHeight > 0 &&
+                 (window.innerWidth != loadedWidth || window.innerHeight != loadedHeight)) window.location.reload();
+    }, 300);
+});
+</script>
+</body>
+</html>

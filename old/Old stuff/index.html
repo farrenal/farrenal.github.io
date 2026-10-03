@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Alexander Farren</title>
+</head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<link rel="stylesheet" type="text/css"
+    href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+
+<style>
+body {font-size: 130%;}
+h1 {
+  width:max-content;
+  font-size:200%;
+  padding:0px 0px 0px 0px;
+  margin:0px;
+}
+h2 {
+  max-width:100%;
+  font-size:150%;
+  padding:0px 0px 10px 0px;
+  margin:0px;
+  text-align: justify;
+}
+p {
+	padding:0px 0px 0px 0px;
+  	width:fit-content;
+    margin:0px;
+}
+.grids{
+  width:fit-content;
+  height:200px;
+  border: 4px solid #422604;
+  border-radius:5px;
+}
+  
+td:nth-child(1){vertical-align:top;}
+td:nth-child(2){vertical-align:center;}
+
+.desktop-only{display:block;}
+.mobile-only{display:none;}
+@media (pointer:coarse) {
+    /* custom css for "touch targets" */
+  td:nth-child(2) {
+    display:none;
+  }
+  .desktop-only{display:none;}
+  .mobile-only{display:block;}
+}
+table {
+  min-width:0px;
+  min-height:0px;
+}
+td{
+min-width:0px;
+min-height:0px;
+padding-left:10px;
+padding-right:10px;
+text-align: center;
+max-width:20cm;
+}
+hr{
+padding:0px;
+}
+main{
+  text-align: justify;
+  text-justify:inter-word;
+  font-family: "Computer Modern", serif;
+  font-size: 100%;
+  font-weight:100%;
+  max-width:100%;
+}
+a{
+text-decoration:none;
+color: blue;
+}
+</style>
+<body style="background-color:#f2e6d9;">
+<table style="
+  margin-left:auto;
+  margin-right:auto;
+  max-width:fit-content;"class="desktop-only">
+<tr>
+<td>
+<img src="https://farrenal.github.io/Headshot.jpg" alt="Photo of me" style="
+  width:224px;
+  height:366px;
+  border:5px solid #422604;
+  border-radius:35px;" >
+</td>
+<td>
+<h1 style="margin-left:auto;margin-right:auto;font-size:350%;">Alexander Farren</h1>
+<p style="color:#6b3102;margin-left:auto;margin-right:auto;font-size:150%;">farrenal@tcd.ie</p>
+<hr>
+<h2>About me</h2>
+<main>I'm a final year theoretical physics student at Trinity College Dublin. Here you can find some work I've done.</main>
+</td></tr></table>
+
+<div class="mobile-only"><h1 style="margin-left:auto;margin-right:auto;">Alexander Farren</h1>
+<p style="color:#6b3102;margin-left:auto;margin-right:auto;">farrenal@tcd.ie</p>
+<img src="https://farrenal.github.io/Headshot.jpg" alt="Hello there" style="
+  width:224px;
+  height:366px;
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+  margin-top:10px;
+  margin-bottom:10px;
+  padding:0px 0px 0px 0px;
+  border:4.5px solid #422604;
+  border-radius:50px;" >
+<hr><table cellspacing="10px"><tr><td><h2>About me</h2>
+<main>I'm a final year theoretical physics student at Trinity College Dublin. Here you can find some work I've done.<main/></td></tr></table>
+</div>
+
+<hr>
+<table style="
+  margin-left:auto;
+  margin-right:auto;
+  border-spacing:0px 20px; ">
+<tr style="background-color: #d2e6f7;outline: #4a55cf thick solid;">
+<td><h2>Research Experience</h2> 
+<main> Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">Naughton Fellowship</a> to do an REU at the University of Notre Dame for the Summer 2023. I worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on spurious isospin symmetry breaking in the IMSRG.</main>
+<br>
+<main>
+See <a href="https://miro.medium.com/v2/resize:fit:1024/1*mwXHpdt6CTQHxH78dwc6NA.jpeg">report</a> and <a href="https://farrenal.github.io/Presentation.pdf">presentation slides</a>.
+</main>
+</td>
+<td>
+<img class="grids" src="https://farrenal.github.io/particleladder.jpeg" style="border:#4a55cf 5px solid;">
+</td>
+</tr>
+<tr style="background-color: #f2c796;outline: #fa7d34 thick solid;">
+<td>
+<h2>Electoral Redistricting</h2> 
+<main> Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a> event in May 2023, applied multi-objective optimisation and data science techniques to the elecotral redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>, Ben McGloin and Mikey Whelan.</main>
+<br>
+<main>See <a href="https://elizasomerville.github.io/Redistricting_Ireland_Report.pdf">report</a> and <a href="https://github.com/elizasomerville/IrishConstituencyOptimisation">code repository</a>.</main>
+</td>
+<td>
+<img src="https://farrenal.github.io/ireland.jpg" class="grids" style="border:#fa7d34 5px solid;">
+</td>
+</tr>
+<tr style="background-color: #bae09d;outline: #278513 thick solid;">
+<td>
+<h2>Physics Communication</h2> 
+<main> Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation convention for the Theoretical Physics Student Association (TPSA) <a href="https://www.youtube.com/@tpsa_ireland/videos">Youtube channel</a>. Recently created a video on deriving the critical temperature of the 2D Ising Model with Mikey Whelan.</main>
+<br>
+<main>- <a href="https://www.youtube.com/watch?v=RrZWrJcV5ZM">Einstein Summation Convention #1</a></main>
+<main>- <a href="https://www.youtube.com/watch?v=qBqU5paaXLk">Einstein Summation Convention #2</a></main>
+<main>- <a href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Critical Temperature of the 2D Ising Model</a></main>
+</td>
+<td>
+<img src="https://farrenal.github.io/physcomm.jpeg" class="grids" style="border:#278513 5px solid">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

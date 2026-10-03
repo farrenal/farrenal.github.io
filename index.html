@@ -1,27 +1,23 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <title>Alexander Farren</title>
     <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<link href='https://fonts.googleapis.com/css?family=Fira Sans Condensed' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- What search engines show, and what a link to this page looks like when it is shared -->
+    <meta name="description" content="Alexander Farren, PhD student in theoretical physics at Cambridge: research, interactive visualisations, talks and other projects.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Alexander Farren">
+    <meta property="og:description" content="PhD student in theoretical physics at Cambridge: research, interactive visualisations, talks and other projects.">
+    <meta property="og:url" content="https://alexfarren.com/">
+    <meta property="og:image" content="https://alexfarren.com/Images/headshot_sunny.jpg">
+    <meta name="twitter:card" content="summary">
     <link rel="apple-touch-icon" type="image/png" href="Images/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="Images/android-chrome-512x512.png">
-	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
     <link rel="stylesheet" type="text/css" href="masterstyle.css">
     <script defer data-domain="farrenal.github.io" src="https://plausible.io/js/script.js"></script>
-    <script src="/MathJax/MathJax.js" type="text/javascript">
-        MathJax.Hub.Config({
-            config: ["MMLorHTML.js"],
-            extensions: ["tex2jax.js"],
-            jax: ["input/TeX", "output/SVG"],
-            tex2jax: {inlineMath: ["\\(","\\)"], displayMath: ["\$$","\$$"]}
-        });
-        </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- MathJax draws the mathematics written between \( and \) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_SVG" type="text/javascript"></script>
 </head>
 
 <body> 
@@ -36,7 +32,7 @@
                 <h1 class="name">
                     Alexander Farren
                 </h1>
-                <p class="email"><a class="email">amf94@cam.ac.uk</a></p>
+                <p class="email profile-links"><a href="mailto:amf94@cam.ac.uk">amf94@cam.ac.uk</a><span>&middot;</span><a href="https://inspirehep.net/authors/2863664?ui-citation-summary=true&ui-exclude-self-citations=true" target="_blank">INSPIRE</a></p>
                 <hr>
                 <h2>
                     About me
@@ -54,15 +50,14 @@
             </td>
         </tr>
     </table>
-    <hr class="mainhr">
 </div>
 
 <div class="mobile-only mobile-only-intro">
     <h1 class="mobile-only-intro name">
         Alexander Farren
     </h1>
-    <p class="mobile-only-intro email">
-        amf94@cam.ac.uk
+    <p class="mobile-only-intro email profile-links">
+        <a href="mailto:amf94@cam.ac.uk">amf94@cam.ac.uk</a><span>&middot;</span><a href="https://inspirehep.net/authors/2863664?ui-citation-summary=true&ui-exclude-self-citations=true" target="_blank">INSPIRE</a>
     </p>
     <img class="mobile-only-intro headshot" src="Images/headshot_sunny.jpg" alt="Photo of me">
     <hr class="mainhr">
@@ -85,334 +80,309 @@
             </td>
         </tr>
     </table>
-    <hr class="mainhr">
 </div>
 
-<nav id="navbar">
-    <a class="tabButton Research"        onclick="tabClicked('Research');">         Research</a> 
-    <a class="tabButton Visualisations"  onclick="tabClicked('Visualisations');">   Visualisations</a> 
-    <a class="tabButton Communication"   onclick="tabClicked('Communication');">    Communication</a> 
-    <a class="tabButton Miscellaneous"   onclick="tabClicked('Miscellaneous');">    Miscellaneous</a>
-    <a class="toggleButton"              onclick="toggleOpenAll();">                &#8615;</a>
-</nav>
+<!-- The projects: a list of sections which open and close, each holding its widgets -->
+<div class="sections">
 
-<!-- <div>
-    <div id="debugText"></div>
-</div> -->
-
-<table class="maintable">
-
-<tbody class="tabContent Research">
-    <tr class="headanchor" id="Research">
-        <td>
-        <h1>Research</h1>
-        </td>
-    </tr>
-    <tr class="phd">
-        <td>
-            <h2 class="project-title">
-            PhD  <div class="dates">&#x2013; \((\eta=0)\)</div> 
-            </h2> 
+<details class="section" id="Research">
+    <summary>Research</summary>
+    <article class="widget phd">
+        <h2 class="project-title">PhD <span class="dates">&#x2013; \((\eta=0)\)</span></h2>
+        <div class="widget-image">
+            <img src="Images/dSloop.jpeg" alt="Sketch of a loop diagram hanging from the late-time boundary of de Sitter space" loading="lazy">
+        </div>
+        <div class="widget-text">
             <main>
-            Studying loops in de Sitter. 
+                Studying loops in de Sitter.
             </main>
-            <br>
-        </td>
-        <td class="grids">
-            <img class="grids" src="Images/dSloop.jpeg">
-        </td>
-    </tr>
-    <tr class="hamilton">
-        <td>
-            <h2 class="project-title">
-            Research Experience <div class="dates">&#x2013;  Summer 2024</div>
-            </h2> 
+            <div class="buttons">
+                <a class="clickables inspire" href="https://inspirehep.net/authors/2863664?ui-citation-summary=true&ui-exclude-self-citations=true">inSpire</a>
+                <a class="clickables paper" href="https://arxiv.org/abs/2603.08794">Pre-print (hep-th/2603.08794)</a>
+            </div>
+        </div>
+    </article>
+    <article class="widget essay">
+        <h2 class="project-title">Part III Essay <span class="dates">&#x2013; 2025</span></h2>
+        <div class="widget-image">
+            <img src="Images/fms.jpeg" alt="Diagram of fermions scattering off a magnetic monopole, coming in as one species and leaving as another" loading="lazy">
+        </div>
+        <div class="widget-text">
+            <main>
+                In my essay I discussed what happens when one scatters a fermion off a magnetic monopole&#x2014;a story dating back to the 70's. After solving the Dirac equation in the presence of a monopole,
+                it turns out the lowest angular momentum mode of fermions exhibits the peculiar behaviour of states being split into either in or out, such that quantum numbers
+                like chirality and electric charge are violated. Strange consequences arise when combining this effect with GUTs. My essay setter was <a href="https://www.damtp.cam.ac.uk/user/tong/">Prof. David Tong</a>.
+            </main>
+            <div class="buttons">
+                <a class="clickables" href="Documents/Essay.pdf" >Essay</a>
+            </div>
+        </div>
+    </article>
+    <article class="widget hamilton">
+        <h2 class="project-title">Research Experience <span class="dates">&#x2013; Summer 2024</span></h2>
+        <div class="widget-image">
+            <img src="Images/cutbox.jpeg" alt="One-loop box Feynman diagram with all four propagators cut" loading="lazy">
+        </div>
+        <div class="widget-text">
             <main>
                 Participated in the Hamilton Trust Summer Internship with <a href="https://elizasomerville.github.io">Eliza Somerville</a> and Mikey Whelan.
                 Supervised by <a href="https://www.maths.tcd.ie/~britto/">Prof. Ruth Britto</a>, we studied the symbol alphabet of one-loop Feynman integrals.
             </main>
-            <hr class="bumphr"/>
-            <main>
-            <a class="clickables" href="Documents/Hamilton_report.pdf">Report</a>
-            <a class="clickables" href="Documents/Hamilton_presentation.pdf" >Slides</a>
-            <a class="clickables" href="Documents/Hamilton_poster.pdf" >Poster</a>
-            </main>
-        </td>
-        <td class="grids">
-            <img class="grids" src="Images/cutbox.jpeg" >
-        </td>
-    </tr>
-    <tr class="naughton">
-        <td>
-            <h2 class="project-title">
-            Research Experience <div class="dates">&#x2013; Summer 2023</div>
-            </h2> 
-            <main> 
-            Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">
-            Naughton Fellowship</a> to do an REU at the University of Notre Dame. 
-            Worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on 
-            spurious isospin symmetry breaking in the IMSRG formalism of <i>ab initio</i> many-body nuclear theory.</main>
-            <hr class="bumphr"/>
-            <main>
-            <a class="clickables" href="Documents/SpuriousISB_report.pdf" >Report</a>
-            <a class="clickables" href="Documents/SpuriousISB_presentation.pdf" >Slides</a>
-            <a class="clickables" href="https://arxiv.org/abs/2412.10693" id="paper">Pre-print (nucl-th/2412.10693)</a>
-            </main>
-        </td>
-        <td class="grids">
-            <img class="grids" src="Images/particleladder.jpeg" >
-        </td>
-    </tr>
-    <tr class="essay">
-        <td>
-            <h2 class="project-title">
-            Part III Essay <div class="dates">&#x2013; 2025</div>
-            </h2> 
-            <main> 
-            In my essay I discussed what happens when one scatters a fermion off a magnetic monopole&#x2014;a story dating back to the 70's. After solving the Dirac equation in the presence of a monopole, 
-            it turns out the lowest angular momentum mode of fermions exhibits the peculiar behaviour of states being split into either in or out, such that quantum numbers 
-            like chirality and electric charge are violated. Strange consequences arise when combining this effect with GUTs. My essay setter was <a href="https://www.damtp.cam.ac.uk/user/tong/">Prof. David Tong</a>.
-            </main>
-            <hr class="bumphr"/>
-            <main>
-            <a class="clickables" href="Documents/Essay.pdf" >Essay</a>
-            </main>
-        </td>
-        <td class="grids">
-            <img src="Images/fms.jpeg">
-        </td>
-    </tr>
-    <tr class="fyp">
-        <td>
-            <h2 class="project-title">
-            Bachelor Thesis <div class="dates">&#x2013; 2023/2024</div>
-            </h2> 
-            <main> 
-            My thesis was a review of <a href="https://arxiv.org/abs/0901.4937"> Foundations of the \(\small\text{AdS}_5\times S^5\) Superstring</a> in which
-            I reproduced many of the results from the first two chapters. It involved learning about basic string theory, superalgebras, the Green-Schwarz superstring
-            in \(\small\text{AdS}_5\times S^5\), and how one could go about quantising it in the light-cone gauge. It turns out to be difficult to quantise the model
-            directly so one resorts to a perturbative approach in the limit as the string length goes to infinity. My supervisor was <a href="https://www.maths.tcd.ie/~frolovs/">Prof. Sergey Frolov</a>.
-            </main>
-            <hr class="bumphr"/>
-            <main>
-            <a class="clickables" href="Documents/FYP.pdf" >Thesis</a>
-            <a class="clickables" href="Documents/FYP_presentation.pdf" >Slides</a>
-            <a class="clickables" href="Documents/FYP_poster.pdf" >Poster</a>
-            </main>
-        </td>
-        <td class="grids">
-            <img src="Images/worldsheet.jpeg">
-        </td>
-    </tr>
-</tbody> 
-<!--End of tab Research-->
-
-<tbody class = "tabContent Visualisations">
-    <tr class="headanchor" id="Visualisations">
-        <td>
-        <h1>Visualisations</h1>
-        </td>
-    </tr>
-    <tr class="cloudchamber">
-        <td>
-            <h2 class="project-title">
-            Interactive Cloud Chamber <div class="dates">&#x2013; Nov 2024</div>
-            </h2> 
-            <main> 
-            A cloud chamber reveals charged particles which are usually invisible to the naked eye. These basic experiments
-            played a historical role in our understanding of particle physics, and can be made at home with a bit of effort! 
-            I created this interactive webpage as a convenient version of the real thing, where you can choose which particle
-            to observe.
-            </main>
-            <hr class="bumphr" />
-            <main>
-            <!-- <a class="clickables" href="Documents/CloudChamber_report.pdf">Explanation</a> -->
-            <a class="clickables" href="CloudChamber" >Interactive chamber</a>
-            </main>
-        </td>
-        <td class="grids">
-            <img class="grids fit">
-        </td>
-    </tr>
-    <tr class="potts">
-        <td>
-            <h2 class="project-title">
-            Interactive Potts Model <div class="dates">&#x2013; Oct 2023</div>
-            </h2> 
-            <main> 
-            Following an independent reading project on statistical field theory, my interest 
-            in critical behaviour led to this visual showcase of the square lattice Potts model. To play around with the 
-            lattice, see the interactive gallery (best on desktop). If you want to skip straight to the theory behind it,
-            see the explanation.
-            </main>
-            <hr class="bumphr" />
-            <main>
-            <a class="clickables" href="Documents/Potts_report.pdf">Explanation</a>
-            <a class="clickables" href="Potts" >Interactive gallery</a>
-            </main>
-        </td>
-        <td class="grids">
-            <img class="grids fit" src="Images/Potts.gif">
-        </td>
-    </tr>
-    <tr class="solitons">
-        <td>
-            <h2 class="project-title">
-            Solitons in 1 dimension <div class="dates">&#x2013; Nov 2023</div>
-            </h2> 
-            <main> 
-            Learned about basic soliton theory with <a href="https://elizasomerville.github.io">Eliza Somerville</a> and wrote a 
-            short introduction to solitons in 1+1 dimensions, namely solutions to the KdV equation and kink solitons for a \(\small\phi^4\) potential and a sine-Gordon potential.
-            </main>
-            <hr class="bumphr"/>
-            <main>
-            <a class="clickables" href="Documents/Solitons_report.pdf" >Explanation</a>
-            <a class="clickables" href="Solitons" >Satisfying animations</a>
-            </main>
-        </td>
-        <td class="grids">
-            <img class="grids fit" src="Images/Solitons.gif">
-        </td>
-    </tr>
-</tbody> 
-<!--End of tab Visualisations-->
-
-<tbody class = "tabContent Communication">
-    <tr class="headanchor" id="Communication">
-        <td>
-        <h1>Communication</h1>
-        </td>
-    </tr>
-    <tr class="partiiitalk">
-        <td>
-            <h2 class="project-title">
-            Part III Seminar <div class="dates">&#x2013; Dec 2024</div>
-            </h2> 
-            <main>
-            I enjoyed learning about the on-shell bootstrap techniques for tree-level amplitudes from Cliff Cheung's <a href="https://www.youtube.com/watch?v=Ks6nuuFxRqM">TASI lectures</a>, so I decided to prepare
-            a student seminar for my master's cohort on the Parke-Taylor formula and loop amplitudes.
-            </main>
-            <main>
-            <a class="clickables" href="Documents/PartIII_talk.pdf">Slides</a>
-            </main>
-            <br>
-        </td>
-        <td class="grids">
-            <img class="grids fit" src="Images/OnShellAmplitude.jpeg">
-        </td>
-    </tr>	
-    <tr class="physcomm">
-        <td>
-            <h2 class="project-title">
-            TPSA lectures <div class="dates">&#x2013; 2023</div>
-            </h2> 
-            <main>
-            Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation 
-            convention for the Theoretical Physics Student Association (TPSA).
-            </main>
-            <main>
-            <a class="clickables" href="https://www.youtube.com/watch?v=RrZWrJcV5ZM">ESC #1</a>
-            <a class="clickables" href="https://www.youtube.com/watch?v=qBqU5paaXLk">ESC #2</a>
-            <div class="desktop-only">
-            <a class="clickables" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3 - Classical Field Theory</a>
+            <div class="buttons">
+                <a class="clickables" href="Documents/Hamilton_report.pdf">Report</a>
+                <a class="clickables" href="Documents/Hamilton_presentation.pdf" >Slides</a>
+                <a class="clickables" href="Documents/Hamilton_poster.pdf" >Poster</a>
             </div>
-            <div class="mobile-only">
-            <a class="clickables" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3</a>
+        </div>
+    </article>
+    <article class="widget fyp">
+        <h2 class="project-title">Bachelor Thesis <span class="dates">&#x2013; 2023/2024</span></h2>
+        <div class="widget-image">
+            <img src="Images/worldsheet.jpeg" alt="Sketch of a string worldsheet in AdS5 x S5" loading="lazy">
+        </div>
+        <div class="widget-text">
+            <main>
+                My thesis was a review of <a href="https://arxiv.org/abs/0901.4937"> Foundations of the \(\small\text{AdS}_5\times S^5\) Superstring</a> in which
+                I reproduced many of the results from the first two chapters. It involved learning about basic string theory, superalgebras, the Green-Schwarz superstring
+                in \(\small\text{AdS}_5\times S^5\), and how one could go about quantising it in the light-cone gauge. It turns out to be difficult to quantise the model
+                directly so one resorts to a perturbative approach in the limit as the string length goes to infinity. My supervisor was <a href="https://www.maths.tcd.ie/~frolovs/">Prof. Sergey Frolov</a>.
+            </main>
+            <div class="buttons">
+                <a class="clickables" href="Documents/FYP.pdf" >Thesis</a>
+                <a class="clickables" href="Documents/FYP_presentation.pdf" >Slides</a>
+                <a class="clickables" href="Documents/FYP_poster.pdf" >Poster</a>
             </div>
-            </main>
-            <br style="clear:both" />
-            <br>
+        </div>
+    </article>
+    <article class="widget naughton">
+        <h2 class="project-title">Research Experience <span class="dates">&#x2013; Summer 2023</span></h2>
+        <div class="widget-image">
+            <img src="Images/particleladder.jpeg" alt="Many-body diagram with particle and hole lines joined by interactions" loading="lazy">
+        </div>
+        <div class="widget-text">
             <main>
-            Made a video on the critical temperature of the Ising Model with Mikey Whelan.
+                Received the <a href="https://naughton.nd.edu/#:~:text=The%20Naughton%20Fellowship,institutions%20and%20countries.">
+                Naughton Fellowship</a> to do an REU at the University of Notre Dame.
+                Worked with <a href="https://physics.nd.edu/people/ragnar-stroberg/">Prof. Ragnar Stroberg</a> on
+                spurious isospin symmetry breaking in the IMSRG formalism of <i>ab initio</i> many-body nuclear theory.
             </main>
-            <main>
-            <div class="desktop-only">
-            <a class="clickables" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Critical Temperature of the 2D Ising Model</a>
+            <div class="buttons">
+                <a class="clickables" href="Documents/SpuriousISB_report.pdf" >Report</a>
+                <a class="clickables" href="Documents/SpuriousISB_presentation.pdf" >Slides</a>
+                <a class="clickables paper" href="https://arxiv.org/abs/2412.10693">Pre-print (nucl-th/2412.10693)</a>
             </div>
-            <div class="mobile-only">
-            <a class="clickables" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Ising model</a>
+        </div>
+    </article>
+</details>
+
+<details class="section" id="Visualisations" open>
+    <summary>Visualisations</summary>
+    <article class="widget cloudchamber">
+        <h2 class="project-title"><a class="banner-link" href="CloudChamber" target="_blank"><span>Interactive Cloud Chamber <span class="dates">&#x2013; Nov 2024</span></span></a></h2>
+        <div class="widget-image">
+            <iframe class="thumbnail" src="CloudChamber/thumbnail/index.html" title="A cloud chamber, simulated live" scrolling="no" tabindex="-1"></iframe>
+            <a class="widget-link" href="CloudChamber" target="_blank" aria-label="Open the animations"></a>
+        </div>
+        <div class="widget-text">
+            <main>
+                A cloud chamber reveals charged particles which are usually invisible to the naked eye.
+                <span class="desktop-text">These basic experiments
+                played a historical role in our understanding of particle physics, and can be made at home with a bit of effort!
+                I created this interactive webpage as a convenient version of the real thing, where you can add radioactive sources
+                and choose which particles to observe.</span>
+            </main>
+            <!-- <div class="buttons">
+                <a class="clickables animations" href="CloudChamber">Animations</a>
+            </div> -->
+        </div>
+    </article>
+    <article class="widget solitons">
+        <h2 class="project-title"><a class="banner-link" href="Solitons" target="_blank"><span>Solitons in 1 dimension <span class="dates">&#x2013; Nov 2023</span></span></a></h2>
+        <div class="widget-image">
+            <picture>
+                <source media="(prefers-reduced-motion: reduce)" srcset="Images/Solitons_still.png">
+                <img src="Images/Solitons.gif" alt="Animated plot of three solitary waves of different heights moving at different speeds" loading="lazy">
+            </picture>
+            <a class="widget-link" href="Solitons" target="_blank" aria-label="Open the animations"></a>
+        </div>
+        <div class="widget-text">
+            <main>
+                Learned about basic soliton theory with <a href="https://elizasomerville.github.io">Eliza Somerville</a> and wrote a
+                short introduction to solitons in 1+1 dimensions, namely solutions to the KdV equation and kink solitons for a \(\small\phi^4\) potential and a sine-Gordon potential. 
+                Here you will find some satisfying animations.
+            </main>
+            <!-- <div class="buttons">
+                <a class="clickables animations" href="Solitons">Animations</a>
+            </div> -->
+        </div>
+    </article>
+    <article class="widget potts">
+        <h2 class="project-title"><a class="banner-link" href="Potts" target="_blank"><span>Interactive Potts Model <span class="dates">&#x2013; Oct 2023</span></span></a></h2>
+        <div class="widget-image">
+            <iframe class="thumbnail" src="Potts/thumbnail/index.html" title="The Potts model, simulated live" scrolling="no" tabindex="-1"></iframe>
+            <a class="widget-link" href="Potts" target="_blank" aria-label="Open the animations"></a>
+        </div>
+        <div class="widget-text">
+            <main>
+                Following an independent reading project on statistical field theory, my interest
+                in critical behaviour led to this visual showcase of the square lattice Potts model.
+                <span class="desktop-text">To play around with the
+                lattice, see the interactive gallery (best on desktop).</span>
+            </main>
+            <!-- <div class="buttons">
+                <a class="clickables animations" href="Potts">Animations</a>
+            </div> -->
+        </div>
+    </article>
+</details>
+
+<details class="section" id="Talks">
+    <summary>Talks</summary>
+    <article class="widget partiiitalk">
+        <h2 class="project-title">Part III Seminar <span class="dates">&#x2013; Dec 2024</span></h2>
+        <div class="widget-image">
+            <img class="cover" src="Images/OnShellAmplitude.jpeg" alt="Cartoon of a figure made of gluon lines standing on a turtle shell, next to a wave" loading="lazy">
+        </div>
+        <div class="widget-text">
+            <main>
+                I enjoyed learning about the on-shell bootstrap techniques for tree-level amplitudes from Cliff Cheung's <a href="https://www.youtube.com/watch?v=Ks6nuuFxRqM">TASI lectures</a>, so I decided to prepare
+                a student seminar for my master's cohort on the Parke-Taylor formula and loop amplitudes.
+            </main>
+            <div class="buttons">
+                <a class="clickables" href="Documents/PartIII_talk.pdf">Slides</a>
             </div>
-            </main>
-            <br>
-        </td>
-        <td class="grids">
-            <img class="grids fit" src="Images/physcomm.jpeg">
-        </td>
-    </tr>
-</tbody>
-<!--End of tab Communication-->
-
-<tbody class = "tabContent Miscellaneous">
-    <tr class="headanchor" id="Miscellaneous">
-        <td>
-            <h1>Miscellaneous</h1>
-        </td>
-    </tr>
-    <tr class="ireland">
-        <td>
-            <h2 class="project-title">
-            Electoral Redistricting <div class="dates">&#x2013; May 2023</div>
-            </h2> 
-            <main> 
-            Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a> 
-            hackathon event, applied multi-objective optimisation and data science techniques to the electoral 
-            redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>, 
-            Ben McGloin and Mikey Whelan.
-            </main>
-            <hr class="bumphr" />
+        </div>
+    </article>
+    <article class="widget physcomm">
+        <h2 class="project-title">TPSA lectures <span class="dates">&#x2013; 2023</span></h2>
+        <div class="widget-image">
+            <img class="cover" src="Images/physcomm.jpeg" alt="Alexander writing index notation on a blackboard" loading="lazy">
+        </div>
+        <div class="widget-text">
             <main>
-            <a class="clickables" href="https://elizasomerville.github.io/Files/Redistricting_Ireland_Report.pdf">Report</a>
-            <a class="clickables" href="https://github.com/elizasomerville/IrishConstituencyOptimisation">Github</a>
+                Wrote and filmed a video series introducing index notation, the Levi-Civita symbol and Einstein summation
+                convention for the Theoretical Physics Student Association (TPSA).
             </main>
-        </td>
-        <td class="grids">
-            <img class="grids" src="Images/ireland.jpg">
-        </td>
-    </tr>
-    <tr class="mathhack">
-        <td>
-            <h2 class="project-title">
-            MathDeriver <div class="dates">&#x2013; Oct 2024</div>
-            </h2> 
-            <main> 
-            As part of the 1-day <a href="https://lu.ma/o07b5s8m">Flywheel: Tools for Science</a> 
-            hackathon event, I collaborated with <a href="https://joebacchus.github.io/">Joe Bacchus George</a> and Piotr Toka to create a python script capabale of providing users with the derivation of numbered equations from arXiv articles.
-            </main>
-            <hr class="bumphr" />
+            <div class="buttons">
+                <a class="clickables" href="https://www.youtube.com/watch?v=RrZWrJcV5ZM">ESC #1</a>
+                <a class="clickables" href="https://www.youtube.com/watch?v=qBqU5paaXLk">ESC #2</a>
+                <div class="desktop-only">
+                <a class="clickables" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3 - Classical Field Theory</a>
+                </div>
+                <div class="mobile-only">
+                <a class="clickables" href="https://www.youtube.com/watch?v=5fnNS8rO3KA">ESC #3</a>
+                </div>
+            </div>
             <main>
-            <a class="clickables" href="https://github.com/joebacchus/Maths_Deriver">Github</a>
+                Made a video on the critical temperature of the Ising Model with Mikey Whelan.
             </main>
-        </td>
-        <td class="grids">
-            <img class="grids" src="Images/Flywheel.jpg">
-        </td>
-    </tr>
-    <tr class="rocket">
-        <td>
-            <h2 class="project-title">
-            Rocket Launch <div class="dates">&#x2013; Jan 2024</div>
-            </h2> 
-            <main> 
-            Built a simple model rocket, <i>Puffin 1</i>, with the Rocketry Comittee of the Trinity Space Society. Some wind led to the launch going sideways... Pictured are myself, Nathan Besch, Grace Madison and Oskar García García de las Heras.
-            </main>
-            <hr class="bumphr" />
+            <div class="buttons">
+                <div class="desktop-only">
+                <a class="clickables" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Critical Temperature of the 2D Ising Model</a>
+                </div>
+                <div class="mobile-only">
+                <a class="clickables" href="https://www.youtube.com/watch?v=3AZ3TFAgVHA">Ising model</a>
+                </div>
+            </div>
+        </div>
+    </article>
+</details>
+
+<details class="section" id="Miscellaneous">
+    <summary>Miscellaneous</summary>
+    <article class="widget mathhack">
+        <h2 class="project-title">MathDeriver <span class="dates">&#x2013; Oct 2024</span></h2>
+        <div class="widget-image">
+            <img src="Images/Flywheel.jpg" alt="Logo of the Flywheel hackathon: a flywheel" loading="lazy">
+        </div>
+        <div class="widget-text">
             <main>
-            <a class="clickables" href="https://trinitynews.ie/2024/04/the-skys-no-limit-the-trinity-space-society-rocket-launch/">Trinity News article<a>
-            <a class="clickables" href="Images/rocketlaunch.mp4">Video of launch</a>
+                As part of the 1-day <a href="https://lu.ma/o07b5s8m">Flywheel: Tools for Science</a>
+                hackathon event, I collaborated with <a href="https://joebacchus.github.io/">Joe Bacchus George</a> and Piotr Toka 
+                to create a python script capabale of providing users with the derivation of numbered equations from arXiv articles.
+                (Oct 2026 update: this is now completely obsolete!)
             </main>
-        </td>
-        <td class="grids">
-            <img class="grids" src="Images/rocket.jpg">
-        </td>
-    </tr>
-</tbody>
-<!--End of tab Miscellaneous-->
+            <div class="buttons">
+                <a class="clickables" href="https://github.com/joebacchus/Maths_Deriver">Github</a>
+            </div>
+        </div>
+    </article>
+    <article class="widget rocket">
+        <h2 class="project-title">Rocket Launch <span class="dates">&#x2013; Jan 2024</span></h2>
+        <div class="widget-image">
+            <img class="cover" src="Images/rocket.jpg" alt="Four people standing in a field next to a model rocket" loading="lazy">
+        </div>
+        <div class="widget-text">
+            <main>
+                Built a simple model rocket, <i>Puffin 1</i>, with the Rocketry Comittee of the Trinity Space Society. Some wind led to the launch going sideways... Pictured are myself, Nathan Besch, Grace Madison and Oskar García García de las Heras.
+            </main>
+            <div class="buttons">
+                <a class="clickables" href="https://trinitynews.ie/2024/04/the-skys-no-limit-the-trinity-space-society-rocket-launch/">Trinity News article</a>
+                <a class="clickables" href="Images/rocketlaunch.mp4">Video of launch</a>
+            </div>
+        </div>
+    </article>
+    <article class="widget ireland">
+        <h2 class="project-title">Electoral Redistricting <span class="dates">&#x2013; May 2023</span></h2>
+        <div class="widget-image">
+            <img src="Images/ireland.png" alt="Map of Ireland divided into coloured constituencies" loading="lazy">
+        </div>
+        <div class="widget-text">
+            <main>
+                Sparked by the <a href="https://www.maths.tcd.ie/~tristan/SSG/index.html">Real World Mathematical Modelling</a>
+                hackathon event, applied multi-objective optimisation and data science techniques to the electoral
+                redistricting of Ireland. I worked with <a href="https://elizasomerville.github.io">Eliza Somerville</a>,
+                Ben McGloin and Mikey Whelan.
+            </main>
+            <div class="buttons">
+                <a class="clickables" href="https://elizasomerville.github.io/Files/Redistricting_Ireland_Report.pdf">Report</a>
+                <a class="clickables" href="https://github.com/elizasomerville/IrishConstituencyOptimisation">Github</a>
+            </div>
+        </div>
+    </article>
+</details>
 
-</table>
+</div>
 
-<script> 
-   $('.clickables').attr('target', '_blank'); 
+<script>
+// Buttons open in a new tab
+document.querySelectorAll('.clickables').forEach((button) => { button.target = '_blank'; });
+
+const sections = document.querySelectorAll('details.section');
+
+// The sections which are open are remembered on this device, and are open again at the next visit.
+// (Some browsers do not allow a page to remember anything: then every visit starts with Visualisations open.)
+const rememberedAs = 'openSections';
+try {
+    const remembered = JSON.parse(window.localStorage.getItem(rememberedAs));
+    if (Array.isArray(remembered)) sections.forEach((section) => { section.open = remembered.includes(section.id); });
+} catch (error) {}
+sections.forEach((section) => {
+    section.addEventListener('toggle', () => {
+        const open = Array.from(sections).filter((each) => each.open).map((each) => each.id);
+        try { window.localStorage.setItem(rememberedAs, JSON.stringify(open)); } catch (error) {}
+    });
+});
+
+// A link to a section (for example #Research) opens that section
+function openLinkedSection() {
+    const section = document.getElementById(window.location.hash.slice(1));
+    if (section && section.classList.contains('section')) section.open = true;
+}
+if (window.location.hash) openLinkedSection();
+window.addEventListener('hashchange', openLinkedSection);
+
+// On a phone, a tap on the banner or the picture of a widget opens the project in this tab, not in a new one
+if (window.matchMedia('(pointer:coarse)').matches) {
+    document.querySelectorAll('.banner-link, .widget-link').forEach((link) => link.removeAttribute('target'));
+}
+
+// Mathematics in a section which was closed when the page loaded could not be measured: draw it again once it shows
+document.querySelectorAll('details.section').forEach((section) => {
+    section.addEventListener('toggle', () => {
+        if (section.open && window.MathJax && MathJax.Hub) MathJax.Hub.Queue(["Rerender", MathJax.Hub, section]);
+    });
+});
 </script>
-<script src="tabs.js"></script>
 </body>
 </html>

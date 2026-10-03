@@ -35,7 +35,7 @@ const imageScaleStep = 0.2;         // on the processor: the steps between the s
 var frameBudget = 10;               // on the processor: the work for one frame should take less than this many milliseconds on average...
 const frameBudgetFrames = 120;      // ...over this many frames
 const warmUpFrames = 90;            // frames which are not counted after the image has been set up (they include one-off work)
-const busyGraphicsCard = 16;        // on the graphics card: if the work for one frame takes more than this many milliseconds on
+const busyGraphicsCard = 14;        // on the graphics card: if the work for one frame takes more than this many milliseconds on
                                     // average, the picture is made smaller (see CloudChamber.animate)...
 const slowGraphicsCard = 25;        // ...and if it takes more than this with the smallest picture, there is no real
                                     // graphics card, and the page changes to the processor

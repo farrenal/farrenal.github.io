@@ -15,6 +15,10 @@
 
     var host = location.hostname;
     if (location.protocol === "file:" || host === "localhost" || host === "127.0.0.1") return;
+    // the site's own addresses: links between them aren't "outgoing", and visits from them aren't "came from"
+    function isOwnSite(h) {
+        return h === host || /(^|\.)alexfarren\.com$/.test(h) || h === "farrenal.github.io";
+    }
     try {
         if (/[?&]notrack\b/.test(location.search)) localStorage.setItem("count-ignore", "1");
         if (/[?&]track\b/.test(location.search)) localStorage.removeItem("count-ignore");
@@ -39,7 +43,7 @@
     var ref = "";
     try {
         var r = new URL(document.referrer);
-        if (r.hostname !== host) ref = r.hostname.replace(/^www\./, "");
+        if (!isOwnSite(r.hostname)) ref = r.hostname.replace(/^www\./, "");
     } catch (e) {}
     var utm = location.search.match(/[?&]utm_source=([^&]+)/);
     if (utm) ref = decodeURIComponent(utm[1]);
@@ -84,10 +88,10 @@
         try { u = new URL(a.href, location.href); } catch (e) { return; }
         if (!/^https?:$/.test(u.protocol)) return;
         if (FILES.test(u.pathname)) {
-            var label = u.hostname === host ? u.pathname : u.hostname.replace(/^www\./, "") + u.pathname;
+            var label = isOwnSite(u.hostname) ? u.pathname : u.hostname.replace(/^www\./, "") + u.pathname;
             return countEvent("download", label);
         }
-        if (u.hostname !== host) {
+        if (!isOwnSite(u.hostname)) {
             return countEvent("outbound", (u.hostname.replace(/^www\./, "") + u.pathname).replace(/\/$/, ""));
         }
     }

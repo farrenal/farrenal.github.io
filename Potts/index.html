@@ -8,7 +8,8 @@
     <link rel="apple-touch-icon" type="image/png" href="https://farrenal.github.io/Images/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="https://farrenal.github.io/Images/android-chrome-512x512.png">
     <link rel="stylesheet" href="potts_styles.css">
-    <script defer data-domain="farrenal.github.io/potts" src="https://plausible.io/js/script.js"></script>
+    <!-- Anonymous visitor counter, no cookies (see _counter/README.md) -->
+    <script defer src="/count.js"></script>
     <!-- MathJax draws the mathematics written between \( and \), in the description and on the buttons -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
@@ -86,28 +87,28 @@
           <section class="panel">
             <h3 class="panel-title">Number of states</h3>
             <div class="button-row">
-              <button type="button" class="btn q" data-q="2" title="Two states: the Ising model" onclick="qClicked(2);">\(q=2\)<span class="swatches"><span class="s0"></span><span class="s1"></span></span></button>
-              <button type="button" class="btn q" data-q="3" onclick="qClicked(3);">\(q=3\)<span class="swatches"><span class="s0"></span><span class="s1"></span><span class="s2"></span></span></button>
-              <button type="button" class="btn q" data-q="4" onclick="qClicked(4);">\(q=4\)<span class="swatches"><span class="s0"></span><span class="s1"></span><span class="s2"></span><span class="s3"></span></span></button>
-              <button type="button" class="btn q" data-q="5" onclick="qClicked(5);">\(q=5\)<span class="swatches"><span class="s0"></span><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span></span></button>
+              <button data-count="q" data-count-label="q = 2" type="button" class="btn q" data-q="2" title="Two states: the Ising model" onclick="qClicked(2);">\(q=2\)<span class="swatches"><span class="s0"></span><span class="s1"></span></span></button>
+              <button data-count="q" data-count-label="q = 3" type="button" class="btn q" data-q="3" onclick="qClicked(3);">\(q=3\)<span class="swatches"><span class="s0"></span><span class="s1"></span><span class="s2"></span></span></button>
+              <button data-count="q" data-count-label="q = 4" type="button" class="btn q" data-q="4" onclick="qClicked(4);">\(q=4\)<span class="swatches"><span class="s0"></span><span class="s1"></span><span class="s2"></span><span class="s3"></span></span></button>
+              <button data-count="q" data-count-label="q = 5" type="button" class="btn q" data-q="5" onclick="qClicked(5);">\(q=5\)<span class="swatches"><span class="s0"></span><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span></span></button>
             </div>
           </section>
           <section class="panel">
             <h3 class="panel-title">Lattice</h3>
             <div class="button-row">
-              <button type="button" class="btn l text" data-size="0" onclick="sizeClicked(0);">150 × 90</button>
-              <button type="button" class="btn l text" data-size="1" onclick="sizeClicked(1);">300 × 180</button>
-              <button type="button" class="btn l text" data-size="2" onclick="sizeClicked(2);">600 × 360</button>
+              <button data-count="lattice size" data-count-label="150 × 90" type="button" class="btn l text" data-size="0" onclick="sizeClicked(0);">150 × 90</button>
+              <button data-count="lattice size" data-count-label="300 × 180" type="button" class="btn l text" data-size="1" onclick="sizeClicked(1);">300 × 180</button>
+              <button data-count="lattice size" data-count-label="600 × 360" type="button" class="btn l text" data-size="2" onclick="sizeClicked(2);">600 × 360</button>
             </div>
           </section>
           <section class="panel">
             <h3 class="panel-title">Playback <span class="panel-note" id="speedSliderText"></span></h3>
             <div class="button-row">
               <label class="slide">Speed
-                <input type="range" min="1" max="100" value="49" id="speedSlider" title="One sweep is one proposed change for every site of the lattice">
+                <input data-count="speed slider" type="range" min="1" max="100" value="49" id="speedSlider" title="One sweep is one proposed change for every site of the lattice">
               </label>
-              <button type="button" class="btn icon" id="pausePlay" title="Pause or resume" onclick="thePotts.toggleAnimation();"><i class="material-icons">pause</i></button>
-              <button type="button" class="btn icon" id="restart" title="Start again from a random lattice" onclick="restartClicked();"><i class="material-icons">replay</i></button>
+              <button data-count="pause/play" type="button" class="btn icon" id="pausePlay" title="Pause or resume" onclick="thePotts.toggleAnimation();"><i class="material-icons">pause</i></button>
+              <button data-count="restart" type="button" class="btn icon" id="restart" title="Start again from a random lattice" onclick="restartClicked();"><i class="material-icons">replay</i></button>
             </div>
           </section>
         </div>
@@ -115,28 +116,28 @@
           <section class="panel">
             <h3 class="panel-title">Temperature <span class="panel-note" id="temperatureSliderText"></span></h3>
             <div class="button-row">
-              <button type="button" class="btn t text" data-preset="0" title="Neighbours lock each other into domains" onclick="temperaturePresetClicked(0);">Low</button>
-              <button type="button" class="btn t text" data-preset="1" onclick="temperaturePresetClicked(1);">Below critical</button>
-              <button type="button" class="btn t text" data-preset="2" onclick="temperaturePresetClicked(2);">Above critical</button>
-              <button type="button" class="btn t text" data-preset="3" title="Thermal fluctuations break up every domain" onclick="temperaturePresetClicked(3);">High</button>
+              <button data-count="temperature preset" data-count-label="Low" type="button" class="btn t text" data-preset="0" title="Neighbours lock each other into domains" onclick="temperaturePresetClicked(0);">Low</button>
+              <button data-count="temperature preset" data-count-label="Below critical" type="button" class="btn t text" data-preset="1" onclick="temperaturePresetClicked(1);">Below critical</button>
+              <button data-count="temperature preset" data-count-label="Above critical" type="button" class="btn t text" data-preset="2" onclick="temperaturePresetClicked(2);">Above critical</button>
+              <button data-count="temperature preset" data-count-label="High" type="button" class="btn t text" data-preset="3" title="Thermal fluctuations break up every domain" onclick="temperaturePresetClicked(3);">High</button>
             </div>
             <div class="button-row">
               <label class="slide">\(T\)
-                <input type="range" min="0.1" max="6" step="0.05" value="2" id="temperatureSlider" title="Temperature of the heat bath, in units of the coupling between neighbours">
+                <input data-count="temperature slider" type="range" min="0.1" max="6" step="0.05" value="2" id="temperatureSlider" title="Temperature of the heat bath, in units of the coupling between neighbours">
               </label>
             </div>
           </section>
           <section class="panel">
             <h3 class="panel-title">Magnetic field <span class="panel-note" id="fieldSliderText"></span></h3>
             <div class="button-row">
-              <button type="button" class="btn h text" data-preset="0" onclick="fieldPresetClicked(0);">None</button>
-              <button type="button" class="btn h text" data-preset="1" onclick="fieldPresetClicked(1);">Weak</button>
-              <button type="button" class="btn h text" data-preset="2" onclick="fieldPresetClicked(2);">Medium</button>
-              <button type="button" class="btn h text" data-preset="3" onclick="fieldPresetClicked(3);">Strong</button>
+              <button data-count="field preset" data-count-label="None" type="button" class="btn h text" data-preset="0" onclick="fieldPresetClicked(0);">None</button>
+              <button data-count="field preset" data-count-label="Weak" type="button" class="btn h text" data-preset="1" onclick="fieldPresetClicked(1);">Weak</button>
+              <button data-count="field preset" data-count-label="Medium" type="button" class="btn h text" data-preset="2" onclick="fieldPresetClicked(2);">Medium</button>
+              <button data-count="field preset" data-count-label="Strong" type="button" class="btn h text" data-preset="3" onclick="fieldPresetClicked(3);">Strong</button>
             </div>
             <div class="button-row">
               <label class="slide">\(H\)
-                <input type="range" min="0" max="40" step="0.5" value="3" id="fieldSlider" title="Strength of the field, which favours the state s = 0. In these units two neighbours in the same state are worth 20.">
+                <input data-count="field slider" type="range" min="0" max="40" step="0.5" value="3" id="fieldSlider" title="Strength of the field, which favours the state s = 0. In these units two neighbours in the same state are worth 20.">
               </label>
             </div>
           </section>

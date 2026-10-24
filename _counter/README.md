@@ -12,11 +12,24 @@ GitHub Pages doesn't publish folders whose names start with `_`, so this folder 
 
 ## What it records
 
-For each day and page: views, unique visitors, the referring site, the country and the device type
-(desktop, mobile or tablet). It uses no cookies and stores no IP addresses. A visitor is recognised within
+For each day and page: views, unique visitors, the referring site, the country, the city and region, and
+the device type (desktop, mobile or tablet). Cloudflare works out the country and city from the IP address,
+which is then discarded. The city is approximate (often the nearest large town or the internet provider's
+hub), and is sometimes unknown. It uses no cookies and stores no IP addresses. A visitor is recognised within
 one day by a scrambled code made from their IP address, browser and a random value that is replaced
 every day, and the previous day's codes are deleted. This is the same approach Plausible uses.
 Bots, other websites, and visits from `localhost` or files opened directly are ignored.
+
+It also records:
+
+- **Time on page:** how long each page was actually on screen (time in a background tab doesn't
+  count). Each page load gets a fresh random code, which is used only to update its own total.
+- **Outgoing links, downloads and email links:** found automatically. A link counts as a download
+  if it ends in `.pdf`, `.zip`, `.pptx`, `.mp4` or similar.
+- **Interactions:** any button or slider with a `data-count` attribute, for example
+  `<button data-count="source" data-count-label="Am-241">`. Sliders count once when let go.
+  Page code can also call `countEvent("name", "label")`. Clicks made by the page's own code
+  (like Solitons opening its first tab) are ignored, and each page view sends at most 60 events.
 
 ## Setting it up (Cloudflare dashboard, about 10 minutes)
 
@@ -38,6 +51,11 @@ The names of buttons may differ slightly from these.
 7. **Stop counting yourself.** Open `https://alexfarren.com/?notrack` once in each browser you use.
    `?track` turns counting back on.
 
+## Adding counting to a new page
+
+Put `<script defer src="/count.js"></script>` in the page's `<head>`, and give the controls you want
+counted a `data-count="..."` attribute (plus `data-count-label="..."` to tell similar buttons apart).
+
 ## Seeing the stats
 
 Open https://implausible.alexanderfarren23.workers.dev/ in a browser. Any username works, with the password from step 4.
@@ -56,3 +74,6 @@ You can choose 7 days, 30 days, 90 days, 1 year or all time, and click a page to
 - **Fake visits:** someone could deliberately send fake page views. For a personal site that isn't worth
   defending against, but the numbers aren't tamper-proof.
 - **Updating the worker:** paste the new `worker.js` into *Edit code* and deploy. The data is kept.
+  New tables and columns are added automatically the first time the new version runs.
+  **Deploy the worker before pushing a newer `count.js`.** An older worker counts the newer message
+  types as extra page views.

@@ -1,12 +1,15 @@
 // Visitor counter for alexfarren.com, running as a Cloudflare Worker with a D1 database.
 //
 // What it records, per day: page views and unique visitors for each page, plus the site
-// that sent the visitor, their country and device type. No cookies, and no IP addresses are
+// that sent the visitor, their country, city and device type. No cookies, and no IP addresses are
 // stored: a visitor is recognised within one day by a scrambled code made from their IP
 // address, browser and a random value that is replaced every day (the same idea Plausible uses).
 //
+// It also records how long each page stays on screen, and events: clicks on outgoing links,
+// downloads, and the buttons and sliders the visualisations mark with data-count.
+//
 // Endpoints:
-//   POST /c            a page view, sent by count.js on the website
+//   POST /c            a message from count.js: a page view, time on page, or an event
 //   GET  /             the stats page (asks for the password in STATS_PASSWORD)
 //   GET  /stats.json   the same numbers as JSON
 //
@@ -24,12 +27,35 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS seen (day TEXT NOT NULL, hash TEXT NOT NULL, path TEXT NOT NULL,
      PRIMARY KEY (day, hash, path))`,
   `CREATE TABLE IF NOT EXISTS salt (day TEXT PRIMARY KEY, value TEXT NOT NULL)`,
+  // approximate location, as Cloudflare works it out from the IP address (the address itself isn't kept)
+  `CREATE TABLE IF NOT EXISTS places (
+     day TEXT NOT NULL, path TEXT NOT NULL, country TEXT NOT NULL, region TEXT NOT NULL, city TEXT NOT NULL,
+     views INTEGER NOT NULL DEFAULT 0, visitors INTEGER NOT NULL DEFAULT 0,
+     PRIMARY KEY (day, path, country, region, city))`,
+  // events: outgoing links, downloads, and buttons/sliders in the visualisations
+  `CREATE TABLE IF NOT EXISTS events (
+     day TEXT NOT NULL, path TEXT NOT NULL, name TEXT NOT NULL, label TEXT NOT NULL,
+     count INTEGER NOT NULL DEFAULT 0, visitors INTEGER NOT NULL DEFAULT 0,
+     PRIMARY KEY (day, path, name, label))`,
+  // seconds on screen for each page view; pv is a random code made fresh for every page load
+  `CREATE TABLE IF NOT EXISTS engagement (
+     day TEXT NOT NULL, path TEXT NOT NULL, pv TEXT NOT NULL, seconds INTEGER NOT NULL,
+     PRIMARY KEY (day, pv))`,
 ];
 let schemaReady = false;
+
+// Columns added after the first version. Adding one that already exists fails harmlessly.
+const ADDED_COLUMNS = [
+  "ALTER TABLE hits ADD COLUMN site_visitors INTEGER NOT NULL DEFAULT 0",
+  "ALTER TABLE places ADD COLUMN site_visitors INTEGER NOT NULL DEFAULT 0",
+];
 
 async function ensureSchema(env) {
   if (schemaReady) return;
   await env.DB.batch(SCHEMA.map(sql => env.DB.prepare(sql)));
+  for (const sql of ADDED_COLUMNS) {
+    try { await env.DB.prepare(sql).run(); } catch (e) { /* already there */ }
+  }
   schemaReady = true;
 }
 
@@ -106,6 +132,35 @@ function deviceOf(ua) {
   return "desktop";
 }
 
+async function visitorCode(request, env, ua, day) {
+  const salt = await saltFor(env, day);
+  const ip = request.headers.get("CF-Connecting-IP") || "";
+  return sha256(`${salt}|${ip}|${ua}`);
+}
+
+async function recordTime(env, path, msg) {
+  const id = String(msg.id || "");
+  const seconds = Math.round(Number(msg.s));
+  if (!/^[a-z0-9]{6,24}$/.test(id) || !Number.isFinite(seconds) || seconds < 0) return;
+  await env.DB.prepare(`INSERT INTO engagement (day, path, pv, seconds) VALUES (?, ?, ?, ?)
+                        ON CONFLICT (day, pv) DO UPDATE SET seconds = MAX(seconds, excluded.seconds)`)
+    .bind(today(), path, id, Math.min(seconds, 4 * 3600)).run();
+}
+
+async function recordEvent(request, env, path, ua, msg) {
+  const name = String(msg.e || "").replace(/[^\w\- .]/g, "").slice(0, 40);
+  const label = String(msg.l || "").replace(/[<>"'`\\]/g, "").slice(0, 120);
+  if (!name) return;
+  const day = today();
+  const hash = await visitorCode(request, env, ua, day);
+  const first = await env.DB.prepare("INSERT OR IGNORE INTO seen (day, hash, path) VALUES (?, ?, ?)")
+    .bind(day, hash, `e|${path}|${name}|${label}`).run();
+  await env.DB.prepare(`INSERT INTO events (day, path, name, label, count, visitors) VALUES (?, ?, ?, ?, 1, ?)
+                        ON CONFLICT (day, path, name, label)
+                        DO UPDATE SET count = count + 1, visitors = visitors + excluded.visitors`)
+    .bind(day, path, name, label, first.meta.changes > 0 ? 1 : 0).run();
+}
+
 async function recordHit(request, env) {
   const ignored = new Response(null, { status: 204 });
   if (!isAllowedOrigin(request.headers.get("Origin") || "")) return ignored;
@@ -116,14 +171,22 @@ async function recordHit(request, env) {
   try { msg = JSON.parse(await request.text()); } catch { return ignored; }
   const path = String(msg.p || "");
   if (!/^\/[\w\-./?=%]{0,150}$/.test(path)) return ignored;
+
+  const kind = msg.t || "pv";
+  if (kind === "time") { await recordTime(env, path, msg); return ignored; }
+  if (kind === "e") { await recordEvent(request, env, path, ua, msg); return ignored; }
+  if (kind !== "pv") return ignored;
+
+  // a page view
   const referrer = String(msg.r || "").toLowerCase().replace(/[^\w.\-]/g, "").slice(0, 60);
-  const country = (request.cf && request.cf.country) || "??";
+  const cf = request.cf || {};
+  const country = cf.country || "??";
+  const region = String(cf.region || "").slice(0, 60);
+  const city = String(cf.city || "").slice(0, 60);
   const device = deviceOf(ua);
 
   const day = today();
-  const salt = await saltFor(env, day);
-  const ip = request.headers.get("CF-Connecting-IP") || "";
-  const hash = await sha256(`${salt}|${ip}|${ua}`);
+  const hash = await visitorCode(request, env, ua, day);
 
   const [pageSeen, siteSeen] = await env.DB.batch([
     env.DB.prepare("INSERT OR IGNORE INTO seen (day, hash, path) VALUES (?, ?, ?)").bind(day, hash, path),
@@ -133,13 +196,21 @@ async function recordHit(request, env) {
   const newOnSite = siteSeen.meta.changes > 0 ? 1 : 0;
 
   await env.DB.batch([
-    env.DB.prepare(`INSERT INTO hits (day, path, referrer, country, device, views, visitors) VALUES (?, ?, ?, ?, ?, 1, ?)
+    env.DB.prepare(`INSERT INTO hits (day, path, referrer, country, device, views, visitors, site_visitors)
+                    VALUES (?, ?, ?, ?, ?, 1, ?, ?)
                     ON CONFLICT (day, path, referrer, country, device)
-                    DO UPDATE SET views = views + 1, visitors = visitors + excluded.visitors`)
-      .bind(day, path, referrer, country, device, newOnPage),
+                    DO UPDATE SET views = views + 1, visitors = visitors + excluded.visitors,
+                                  site_visitors = site_visitors + excluded.site_visitors`)
+      .bind(day, path, referrer, country, device, newOnPage, newOnSite),
     env.DB.prepare(`INSERT INTO daily (day, visitors) VALUES (?, ?)
                     ON CONFLICT (day) DO UPDATE SET visitors = visitors + excluded.visitors`)
       .bind(day, newOnSite),
+    env.DB.prepare(`INSERT INTO places (day, path, country, region, city, views, visitors, site_visitors)
+                    VALUES (?, ?, ?, ?, ?, 1, ?, ?)
+                    ON CONFLICT (day, path, country, region, city)
+                    DO UPDATE SET views = views + 1, visitors = visitors + excluded.visitors,
+                                  site_visitors = site_visitors + excluded.site_visitors`)
+      .bind(day, path, country, region, city, newOnPage, newOnSite),
   ]);
   return new Response(null, { status: 204 });
 }
@@ -166,15 +237,46 @@ async function getStats(env, url) {
   const where = page ? "day >= ? AND path = ?" : "day >= ?";
   const args = page ? [since, page] : [since];
   const q = (sql, ...extra) => env.DB.prepare(sql).bind(...args, ...extra).all().then(r => r.results);
+  const who = page ? "visitors" : "site_visitors";
 
-  const [byDay, pages, referrers, countries, devices, siteDaily] = await Promise.all([
+  const [byDay, pages, referrers, countries, devices, siteDaily, cities, events, times] = await Promise.all([
     q(`SELECT day, SUM(views) AS views, SUM(visitors) AS visitors FROM hits WHERE ${where} GROUP BY day ORDER BY day`),
     q(`SELECT path, SUM(views) AS views, SUM(visitors) AS visitors FROM hits WHERE ${where} GROUP BY path ORDER BY views DESC LIMIT 50`),
-    q(`SELECT referrer, SUM(views) AS views, SUM(visitors) AS visitors FROM hits WHERE ${where} AND referrer != '' GROUP BY referrer ORDER BY visitors DESC LIMIT 30`),
-    q(`SELECT country, SUM(views) AS views, SUM(visitors) AS visitors FROM hits WHERE ${where} GROUP BY country ORDER BY visitors DESC LIMIT 30`),
-    q(`SELECT device, SUM(views) AS views, SUM(visitors) AS visitors FROM hits WHERE ${where} GROUP BY device ORDER BY visitors DESC`),
+    q(`SELECT referrer, SUM(views) AS views, SUM(${who}) AS visitors FROM hits WHERE ${where} AND referrer != '' GROUP BY referrer ORDER BY visitors DESC, views DESC LIMIT 30`),
+    q(`SELECT country, SUM(views) AS views, SUM(${who}) AS visitors FROM hits WHERE ${where} GROUP BY country ORDER BY visitors DESC, views DESC LIMIT 30`),
+    q(`SELECT device, SUM(views) AS views, SUM(${who}) AS visitors FROM hits WHERE ${where} GROUP BY device ORDER BY visitors DESC, views DESC`),
     env.DB.prepare("SELECT day, visitors FROM daily WHERE day >= ? ORDER BY day").bind(since).all().then(r => r.results),
+    q(`SELECT country, region, city, SUM(views) AS views, SUM(${who}) AS visitors FROM places
+       WHERE ${where} AND city != '' GROUP BY country, region, city ORDER BY visitors DESC, views DESC LIMIT 40`),
+    q(`SELECT path, name, label, SUM(count) AS views, SUM(visitors) AS visitors FROM events
+       WHERE ${where} GROUP BY path, name, label ORDER BY visitors DESC, views DESC LIMIT 300`),
+    q(`SELECT path, seconds FROM engagement WHERE ${where} AND seconds > 0 LIMIT 200000`),
   ]);
+
+  // time on page: median and average, overall and for each page
+  const median = xs => {
+    if (!xs.length) return 0;
+    const a = [...xs].sort((x, y) => x - y), m = a.length >> 1;
+    return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+  };
+  const timesByPath = {};
+  for (const t of times) (timesByPath[t.path] ||= []).push(t.seconds);
+  const timeOnPage = Object.entries(timesByPath).map(([path, xs]) => ({
+    path, measured: xs.length, median: median(xs), mean: xs.reduce((a, b) => a + b, 0) / xs.length,
+  })).sort((a, b) => b.measured - a.measured).slice(0, 50);
+  const medianTime = median(times.map(t => t.seconds));
+
+  // events: links to other sites and downloads are added up across pages; the rest stay per page
+  const merge = rows => Object.values(rows.reduce((acc, r) => {
+    const k = r.name + "|" + r.label;
+    acc[k] ||= { name: r.name, label: r.label, views: 0, visitors: 0 };
+    acc[k].views += r.views;
+    acc[k].visitors += r.visitors;
+    return acc;
+  }, {})).sort((a, b) => b.visitors - a.visitors || b.views - a.views);
+  const outbound = merge(events.filter(e => e.name === "outbound" || e.name === "email"));
+  const downloads = merge(events.filter(e => e.name === "download"));
+  const interactions = events.filter(e => !["outbound", "email", "download"].includes(e.name));
 
   // site-wide visitors come from the daily table (one person reading three pages counts once)
   const siteVisitors = Object.fromEntries(siteDaily.map(r => [r.day, r.visitors]));
@@ -188,17 +290,17 @@ async function getStats(env, url) {
   if (range === "all") while (days.length && days[0].views === 0) days.shift();
 
   const sum = k => days.reduce((s, d) => s + d[k], 0);
-  return { range, page, since, totals: { views: sum("views"), visitors: sum("visitors") },
-           days, pages, referrers, countries, devices };
+  return { range, page, since, totals: { views: sum("views"), visitors: sum("visitors"), medianTime },
+           days, pages, referrers, countries, devices, cities, timeOnPage, interactions, outbound, downloads };
 }
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-function table(title, rows, key, label = k => esc(k), link = null) {
+function table(title, rows, key, label = k => esc(k), link = null, heads = ["Visitors", "Views"]) {
   if (!rows.length) return `<section><h2>${title}</h2><p class="none">Nothing yet.</p></section>`;
   const max = Math.max(...rows.map(r => r.visitors || r.views), 1);
   return `<section><h2>${title}</h2><table>
-    <tr><th></th><th>Visitors</th><th>Views</th></tr>
+    <tr><th></th><th>${heads[0]}</th><th>${heads[1]}</th></tr>
     ${rows.map(r => `<tr>
       <td class="name"><div class="bar" style="width:${(100 * (r.visitors || r.views) / max).toFixed(1)}%"></div>
         <span>${link ? `<a href="${link(r[key])}">${label(r[key])}</a>` : label(r[key])}</span></td>
@@ -221,9 +323,31 @@ function chart(days) {
     <text x="0" y="${H + 15}" class="axis">${first}</text><text x="${W}" y="${H + 15}" text-anchor="end" class="axis">${last}</text></svg>`;
 }
 
+const duration = sec => {
+  sec = Math.round(sec);
+  if (sec < 60) return `${sec} s`;
+  const m = Math.floor(sec / 60), r = sec % 60;
+  return m < 60 ? `${m} min${r ? ` ${r} s` : ""}` : `${Math.floor(m / 60)} h ${m % 60} min`;
+};
+
+function timeTable(rows, pageLink) {
+  if (!rows.length) return `<section><h2>Time on page</h2><p class="none">Nothing yet.</p></section>`;
+  const max = Math.max(...rows.map(r => r.median), 1);
+  return `<section><h2>Time on page</h2><table>
+    <tr><th></th><th>Typical</th><th>Average</th><th>Visits</th></tr>
+    ${rows.map(r => `<tr><td class="name"><div class="bar" style="width:${(100 * r.median / max).toFixed(1)}%"></div>
+      <span>${pageLink ? `<a href="${pageLink(r.path)}">${esc(r.path)}</a>` : esc(r.path)}</span></td>
+      <td>${duration(r.median)}</td><td>${duration(r.mean)}</td><td>${r.measured.toLocaleString("en-GB")}</td></tr>`).join("")}
+  </table><p class="note">"Typical" is the median: half of visits were shorter, half longer.
+  Only time with the page on screen counts.</p></section>`;
+}
+
 function statsPage(s) {
-  const flag = cc => cc && cc.length === 2 && cc !== "??"
-    ? String.fromCodePoint(...[...cc.toUpperCase()].map(c => 127397 + c.charCodeAt(0))) + " " + cc : "unknown";
+  const emoji = cc => cc && cc.length === 2 && cc !== "??"
+    ? String.fromCodePoint(...[...cc.toUpperCase()].map(c => 127397 + c.charCodeAt(0))) : "";
+  const flag = cc => emoji(cc) ? emoji(cc) + " " + cc : "unknown";
+  const cities = s.cities.map(r => ({ ...r,
+    place: `${emoji(r.country)} ${r.city}${r.region && r.region !== r.city ? ", " + r.region : ""}`.trim() }));
   const rangeLink = (r, text) => `<a class="${s.range === r ? "on" : ""}" href="?days=${r}${s.page ? "&page=" + encodeURIComponent(s.page) : ""}">${text}</a>`;
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
@@ -239,7 +363,7 @@ function statsPage(s) {
   .totals { display:flex; gap:28px; margin:16px 0; } .totals b { display:block; font-size:28px; }
   .totals span { color:var(--muted); font-size:13px; }
   .card, section { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:14px; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; } .grid section { margin:0; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; } .grid section { margin:0; }
   @media (max-width:700px) { .grid { grid-template-columns:1fr; } }
   svg { width:100%; height:auto; } svg .v { fill:var(--v); } svg .u { fill:var(--u); } svg .axis { font-size:11px; fill:var(--muted); }
   table { width:100%; border-collapse:collapse; font-size:14px; }
@@ -254,12 +378,21 @@ function statsPage(s) {
 <div class="ranges">${rangeLink("7", "7 days")}${rangeLink("30", "30 days")}${rangeLink("90", "90 days")}${rangeLink("365", "1 year")}${rangeLink("all", "All time")}
 ${s.page ? `<a href="?days=${s.range}">← whole site</a>` : ""}</div>
 <div class="totals"><div><b>${s.totals.visitors.toLocaleString("en-GB")}</b><span>visitors (counted once per day)</span></div>
-<div><b>${s.totals.views.toLocaleString("en-GB")}</b><span>page views</span></div></div>
+<div><b>${s.totals.views.toLocaleString("en-GB")}</b><span>page views</span></div>
+<div><b>${s.totals.medianTime ? duration(s.totals.medianTime) : "–"}</b><span>typical time on a page</span></div></div>
 <div class="card">${chart(s.days)}<div class="note key"><i style="background:var(--u)"></i>visitors<i style="background:var(--v)"></i>views</div></div>
 ${s.page ? "" : table("Pages", s.pages, "path", esc, p => `?days=${s.range}&page=${encodeURIComponent(p)}`)}
+${timeTable(s.timeOnPage, s.page ? null : p => `?days=${s.range}&page=${encodeURIComponent(p)}`)}
+${table("Interactions", s.interactions.map(e => ({ ...e,
+  what: `${s.page ? "" : e.path + " · "}${e.name}${e.label ? ": " + e.label : ""}` })), "what", esc, null, ["People", "Times"])}
+<div class="grid">
+${table("Outgoing links", s.outbound.map(e => ({ ...e, what: (e.name === "email" ? "✉ " : "") + e.label })), "what", esc, null, ["People", "Clicks"])}
+${table("Downloads", s.downloads.map(e => ({ ...e, what: e.label })), "what", esc, null, ["People", "Clicks"])}
+</div>
 <div class="grid">
 ${table("Came from", s.referrers, "referrer")}
 ${table("Countries", s.countries, "country", flag)}
+${table("Cities", cities, "place")}
 ${table("Devices", s.devices, "device")}
 </div>
 <p class="note">Days are in UTC. Visitors are recognised within a day only, so someone who comes back tomorrow counts again.</p>

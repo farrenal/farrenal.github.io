@@ -351,6 +351,7 @@ a.clickables:hover{
 .ireland     {--light: #fcd4b6; --dark: #fa7d34; --image: #f2c796;}
 .mathhack    {--light: #d498ba; --dark: #0D0119; --image: #0D0119; --button: #700a44;}
 .rocket      {--light: #dddddd; --dark: #444444; --button: #aa4032;}
+.fundrace    {--light: #b8cdd9; --dark: #1a1f3a; --image: #b9ccda; --button: #cc2936;}   /* cambridgefundrace.org: the colours of its logo */
 
 td:nth-child(1){vertical-align: top;}
 td:nth-child(2){valign: center;}
